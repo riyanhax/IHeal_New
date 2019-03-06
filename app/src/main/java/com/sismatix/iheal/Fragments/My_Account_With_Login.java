@@ -87,7 +87,7 @@ public class My_Account_With_Login extends Fragment {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_my__account__with__login, container, false);
         bottom_navigation.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-        setHasOptionsMenu(true);
+       // setHasOptionsMenu(true);
 
        // MyAddress_Preference.mPrefs = getPreferences(Context.MODE_PRIVATE);
 
@@ -100,13 +100,13 @@ public class My_Account_With_Login extends Fragment {
             Toast.makeText(getContext(), "Please Check your Internet Connection", Toast.LENGTH_SHORT).show();
         }
 
-        //set back icon by defult
+       /* //set back icon by defult
         getActivity().setTitle("MY ACCOUNT");
         ((Navigation_drawer_activity) getActivity()).setSupportActionBar(toolbar_myaccount_ok);
         ((Navigation_drawer_activity) getActivity()).getSupportActionBar()
                 .setDisplayHomeAsUpEnabled(true);
         ((Navigation_drawer_activity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_arrow_left_white_36dp);
-
+*/
         txt_username.setText(Login_preference.getfullname(getActivity()));
         tv_email.setText(Login_preference.getemail(getActivity()));
 

@@ -32,6 +32,7 @@ public class AccountTabs extends Fragment {
   public static Toolbar toolbar_myaccount;
 
     /*TextView tv_tab_titles;*/
+    TextView tv_myaccount_title;
 
     public AccountTabs() {
         // Required empty public constructor
@@ -41,14 +42,30 @@ public class AccountTabs extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_account_tabs, container, false);
-        toolbar_myaccount = (Toolbar) v.findViewById(R.id.toolbar_myaccount);
-        //tv_tab_titles = (TextView) v.findViewById(R.id.tv_tab_titles);
+
+        tv_myaccount_title = (TextView) v.findViewById(R.id.tv_myaccount_title);
         //tv_tab_titles.setText("MY ACCOUNT");
+
+        //option manu
         setHasOptionsMenu(true);
+        toolbar_myaccount = (Toolbar) v.findViewById(R.id.toolbar_myaccount);
+        // toolbar_mywishlist.setTitle("My Wishlist");
+
         ((Navigation_drawer_activity) getActivity()).setSupportActionBar(toolbar_myaccount);
         ((Navigation_drawer_activity) getActivity()).getSupportActionBar()
                 .setDisplayHomeAsUpEnabled(true);
         ((Navigation_drawer_activity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_arrow_left_white_36dp);
+
+/*
+
+
+        setHasOptionsMenu(true);
+        toolbar_myaccount = (Toolbar) v.findViewById(R.id.toolbar_myaccount);
+        ((Navigation_drawer_activity) getActivity()).setSupportActionBar(toolbar_myaccount);
+        ((Navigation_drawer_activity) getActivity()).getSupportActionBar()
+                .setDisplayHomeAsUpEnabled(true);
+        ((Navigation_drawer_activity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_arrow_left_white_36dp);
+*/
 
         final TabLayout tabLayout = (TabLayout) v.findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("MY ACCOUNT"));
@@ -68,17 +85,17 @@ public class AccountTabs extends Fragment {
                 viewPager.setCurrentItem(tab.getPosition());
                 if (tab.getPosition() == 0) {
                     //tv_tab_titles.setText("MY ACCOUNT");
-                    toolbar_myaccount.setTitle("MY ACCOUNT");
+                    tv_myaccount_title.setText("MY ACCOUNT");
                 } else if (tab.getPosition() == 1) {
                     //tv_tab_titles.setText("MY ORDERS");
-                    toolbar_myaccount.setTitle("MY ORDERS");
+                    tv_myaccount_title.setText("MY ORDERS");
                 } else if (tab.getPosition() == 2) {
                     //tv_tab_titles.setText("MESSAGES");
-                    toolbar_myaccount.setTitle("MESSAGES");
+                    tv_myaccount_title.setText("MESSAGES");
                 } else if (tab.getPosition() == 3) {
                     Wishlist_fragment.toolbar_mywishlist.setVisibility(View.GONE);
                     //tv_tab_titles.setText("WISHLIST");
-                    toolbar_myaccount.setTitle("WISHLIST");
+                    tv_myaccount_title.setText("WISHLIST");
                 }
             }
             @Override
@@ -93,16 +110,16 @@ public class AccountTabs extends Fragment {
         return v;
     }
 
-    /*@Override
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
        // inflater.inflate(R.menu.cart, menu);
         //MenuItem item = menu.findItem(R.id.cart);
-        *//*MenuItem item_search = menu.findItem(R.id.search);
-        item_search.setVisible(false);*//*
+     /*   MenuItem item_search = menu.findItem(R.id.search);
+        item_search.setVisible(false);*/
        // item.setVisible(false);
         super.onCreateOptionsMenu(menu, inflater);
-    }*/
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

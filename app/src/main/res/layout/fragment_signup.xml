@@ -151,7 +151,10 @@
                             android:layout_marginLeft="10dp"
                             android:text="LOGIN"
                             android:background="@drawable/loginbg_border"
-                            android:padding="5dp"
+                            android:paddingRight="10dp"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
                             android:textColor="@color/colorPrimary"
                             android:textSize="14sp" />
                     </LinearLayout>

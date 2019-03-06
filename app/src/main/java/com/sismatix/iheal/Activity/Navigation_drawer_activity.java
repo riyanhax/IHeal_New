@@ -43,6 +43,7 @@ import com.sismatix.iheal.Fragments.Cart;
 import com.sismatix.iheal.Fragments.EmailLogin;
 import com.sismatix.iheal.Fragments.Hair_Cair_fregment;
 import com.sismatix.iheal.Fragments.Home;
+import com.sismatix.iheal.Fragments.Meassge_fragment;
 import com.sismatix.iheal.Fragments.MyOrder;
 import com.sismatix.iheal.Fragments.MyOrderDetails;
 import com.sismatix.iheal.Fragments.Nature_Category_freg;
@@ -194,7 +195,6 @@ public class Navigation_drawer_activity extends AppCompatActivity
             return false;
         }
     };
-
     private void selectFragment(MenuItem item) {
 
         item.setChecked(true);
@@ -303,8 +303,15 @@ public class Navigation_drawer_activity extends AppCompatActivity
                 pushFragment(new Account(), "Wishlist_fragment");
             }
         } else if (id == R.id.nav_messages) {
+            if (loginflagmain.equalsIgnoreCase("1") || loginflagmain == "1") {
 
-            pushFragment(new MyOrderDetails(), "MyOrder_details");
+                pushFragment(new Meassge_fragment(), "Meassge");
+            } else {
+
+                pushFragment(new Account(), "Login_myaccount");
+
+            }
+            //pushFragment(new MyOrderDetails(), "MyOrder_details");
         } else if (id == R.id.nav_notification) {
         }
 
