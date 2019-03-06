@@ -57,8 +57,6 @@ public class AccountTabs extends Fragment {
         ((Navigation_drawer_activity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_arrow_left_white_36dp);
 
 /*
-
-
         setHasOptionsMenu(true);
         toolbar_myaccount = (Toolbar) v.findViewById(R.id.toolbar_myaccount);
         ((Navigation_drawer_activity) getActivity()).setSupportActionBar(toolbar_myaccount);
@@ -104,7 +102,6 @@ public class AccountTabs extends Fragment {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
             }
-
         });
 
         return v;

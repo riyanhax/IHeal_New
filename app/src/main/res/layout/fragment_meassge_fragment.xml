@@ -11,9 +11,9 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Coming Soon...."
+        android:text="Under development.."
         android:textColor="@color/main"
-        android:textSize="30dp"
+        android:textSize="25dp"
         android:layout_gravity="center"
         android:gravity="center"/>
 
