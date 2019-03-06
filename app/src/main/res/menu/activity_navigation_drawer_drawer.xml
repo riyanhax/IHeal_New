@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <!--
+        <group android:checkableBehavior="single">
+            <item
+                android:id="@+id/nav_camera"
+                android:icon="@drawable/ic_menu_camera"
+                android:title="Import" />
+            <item
+                android:id="@+id/nav_gallery"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="Gallery" />
+            <item
+                android:id="@+id/nav_slideshow"
+                android:icon="@drawable/ic_menu_slideshow"
+                android:title="Slideshow" />
+            <item
+                android:id="@+id/nav_manage"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Tools" />
+        </group>-->
+
+    <item
+        android:id="@+id/title_shop_tools"
+        android:title="Shop">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_product_categories"
+                    android:icon="@drawable/product_cat"
+                    android:title="Product Categories" />
+                <!-- <item
+                     android:id="@+id/nav_health_topic"
+                     android:icon="@drawable/health_topics"
+                     android:title="Health Topics"
+                     />
+                 <item
+                     android:id="@+id/nav_offers"
+                     android:icon="@drawable/offers"
+                     android:title="OFFERS" />
+                 <item
+                     android:id="@+id/nav_reviews"
+                     android:icon="@drawable/reviews"
+                     android:title="Reviews"
+                    />-->
+                <!--<item
+                    android:id="@+id/nav_recipes"
+                    android:icon="@drawable/recipes"
+                    android:title="Recipes"
+                    />-->
+            </group>
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/title_account_tools"
+        android:title="Account">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_my_account"
+                    android:icon="@drawable/myaccount"
+                    android:title="My Account" />
+                <item
+                    android:id="@+id/nav_my_order"
+                    android:icon="@drawable/offers"
+                    android:title="My Order" />
+                <item
+                    android:id="@+id/nav_wishlist"
+                    android:icon="@drawable/wishlist"
+                    android:title="Wishlist" />
+
+                <item
+                    android:id="@+id/nav_messages"
+                    android:icon="@drawable/messages"
+                    android:title="Messages" />
+                <item
+                    android:id="@+id/nav_notification"
+                    android:icon="@drawable/notification"
+                    android:title="Notifications" />
+            </group>
+        </menu>
+    </item>
+
+
+</menu>

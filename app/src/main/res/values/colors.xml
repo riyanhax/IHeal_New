@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#36ba86</color>
+    <color name="colorPrimaryDark">#269e6f</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="selected_color">#fee5a7</color>
+
+    <color name="main">#269e6f</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="signup_bg">#f8f8f8</color>
+    <color name="facebook_color">#4267b2</color>
+    <color name="cart_image_bg">#f2f2f2</color>
+    <color name="onclick">#ffe5a8</color>
+    <color name="edittext">#707070</color>
+    <color name="view">#c8c8c8</color>
+    <color name="delete">#f45d64</color>
+    <color name="edit">#3f7a5c</color>
+    <color name="black_trans80">#14000000</color>
+
+    //shipping page color
+    <color name="light_grey">#c3c3c3</color>
+   <!-- <color name="editText_font_black">#3a3a3a</color>
+    <color name="delivery_font_color">#4a4a4a</color>-->
+    <color name="toggle_btn">#007aff</color>
+    <color name="delivery_background_color">#fbfaff</color>
+
+    <!---payment method -->
+    <color name="textcolor">#828182</color>
+    <color name="edittextpay">#4a4a4a</color>
+    <color name="titlepayal">#c3c3c3</color>
+
+    <color name="trans">#00FFFFFF</color>
+    <!-- iteam details  -->
+    <color name="slieder_bg">#f6f5f5</color>
+    <color name="addtocart">#e96060</color>
+    <color name="haircare">#797979</color>
+    //product_row
+    <color name="product_bg">#efefef</color>
+
+    //nature row_row
+    <color name="nature_bg">#40b889</color>
+
+    <color name="transcparent">#00ffffff</color>
+
+    <color name="light_green">#8FA050</color>
+
+    <color name="product_back">#f0f0f0</color>
+
+
+    <color name="graydeep">#666666</color>
+
+
+</resources>

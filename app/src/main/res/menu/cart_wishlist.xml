@@ -1,0 +1,37 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="example.javatpoint.com.optionmenu.MainActivity">
+
+
+    <!--<item
+        android:id="@+id/help"
+        android:title="Need Help? Call Us!"
+        app:showAsAction="withText" />-->
+
+
+    <item
+        android:id="@+id/wish"
+        android:icon="@drawable/ic_favorite_border_white_36dp"
+        android:title="wish"
+        app:showAsAction="always"
+        tools:ignore="AppCompatResource"
+        android:visible="true"/>
+    <item
+        android:id="@+id/fill_wish"
+        android:icon="@drawable/ic_favorite_white_36dp"
+        android:title="wish_remov"
+        app:showAsAction="always"
+        tools:ignore="AppCompatResource"
+        android:visible="false"/>
+    <item
+        android:id="@+id/cartt"
+        android:icon="@drawable/ic_menu_cart"
+        android:title="cart"
+        android:iconTint="@color/white"
+        android:iconTintMode="@color/white"
+        app:showAsAction="always"
+        />
+
+</menu>
