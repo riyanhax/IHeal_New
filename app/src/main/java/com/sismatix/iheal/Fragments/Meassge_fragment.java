@@ -20,6 +20,7 @@ public class Meassge_fragment extends Fragment {
     public Meassge_fragment() {
         // Required empty public constructor
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

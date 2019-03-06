@@ -53,7 +53,6 @@ import com.sismatix.iheal.Preference.Login_preference;
 import com.sismatix.iheal.R;
 import com.sismatix.iheal.View.CustomTypefaceSpan;
 
-
 public class Navigation_drawer_activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
