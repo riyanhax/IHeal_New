@@ -162,7 +162,7 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.MyVi
 
                         Toast.makeText(context, "" + meassg, Toast.LENGTH_SHORT).show();
                         Login_preference.setquote_id(context, jsonObject.getString("quote_id"));
-                        Log.e("ada_quote_iddddd", "" + jsonObject.getString("quote_id"));
+                        Log.e("wishada_quote_iddddd", "" + jsonObject.getString("quote_id"));
                         Login_preference.setiteamqty(context, jsonObject.getString("items_qty"));
                         AppCompatActivity activity = (AppCompatActivity) v.getContext();
                         Fragment myFragment = new Cart();
@@ -171,6 +171,7 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.MyVi
                     } else if (status.equalsIgnoreCase("error")) {
                         Toast.makeText(context, "" + meassg, Toast.LENGTH_SHORT).show();
                     }
+
                 } catch (Exception e) {
                     Log.e("ada_exception", "" + e);
                 }

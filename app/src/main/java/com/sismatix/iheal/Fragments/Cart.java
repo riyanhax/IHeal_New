@@ -102,7 +102,7 @@ public class Cart extends Fragment {
         }
 
         cart_adapter = new Cart_List_Adapter(getActivity(), cartList);
-       // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mLayoutManager.setReverseLayout(true);
         mLayoutManager.setStackFromEnd(true);
@@ -404,7 +404,7 @@ public class Cart extends Fragment {
                     if (status.equalsIgnoreCase("success")) {
                         lv_productnot.setVisibility(View.VISIBLE);
                         grand_total = jsonObject.getString("grand_total");
-                        Log.e("gtot",""+grand_total);
+                        Log.e("gtot", "" + grand_total);
                         tv_maintotal.setText(grand_total);
 
                         qoute_id_cart = jsonObject.getString("quote_id");
@@ -413,16 +413,19 @@ public class Cart extends Fragment {
                         Log.e("cart_items_total_cart", "" + cart_items_count);
 
                         productslist = jsonObject.getString("products");
-                        Log.e("prod_list_cart",""+productslist);
+                        Log.e("prod_list_cart", "" + productslist);
                         if (productslist.equalsIgnoreCase("[]") || productslist.equalsIgnoreCase("")) {
 
                             lv_productnot.setVisibility(View.VISIBLE);
 
                         } else {
                             lv_productnot.setVisibility(View.GONE);
+                            if (cart_items_count.equals("null") | cart_items_count.equals("0") | cart_items_count.equals("")) {
+                                cart_items_count = "0";
+                            }
                             Login_preference.setCart_item_count(context, cart_items_count);
                             JSONArray jsonArray = jsonObject.getJSONArray("products");
-                            Log.e("jsonarr_cart",""+jsonArray);
+                            Log.e("jsonarr_cart", "" + jsonArray);
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 try {
                                     JSONObject vac_object = jsonArray.getJSONObject(i);

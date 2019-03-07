@@ -38,8 +38,6 @@ public class Login_preference {
     }
 
 
-
-
     public static void setcustomer_id(Context context, String value)
     {
         mPrefs = PreferenceManager.getDefaultSharedPreferences(context);

@@ -54,7 +54,7 @@
     <string name="home_create">CREATE NEW ACCOUNT</string>
     <string name="shoppingcart">Shopping Cart</string>
     <string name="placeorder">PLACE THIS ORDER</string>
-    <string name="checkout">Checkout</string>
+    <string name="checkout">CHECKOUT</string>
     <string name="shipping">SHIPPING</string>
     <string name="payment">PAYMENT</string>
     <string name="confirmation">CONFIRMATION</string>

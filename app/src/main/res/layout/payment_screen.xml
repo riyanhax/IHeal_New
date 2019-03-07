@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:orientation="vertical"
     android:weightSum="4">
 
@@ -11,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="0.4">
+
 
         <ScrollView
             android:layout_width="match_parent"
@@ -30,58 +30,26 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:layout_height="wrap_content">
 
                         <TextView
-                            android:id="@+id/tv_payment_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
                             android:text="@string/paymentmethod"
-                            android:textColor="#4a4a4a"
-                            android:textSize="16dp"
-                            android:textStyle="bold" />
+                            android:textColor="#4a4a4a" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:weightSum="3">
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
 
-                        <LinearLayout
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/payment_method_recyclerview"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1.4">
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.2"
-                            android:gravity="center">
-
-                            <android.support.v7.widget.RecyclerView
-                                android:id="@+id/payment_method_recyclerview"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center"
-                                android:scrollbars="none" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1.4">
-
-                        </LinearLayout>
-
+                            android:layout_height="match_parent"
+                            android:scrollbars="none" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -270,8 +238,6 @@
                 </LinearLayout>
 
             </LinearLayout>
-
-
         </ScrollView>
 
     </LinearLayout>
@@ -285,59 +251,43 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/btn_green_ripple"
+            android:background="@color/edit"
             android:gravity="center"
             android:orientation="horizontal"
-            android:weightSum="5">
+            android:weightSum="4">
 
             <LinearLayout
-                android:id="@+id/lv_goback_payment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_weight="4"
-                android:background="@drawable/btn_green_ripple"
+                android:layout_weight="0.4"
                 android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_keyboard_arrow_left_black_24dp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/lv_confirm_order"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:background="@drawable/btn_green_ripple"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:weightSum="2">
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tv_payconf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_weight="1.5"
                     android:gravity="center"
                     android:text="@string/CONFIRM_ORDER"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="3.6"
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/iv_confirm_order"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
                     android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
-
             </LinearLayout>
-
         </LinearLayout>
     </LinearLayout>
 

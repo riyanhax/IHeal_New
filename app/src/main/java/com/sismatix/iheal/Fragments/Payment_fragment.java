@@ -289,7 +289,7 @@ public class Payment_fragment extends Fragment {
         lv_goback_payment = (LinearLayout) v.findViewById(R.id.lv_goback_payment);
 
         payment_method_adapter = new Payment_Method_Adapter(getActivity(), payment_method_models);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         layoutManager.setReverseLayout(false);
         payment_method_recyclerview.setLayoutManager(layoutManager);
         payment_method_recyclerview.setAdapter(payment_method_adapter);

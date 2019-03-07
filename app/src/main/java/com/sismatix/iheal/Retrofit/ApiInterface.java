@@ -182,4 +182,11 @@ public interface ApiInterface {
     Call<ResponseBody> AppReorder(@Field("customer_id") String customer_id,
                                     @Field("order_id")String order_id);
 
+
+    @POST("AppCatalogSearch.php")
+    @FormUrlEncoded
+    Call<ResponseBody> AppSearchCategory(@Field("searchterm") String searchterm);
+
+
+
 }
