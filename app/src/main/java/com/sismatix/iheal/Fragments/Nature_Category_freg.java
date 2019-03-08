@@ -231,14 +231,17 @@ public class Nature_Category_freg extends Fragment {
             badge = new CountDrawable(getActivity());
         }
         count=Login_preference.getCart_item_count(getActivity());
+        if(count.equalsIgnoreCase("null")||count.equals("")){
+            badge.setCount("0");
+        }else {
+            badge.setCount(count);
+        }
         Log.e("count_142",""+count);
-        badge.setCount(count);
         icon.mutate();
         icon.setDrawableByLayerId(R.id.ic_group_count, badge);
 
         super.onCreateOptionsMenu(menu, inflater);
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection

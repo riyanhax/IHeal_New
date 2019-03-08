@@ -7,6 +7,8 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.design.internal.BottomNavigationItemView;
+import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.internal.NavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -19,6 +21,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.TextAppearanceSpan;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.SubMenu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -61,9 +64,11 @@ public class Navigation_drawer_activity extends AppCompatActivity
     Toolbar toolbar;
     MenuItem title_account_tools, title_shop_tools;
     SpannableString shop, account;
+    String cartitem_count;
     public static LinearLayout lv_withlogin_header, login_navigation, lv_logout;
     public static String loginflagmain;
-    public static TextView tv_navidrawer, item_count, tv_logout;
+    public static TextView tv_navidrawer, item_count, tv_logout,tv_bottomcount;
+    private View notificationBadge;
 
     //bottom navigation
 
@@ -79,9 +84,11 @@ public class Navigation_drawer_activity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation_drawer);
         loginflagmain = Login_preference.getLogin_flag(Navigation_drawer_activity.this);
+        cartitem_count = Login_preference.getCart_item_count(Navigation_drawer_activity.this);
         Log.e("logingflag", "" + loginflagmain);
 
         AllocateMemory();
+
 
         login_navigation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,6 +171,7 @@ public class Navigation_drawer_activity extends AppCompatActivity
             }
         });
         Bootom_Navigation_view();
+
     }
 
     private void applyFontToMenuItem(MenuItem mi) {
@@ -185,6 +193,17 @@ public class Navigation_drawer_activity extends AppCompatActivity
 
         Menu menu = bottom_navigation.getMenu();
         selectFragment(menu.getItem(0));
+
+        BottomNavigationMenuView menuView = (BottomNavigationMenuView) bottom_navigation.getChildAt(0);
+        BottomNavigationItemView itemView = (BottomNavigationItemView) menuView.getChildAt(3);
+        notificationBadge = LayoutInflater.from(this).inflate(R.layout.badge_row, menuView, false);
+        tv_bottomcount = (TextView) notificationBadge.findViewById(R.id.badge);
+        if(cartitem_count.equalsIgnoreCase("null")||cartitem_count.equals("")){
+            tv_bottomcount.setText("0");
+        }else {
+            tv_bottomcount.setText(cartitem_count);
+        }
+        itemView.addView(notificationBadge);
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -326,7 +345,6 @@ public class Navigation_drawer_activity extends AppCompatActivity
             }
         }
     }
-
     private void AllocateMemory() {
         //set bydefault itemcount
         Login_preference.setCart_item_count(Navigation_drawer_activity.this, "0");
@@ -341,6 +359,14 @@ public class Navigation_drawer_activity extends AppCompatActivity
         item_count = (TextView) header.findViewById(R.id.item_count);
         lv_withlogin_header = (LinearLayout) header.findViewById(R.id.lv_withlogin_header);
         tv_logout = (TextView) findViewById(R.id.tv_logout);
+        Log.e("Username",""+Login_preference.getfullname(Navigation_drawer_activity.this));
+        tv_navidrawer.setTypeface(Home.roboto_bold);
+        tv_navidrawer.setText(Login_preference.getfullname(Navigation_drawer_activity.this));
+        if(cartitem_count.equalsIgnoreCase("null")||cartitem_count.equals("")){
+           item_count.setText("0");
+        }else {
+            item_count.setText(cartitem_count);
+        }
 
         ///menu in login&logout opetionshow
         if (loginflagmain.equalsIgnoreCase("1") || loginflagmain == "1") {
@@ -348,8 +374,6 @@ public class Navigation_drawer_activity extends AppCompatActivity
             login_navigation.setVisibility(View.GONE);
             lv_logout.setVisibility(View.VISIBLE);
         } else {
-            tv_navidrawer.setTypeface(Home.roboto_bold);
-            tv_navidrawer.setText(Login_preference.getemail(Navigation_drawer_activity.this));
             lv_withlogin_header.setVisibility(View.GONE);
             login_navigation.setVisibility(View.VISIBLE);
             lv_logout.setVisibility(View.GONE);

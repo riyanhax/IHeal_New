@@ -93,8 +93,6 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.MyVi
         intent.putExtra("wishlist_pidddd", wishliist_product_id);
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
 
-        Log.e("wishliist_product_id", "" + wishliist_product_id);
-        Log.e("wishlist_customer_id", "" + wishlist_customer_id);
         Log.e("wishlist_action", "" + action);
 
         holder.iv_wishlist_image_remove.setOnClickListener(new View.OnClickListener() {
@@ -114,7 +112,7 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.MyVi
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     public void run() {
-                        Toast.makeText(context, wishlist_model.getProduct_id(), Toast.LENGTH_SHORT).show();
+                      //  Toast.makeText(context, wishlist_model.getProduct_id(), Toast.LENGTH_SHORT).show();
                     }
                 }, 1000);
 
@@ -123,29 +121,29 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.MyVi
     }
 
     private void addtoCart(final View v) {
-
+        String removewishlist="1";
         String loginflag = Login_preference.getLogin_flag(context);
         Log.e("ada_cid", "" + Login_preference.getcustomer_id(context));
         if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
             Log.e("ada_withlogin", "");
             ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
-            addtocart = api.addtocart(proddd_id, Login_preference.getcustomer_id(context));
-            Log.e("ada_prodid", "" + proddd_id);
+            addtocart = api.addtocart_wish(proddd_id, Login_preference.getcustomer_id(context),removewishlist);
+            Log.e("pass_apidata", "" + removewishlist);
 
         } else {
             String quote_id = Login_preference.getquote_id(context);
             if (quote_id.equalsIgnoreCase("") || quote_id == "null") {
                 Log.e("ada_without_quote", "");
                 ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
-                addtocart = api.withoutlogin_quote_addtocart(proddd_id);
+                addtocart = api.withoutlg_quote_addtocart_wish(proddd_id,removewishlist);
                 Log.e("proddd_id_witoutquote", "" + proddd_id);
 
-            } else {
+            }/* else {
                 Log.e("without_login_withquote", "");
                 ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
                 Log.e("ada_withquote", "" + Login_preference.getquote_id(context));
-                addtocart = api.withoutlogin_addtocart(proddd_id, Login_preference.getquote_id(context));
-            }
+                addtocart = api.withoutlogin_addtocart_wishlist(proddd_id, Login_preference.getquote_id(context),"1");
+            }*/
         }
 
         addtocart.enqueue(new Callback<ResponseBody>() {
@@ -158,18 +156,17 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.MyVi
                     String status = jsonObject.getString("status");
                     String meassg = jsonObject.getString("message");
                     Log.e("ada_message", "" + meassg);
-                    if (status.equalsIgnoreCase("success")) {
-
+                    if (status.equalsIgnoreCase("Success")) {
                         Toast.makeText(context, "" + meassg, Toast.LENGTH_SHORT).show();
                         Login_preference.setquote_id(context, jsonObject.getString("quote_id"));
-                        Log.e("wishada_quote_iddddd", "" + jsonObject.getString("quote_id"));
                         Login_preference.setiteamqty(context, jsonObject.getString("items_qty"));
+                        Login_preference.setCart_item_count(context,jsonObject.getString("items_count"));
                         AppCompatActivity activity = (AppCompatActivity) v.getContext();
                         Fragment myFragment = new Cart();
                         activity.getSupportFragmentManager().beginTransaction().replace(R.id.rootLayout, myFragment).addToBackStack(null).commit();
 
                     } else if (status.equalsIgnoreCase("error")) {
-                        Toast.makeText(context, "" + meassg, Toast.LENGTH_SHORT).show();
+                      //  Toast.makeText(context, "" + meassg, Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (Exception e) {

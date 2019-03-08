@@ -410,7 +410,13 @@ public class Cart extends Fragment {
                         qoute_id_cart = jsonObject.getString("quote_id");
                         Log.e("qoute_id_cart", "" + qoute_id_cart);
                         cart_items_count = jsonObject.getString("items_count");
+                        Login_preference.setCart_item_count(context,cart_items_count);
                         Log.e("cart_items_total_cart", "" + cart_items_count);
+                        if(cart_items_count.equalsIgnoreCase("null")||cart_items_count.equals("")){
+                            Navigation_drawer_activity.item_count.setText("0");
+                        }else {
+                            Navigation_drawer_activity.item_count.setText(cart_items_count);
+                        }
 
                         productslist = jsonObject.getString("products");
                         Log.e("prod_list_cart", "" + productslist);
@@ -420,9 +426,6 @@ public class Cart extends Fragment {
 
                         } else {
                             lv_productnot.setVisibility(View.GONE);
-                            if (cart_items_count.equals("null") | cart_items_count.equals("0") | cart_items_count.equals("")) {
-                                cart_items_count = "0";
-                            }
                             Login_preference.setCart_item_count(context, cart_items_count);
                             JSONArray jsonArray = jsonObject.getJSONArray("products");
                             Log.e("jsonarr_cart", "" + jsonArray);

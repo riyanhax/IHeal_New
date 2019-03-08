@@ -1,6 +1,7 @@
 package com.sismatix.iheal.Fragments;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -40,7 +42,7 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
 
     EditText login_email, login_password;
     Button btn_login;
-    TextView tv_forgotpassword,tv_email_title;
+    TextView tv_forgotpassword,tv_email_title,tv_createdaccount;
     String screen,loginflag;
     Bundle bundle;
 
@@ -57,6 +59,8 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
         bundle= this.getArguments();
 
         AllocateMemory(v);
+        InputMethodManager imgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imgr.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
 
         tv_email_title.setTypeface(Home.roboto_medium);
         login_email.setTypeface(Home.roboto_regular);
@@ -68,6 +72,7 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
 
         btn_login.setOnClickListener(this);
         tv_forgotpassword.setOnClickListener(this);
+        tv_createdaccount.setOnClickListener(this);
 
         return v;
     }
@@ -78,6 +83,7 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
         btn_login = (Button) v.findViewById(R.id.btn_login);
         tv_forgotpassword = (TextView) v.findViewById(R.id.tv_forgotpassword);
         tv_email_title = (TextView)v.findViewById(R.id.tv_email_title);
+        tv_createdaccount = (TextView)v.findViewById(R.id.tv_createdaccount);
     }
 
     private void validateUserData() {
@@ -207,10 +213,16 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
         } else if (view == tv_forgotpassword) {
             Forgotpassword_fragment nextFrag = new Forgotpassword_fragment();
             getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.rootLayout, nextFrag, "login")
+                    .replace(R.id.rootLayout, nextFrag, "Login")
                     .addToBackStack(null)
                     .commit();
-        }
+        }else if (view == tv_createdaccount){
+           Signup nextFrag = new Signup();
+           getActivity().getSupportFragmentManager().beginTransaction()
+                   .replace(R.id.rootLayout, nextFrag, "Signup")
+                   .addToBackStack(null)
+                   .commit();
+       }
     }
 
     @Override

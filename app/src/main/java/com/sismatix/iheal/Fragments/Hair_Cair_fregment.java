@@ -230,7 +230,11 @@ public class Hair_Cair_fregment extends Fragment {
         }
         count = Login_preference.getCart_item_count(getActivity());
         Log.e("count_142", "" + count);
-        badge.setCount(count);
+        if(count.equalsIgnoreCase("null")||count.equals("")){
+            badge.setCount("0");
+        }else {
+            badge.setCount(count);
+        }
         icon.mutate();
         icon.setDrawableByLayerId(R.id.ic_group_count, badge);
 

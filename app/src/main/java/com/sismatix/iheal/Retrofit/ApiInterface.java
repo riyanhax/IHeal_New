@@ -54,6 +54,16 @@ public interface ApiInterface {
     @FormUrlEncoded
     Call<ResponseBody> withoutlogin_addtocart(@Field("product_id") String product_id,
                                               @Field("quote_id") String quote_id);
+    @POST("AppAddToCart.php")
+    @FormUrlEncoded
+    Call<ResponseBody>addtocart_wish(@Field("product_id") String product_id,
+                                          @Field("customerid") String customer_id,
+                                          @Field("removeWishlist") String removeWishlist);
+
+    @POST("AppAddToCart.php")
+    @FormUrlEncoded
+    Call<ResponseBody> withoutlg_quote_addtocart_wish(@Field("product_id") String product_id,
+                                                             @Field("removeWishlist") String removeWishlist);
 
     @POST("AppCartList.php")
     @FormUrlEncoded
