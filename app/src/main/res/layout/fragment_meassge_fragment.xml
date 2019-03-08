@@ -7,14 +7,11 @@
     android:layout_marginBottom="?attr/actionBarSize"
     tools:context="com.sismatix.iheal.Fragments.Search">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <WebView  xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Under development.."
-        android:textColor="@color/main"
-        android:textSize="25dp"
-        android:layout_gravity="center"
-        android:gravity="center"/>
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" />
 
 </LinearLayout>

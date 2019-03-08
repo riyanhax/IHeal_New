@@ -98,7 +98,6 @@ public class My_orderlist_Adapter extends RecyclerView.Adapter<My_orderlist_Adap
                 }, 1000);
             }
         });
-
     }
 
     private void callReorderapi() {
