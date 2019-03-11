@@ -27,6 +27,8 @@ public class Splash extends AppCompatActivity {
             @Override
             public void run() {
                 Intent i =new Intent(Splash.this,Navigation_drawer_activity.class);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
                 startActivity(i);
                 finish();
 

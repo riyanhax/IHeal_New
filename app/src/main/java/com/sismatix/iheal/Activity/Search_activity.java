@@ -294,6 +294,8 @@ public class Search_activity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Intent i = new Intent(Search_activity.this, Home.class);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
 

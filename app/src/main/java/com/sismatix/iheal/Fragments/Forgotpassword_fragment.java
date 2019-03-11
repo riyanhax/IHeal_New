@@ -44,11 +44,7 @@ public class Forgotpassword_fragment extends Fragment implements View.OnClickLis
         // Inflate the layout for this fragment
         View v=inflater.inflate(R.layout.fragment_forgotpassword_fragment, container, false);
         bottom_navigation.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-
-
         AllocateMemory(v);
-
-
         btn_submit.setOnClickListener(this);
         iv_forget_password.setOnClickListener(this);
 
@@ -67,6 +63,8 @@ public class Forgotpassword_fragment extends Fragment implements View.OnClickLis
         Log.e("clickone", "");
         android.support.v4.app.FragmentManager manager =getFragmentManager();
         android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
+        transaction.setCustomAnimations(R.anim.fade_in,
+                0, 0, R.anim.fade_out);
         transaction.replace(R.id.rootLayout, fragment);
         transaction.addToBackStack(null);
 
@@ -105,7 +103,7 @@ public class Forgotpassword_fragment extends Fragment implements View.OnClickLis
                                 .addToBackStack(null)
                                 .commit();
                     }else if (status.equalsIgnoreCase("error")){
-                        Toast.makeText(getContext(), ""+meassg, Toast.LENGTH_SHORT).show();
+                       Toast.makeText(getContext(), ""+meassg, Toast.LENGTH_SHORT).show();
                     }
                 }catch (Exception e){
                     Log.e("",""+e);

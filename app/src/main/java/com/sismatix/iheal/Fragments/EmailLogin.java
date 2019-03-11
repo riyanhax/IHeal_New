@@ -42,8 +42,8 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
 
     EditText login_email, login_password;
     Button btn_login;
-    TextView tv_forgotpassword,tv_email_title,tv_createdaccount;
-    String screen,loginflag;
+    TextView tv_forgotpassword, tv_email_title, tv_createdaccount;
+    String screen, loginflag;
     Bundle bundle;
 
     public EmailLogin() {
@@ -56,7 +56,7 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_email_login, container, false);
         bottom_navigation.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-        bundle= this.getArguments();
+        bundle = this.getArguments();
 
         AllocateMemory(v);
         InputMethodManager imgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -67,9 +67,7 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
         login_password.setTypeface(Home.roboto_regular);
         btn_login.setTypeface(Home.roboto_medium);
         tv_forgotpassword.setTypeface(Home.roboto_medium);
-        tv_forgotpassword.setPaintFlags(tv_forgotpassword.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
-
-
+        tv_forgotpassword.setPaintFlags(tv_forgotpassword.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         btn_login.setOnClickListener(this);
         tv_forgotpassword.setOnClickListener(this);
         tv_createdaccount.setOnClickListener(this);
@@ -82,15 +80,15 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
         login_password = (EditText) v.findViewById(R.id.login_password);
         btn_login = (Button) v.findViewById(R.id.btn_login);
         tv_forgotpassword = (TextView) v.findViewById(R.id.tv_forgotpassword);
-        tv_email_title = (TextView)v.findViewById(R.id.tv_email_title);
-        tv_createdaccount = (TextView)v.findViewById(R.id.tv_createdaccount);
+        tv_email_title = (TextView) v.findViewById(R.id.tv_email_title);
+        tv_createdaccount = (TextView) v.findViewById(R.id.tv_createdaccount);
     }
 
     private void validateUserData() {
         final String username = login_email.getText().toString();
         final String password = login_password.getText().toString();
 
-          if (login_email.getText().length() == 0) {
+        if (login_email.getText().length() == 0) {
             /*signup_input_layout_email.setError("Please enter your Email id");*/
             Toast.makeText(getContext(), "Please enter your Email id", Toast.LENGTH_SHORT).show();
         } else if (login_password.getText().length() == 0) {
@@ -149,11 +147,11 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
                         Login_preference.setcustomer_id(getActivity(), jsonObject.getString("customer_id"));
                         Login_preference.setemail(getActivity(), jsonObject.getString("email"));
                         Login_preference.setfullname(getActivity(), jsonObject.getString("fullname"));
-                        Log.e("screennn",""+screen);
-                        Log.e("bundleee",""+bundle);
-                        if (bundle!=null){
-                            Navigation_drawer_activity.loginflagmain=Login_preference.getLogin_flag(getActivity());
-                            loginflag=Login_preference.getLogin_flag(getActivity());
+                        Log.e("screennn", "" + screen);
+                        Log.e("bundleee", "" + bundle);
+                        if (bundle != null) {
+                            Navigation_drawer_activity.loginflagmain = Login_preference.getLogin_flag(getActivity());
+                            loginflag = Login_preference.getLogin_flag(getActivity());
                             if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
                                 Navigation_drawer_activity.lv_withlogin_header.setVisibility(View.VISIBLE);
                                 Navigation_drawer_activity.login_navigation.setVisibility(View.GONE);
@@ -164,25 +162,18 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
                                 Navigation_drawer_activity.login_navigation.setVisibility(View.VISIBLE);
                                 Navigation_drawer_activity.lv_logout.setVisibility(View.GONE);
                             }
-                            screen =bundle.getString("value");
-                            Log.e("screen_59",""+screen);
+                            screen = bundle.getString("value");
+                            Log.e("screen_59", "" + screen);
                             Checkout_fragment nextFrag = new Checkout_fragment();
-                            getActivity().getSupportFragmentManager().beginTransaction()
-                                    .replace(R.id.rootLayout, nextFrag, "login")
-                                    .addToBackStack(null)
-                                    .commit();
-                        }else{
-                            Intent intent=new Intent(getActivity(),Navigation_drawer_activity.class);
+                            loadFragment(nextFrag);
+                        } else {
+                            Intent intent = new Intent(getActivity(), Navigation_drawer_activity.class);
+                            getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                             startActivity(intent);
                             getActivity().finish();
                         }
 
-                       /* Home nextFrag = new Home();
-                        getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.rootLayout, nextFrag, "home")
-                                .addToBackStack(null)
-                                .commit();*/
-                    } else if (status.equalsIgnoreCase("error")) {
+                        } else if (status.equalsIgnoreCase("error")) {
                         Toast.makeText(getContext(), "" + meassg, Toast.LENGTH_SHORT).show();
                     }
 
@@ -197,32 +188,31 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
             }
         });
     }
+
     public void loadFragment(Fragment fragment) {
         Log.e("clickone", "");
         android.support.v4.app.FragmentManager manager = getFragmentManager();
         android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
+        transaction.setCustomAnimations(R.anim.fade_in,
+                0, 0, R.anim.fade_out);
         transaction.replace(R.id.rootLayout, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
 
     }
+
     @Override
     public void onClick(View view) {
-       if (view == btn_login) {
+        if (view == btn_login) {
             validateUserData();
         } else if (view == tv_forgotpassword) {
             Forgotpassword_fragment nextFrag = new Forgotpassword_fragment();
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.rootLayout, nextFrag, "Login")
-                    .addToBackStack(null)
-                    .commit();
-        }else if (view == tv_createdaccount){
-           Signup nextFrag = new Signup();
-           getActivity().getSupportFragmentManager().beginTransaction()
-                   .replace(R.id.rootLayout, nextFrag, "Signup")
-                   .addToBackStack(null)
-                   .commit();
-       }
+
+            loadFragment(nextFrag);
+        } else if (view == tv_createdaccount) {
+            Signup nextFrag = new Signup();
+            loadFragment(nextFrag);
+        }
     }
 
     @Override
@@ -234,15 +224,10 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
         getView().setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-
                     loadFragment(new Home());
-
                     return true;
-
                 }
-
                 return false;
             }
         });

@@ -48,68 +48,32 @@ public class Account extends Fragment {
         lv_email_singup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Signup nextFrag = new Signup();
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.rootLayout, nextFrag, "findThisFragment")
-                        .addToBackStack(null)
-                        .commit();
-
-            }
+                loadFragment(new Signup());
+                }
         });
-
         tv_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     public void run() {
-                        EmailLogin nextFrag = new EmailLogin();
-                        getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.rootLayout, nextFrag, "findThisFragment")
-                                .addToBackStack(null)
-                                .commit();
+                        loadFragment(new EmailLogin());
                     }
                 }, 1000);
 
             }
         });
-        ///  BACK_EVENT();
         return v;
 
     }
 
-    private void BACK_EVENT() {
-        v.setFocusableInTouchMode(true);
-        v.requestFocus();
-        v.setOnKeyListener(new View.OnKeyListener() {
-
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-
-                if (event.getAction() == KeyEvent.ACTION_UP
-                        && keyCode == KeyEvent.KEYCODE_BACK) {
-
-                  /*Utils.switchContent(R.id.frag_container,
-                            Utils.HOME_FRAGMENT,
-                            ((ECartHomeActivity) (getContext())),
-                            AnimationType.SLIDE_DOWN);*/
-
-                    loadFragment(new Home(), "Home_fragment");
-                }
-                return true;
-            }
-        });
-
-    }
-
-    public void loadFragment(Fragment fragment, String s) {
+    public void loadFragment(Fragment fragment) {
         Log.e("clickone", "");
         android.support.v4.app.FragmentManager manager = getFragmentManager();
-        android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
+        android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction().setCustomAnimations(R.anim.fade_in,
+                0, 0, R.anim.fade_out);
         transaction.replace(R.id.rootLayout, fragment);
-        transaction.addToBackStack(s);
+        transaction.addToBackStack(null);
         transaction.commit();
     }
 

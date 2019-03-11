@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="5dp"
+    android:layout_marginTop="?attr/actionBarSize"
     android:layout_marginBottom="?attr/actionBarSize"
     android:background="@color/white"
     android:orientation="vertical"
@@ -15,7 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="@drawable/border_lv">
+        android:background="@drawable/border_lv"
+        android:visibility="visible">
 
         <SearchView
             android:id="@+id/search"
@@ -24,6 +25,7 @@
             android:background="@null"
             android:iconifiedByDefault="false"
             android:queryHint="search">
+
             <requestFocus />
         </SearchView>
 
@@ -50,6 +52,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+
         android:layout_marginBottom="?attr/actionBarSize"
         android:visibility="visible">
 

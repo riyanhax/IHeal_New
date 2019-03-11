@@ -170,6 +170,8 @@ public class Home extends Fragment implements View.OnClickListener {
         Log.e("clickone", "");
         android.support.v4.app.FragmentManager manager = getFragmentManager();
         android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
+        transaction.setCustomAnimations(R.anim.fade_in,
+                0, 0, R.anim.fade_out);
         transaction.replace(R.id.rootLayout, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
@@ -184,7 +186,8 @@ public class Home extends Fragment implements View.OnClickListener {
         b.putString("name", value);
         //Fragment myFragment = new TransParant_Hair_care_freg();
         fragment.setArguments(b);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.rootLayout, fragment).addToBackStack(null).commit();
+        getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,
+                0, 0, R.anim.fade_out).replace(R.id.rootLayout, fragment).addToBackStack(null).commit();
 
     }
 
@@ -240,7 +243,7 @@ public class Home extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
 
             case R.id.iv_hair_care:
-                    Toast.makeText(getActivity(), "product is not ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Product is not Available", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.lv_creatnewaccount:

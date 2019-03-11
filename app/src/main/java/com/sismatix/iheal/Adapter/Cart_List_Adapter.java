@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.sismatix.iheal.Fragments.Cart;
 import com.sismatix.iheal.Fragments.Hair_Cair_fregment;
 import com.sismatix.iheal.Fragments.Home;
@@ -76,7 +77,17 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
         holder.tv_product_price_total.setTypeface(Home.roboto_black);
 
         holder.tv_cart_product_title.setText(cart_model.getProduct_name());
-        Glide.with(context).load(cart_model.getProduct_image()).into(holder.iv_cart_product_image);
+
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.placeholder(R.drawable.app_logo_placeholder);
+        requestOptions.error(R.drawable.app_logo_placeholder);
+
+        Glide.with(context)
+                .setDefaultRequestOptions(requestOptions)
+                .load(cart_model.getProduct_image()).into(holder.iv_cart_product_image);
+
+
+
         Log.e("total_price",""+cart_model.getProduct_price());
         holder.tv_product_price_total.setText(cart_model.getProduct_price());
         holder.tv_cart_product_description.setText(cart_model.getProduct_description());

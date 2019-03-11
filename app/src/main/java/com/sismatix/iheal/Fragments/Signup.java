@@ -97,6 +97,8 @@ public class Signup extends Fragment implements View.OnClickListener {
         Log.e("clickone", "");
         android.support.v4.app.FragmentManager manager = getFragmentManager();
         android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
+        transaction.setCustomAnimations(R.anim.fade_in,
+                0, 0, R.anim.fade_out);
         transaction.replace(R.id.rootLayout, fragment);
         transaction.addToBackStack(null);
 
@@ -155,6 +157,8 @@ public class Signup extends Fragment implements View.OnClickListener {
                         Login_preference.setfullname(getActivity(),jsonObject.getString("fullname"));*/
                         EmailLogin nextFrag = new EmailLogin();
                         getActivity().getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.fade_in,
+                                0, 0, R.anim.fade_out)
                                 .replace(R.id.rootLayout, nextFrag, "login")
                                 .addToBackStack(null)
                                 .commit();
@@ -195,6 +199,8 @@ public class Signup extends Fragment implements View.OnClickListener {
         } else if (view == tv_login) {
             EmailLogin nextFrag = new EmailLogin();
             getActivity().getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.fade_in,
+                            0, 0, R.anim.fade_out)
                     .replace(R.id.rootLayout, nextFrag, "login")
                     .addToBackStack(null)
                     .commit();

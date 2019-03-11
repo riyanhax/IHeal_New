@@ -58,7 +58,9 @@ public class Product_Category_adapter extends RecyclerView.Adapter<Product_Categ
                         AppCompatActivity activity = (AppCompatActivity) view.getContext();
                         Fragment myFragment = new Hair_Cair_fregment();
                         myFragment.setArguments(b);
-                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.rootLayout, myFragment).addToBackStack(null).commit();
+                        activity.getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,
+                                0, 0, R.anim.fade_out).setCustomAnimations(R.anim.fade_in,
+                                0, 0, R.anim.fade_out).replace(R.id.rootLayout, myFragment).addToBackStack(null).commit();
                     }
                 }, 1000);
             }

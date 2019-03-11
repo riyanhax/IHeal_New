@@ -167,7 +167,8 @@ public class Payment_fragment extends Fragment {
                                 bundle1.putString("region_shipping", "" + reg_shipping);
                                 Fragment myFragment = new Confirmation_fragment();
                                 myFragment.setArguments(bundle1);
-                                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout_checkout, myFragment).addToBackStack(null).commit();
+                                getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,
+                                        0, 0, R.anim.fade_out).replace(R.id.frameLayout_checkout, myFragment).addToBackStack(null).commit();
                             }
 
                             /*Bundle bundle = new Bundle();
@@ -211,7 +212,8 @@ public class Payment_fragment extends Fragment {
                         bundle1.putString("region_shipping", "" + reg_shipping);
                         Fragment myFragment = new Shipping_fragment();
                         myFragment.setArguments(bundle1);
-                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout_checkout, myFragment).addToBackStack(null).commit();
+                        getActivity().getSupportFragmentManager().beginTransaction() .setCustomAnimations(R.anim.fade_in,
+                                0, 0, R.anim.fade_out).replace(R.id.frameLayout_checkout, myFragment).addToBackStack(null).commit();
 
                     }
                 }, 1000);

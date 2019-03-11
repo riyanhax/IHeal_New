@@ -18,11 +18,8 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ProgressBar;
 
-import com.sismatix.iheal.Adapter.Cart_List_Adapter;
-import com.sismatix.iheal.Adapter.Product_grid_adapter;
 import com.sismatix.iheal.Adapter.Product_recycler_adapter;
-import com.sismatix.iheal.Model.Cart_Model;
-import com.sismatix.iheal.Model.Product_Category_model;
+
 import com.sismatix.iheal.Model.Product_Grid_Model;
 import com.sismatix.iheal.R;
 

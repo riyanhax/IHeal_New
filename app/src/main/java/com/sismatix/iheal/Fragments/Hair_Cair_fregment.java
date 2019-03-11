@@ -34,6 +34,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.flaviofaria.kenburnsview.KenBurnsView;
 import com.sismatix.iheal.Activity.Navigation_drawer_activity;
 import com.sismatix.iheal.Adapter.Product_recycler_adapter;
@@ -167,7 +168,16 @@ public class Hair_Cair_fregment extends Fragment {
                     collapsingToolbar.setTitle(title);
                     String categoryimage = jsonObject.getString("categoryimage");
                     Log.e("categoryimage", "" + categoryimage);
-                    Glide.with(getContext()).load(categoryimage).into(header);
+
+
+                    RequestOptions requestOptions = new RequestOptions();
+                    requestOptions.placeholder(R.drawable.app_logo_placeholder);
+                    requestOptions.error(R.drawable.app_logo_placeholder);
+
+                    Glide.with(getActivity())
+                            .setDefaultRequestOptions(requestOptions)
+                            .load(categoryimage).into(header);
+
 
                     if (status.equalsIgnoreCase("success")) {
                         String products = jsonObject.getString("products");

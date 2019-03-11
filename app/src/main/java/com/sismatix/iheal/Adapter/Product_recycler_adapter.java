@@ -1,9 +1,15 @@
 package com.sismatix.iheal.Adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,6 +22,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
 import com.sismatix.iheal.Fragments.Home;
 import com.sismatix.iheal.Fragments.Item_details;
 import com.sismatix.iheal.Model.Product_Grid_Model;
@@ -44,7 +54,7 @@ public class Product_recycler_adapter extends RecyclerView.Adapter<Product_recyc
     }
 
     @Override
-    public void onBindViewHolder(final Product_recycler_adapter.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
         final Product_Grid_Model product_model = models.get(position);
 
         holder.lv_product_click.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +71,9 @@ public class Product_recycler_adapter extends RecyclerView.Adapter<Product_recyc
                         AppCompatActivity activity = (AppCompatActivity) view.getContext();
                         Fragment myFragment = new Item_details();
                         myFragment.setArguments(b);
-                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.rootLayout, myFragment).addToBackStack(null).commit();
+
+                        activity.getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,
+                                0, 0, R.anim.fade_out).replace(R.id.rootLayout, myFragment).addToBackStack(null).commit();
                     }
                 }, 1000);
             }
@@ -73,7 +85,17 @@ public class Product_recycler_adapter extends RecyclerView.Adapter<Product_recyc
         holder.tv_product_name.setText(product_model.getProducr_title());
         Log.e("titleeeee",""+product_model.getProducr_title());
         holder.tv_product_price.setText(product_model.getProduct_price());
-        Glide.with(context).load(product_model.getProduct_image()).into(holder.iv_product_image);
+
+       // Glide.with(context).load(product_model.getProduct_image()).into(holder.iv_product_image);
+
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.placeholder(R.drawable.app_logo_placeholder);
+        requestOptions.error(R.drawable.app_logo_placeholder);
+
+        Glide.with(context)
+                .setDefaultRequestOptions(requestOptions)
+                .load(product_model.getProduct_image()).into(holder.iv_product_image);
+
 
     }
 

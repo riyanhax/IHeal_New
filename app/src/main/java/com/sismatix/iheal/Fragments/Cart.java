@@ -116,6 +116,8 @@ public class Cart extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), Navigation_drawer_activity.class);
+                getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
                 startActivity(intent);
             }
         });
@@ -239,7 +241,7 @@ public class Cart extends Fragment {
                     String meassg = jsonObject.getString("message");
                     Log.e("message", "" + meassg);
                     if (status.equalsIgnoreCase("success")) {
-                        Toast.makeText(getContext(), "" + meassg, Toast.LENGTH_SHORT).show();
+                     //   Toast.makeText(getContext(), "" + meassg, Toast.LENGTH_SHORT).show();
                         Login_preference.setLogin_flag(getActivity(), "1");
                         Login_preference.setcustomer_id(getActivity(), jsonObject.getString("customer_id"));
                         Login_preference.setemail(getActivity(), jsonObject.getString("email"));
@@ -261,7 +263,7 @@ public class Cart extends Fragment {
                                 .addToBackStack(null)
                                 .commit();*/
                     } else if (status.equalsIgnoreCase("error")) {
-                        Toast.makeText(getContext(), "" + meassg, Toast.LENGTH_SHORT).show();
+                     //   Toast.makeText(getContext(), "" + meassg, Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (Exception e) {

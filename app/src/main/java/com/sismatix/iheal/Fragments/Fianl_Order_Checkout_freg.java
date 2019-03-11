@@ -38,9 +38,8 @@ public class Fianl_Order_Checkout_freg extends Fragment {
         lv_track_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppCompatActivity activity = (AppCompatActivity) v.getContext();
-                Fragment myFragment = new Home();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.rootLayout, myFragment).addToBackStack(null).commit();
+               loadFragment(new Home());
+
             }
         });
 
@@ -73,6 +72,9 @@ public class Fianl_Order_Checkout_freg extends Fragment {
         Log.e("clickone", "");
         android.support.v4.app.FragmentManager manager = getFragmentManager();
         android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
+        transaction.setCustomAnimations(R.anim.fade_in,
+                0, 0, R.anim.fade_out);
+
         transaction.replace(R.id.rootLayout, fragment);
         transaction.addToBackStack(null);
         transaction.commit();

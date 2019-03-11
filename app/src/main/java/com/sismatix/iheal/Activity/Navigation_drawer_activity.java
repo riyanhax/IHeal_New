@@ -262,6 +262,8 @@ public class Navigation_drawer_activity extends AppCompatActivity
         if (fragmentManager != null) {
             FragmentTransaction ft = fragmentManager.beginTransaction();
             if (ft != null) {
+                ft.setCustomAnimations(R.anim.fade_in,
+                        0, 0, R.anim.fade_out);
                 ft.replace(R.id.rootLayout, fragment);
                 ft.addToBackStack(add_to_backstack);
                 ft.commit();

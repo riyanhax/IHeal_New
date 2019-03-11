@@ -202,7 +202,8 @@ public class Confirmation_fragment extends Fragment {
 
                         Fragment myFragment = new Payment_fragment();
                         myFragment.setArguments(bundle1);
-                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout_checkout, myFragment).addToBackStack(null).commit();
+                        getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,
+                                0, 0, R.anim.fade_out).replace(R.id.frameLayout_checkout, myFragment).addToBackStack(null).commit();
 
                     }
                 }, 1000);
@@ -233,7 +234,8 @@ public class Confirmation_fragment extends Fragment {
 
                 Fragment myFragment = new Shipping_fragment();
                 myFragment.setArguments(bundle2);
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout_checkout, myFragment).addToBackStack(null).commit();
+                getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,
+                        0, 0, R.anim.fade_out).replace(R.id.frameLayout_checkout, myFragment).addToBackStack(null).commit();
             }
         });
 
@@ -241,7 +243,8 @@ public class Confirmation_fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Fragment myFragment = new Cart();
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.rootLayout, myFragment).addToBackStack(null).commit();
+                getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,
+                        0, 0, R.anim.fade_out).replace(R.id.rootLayout, myFragment).addToBackStack(null).commit();
             }
         });
 
@@ -337,6 +340,8 @@ public class Confirmation_fragment extends Fragment {
         Log.e("clickone", "");
         android.support.v4.app.FragmentManager manager = getFragmentManager();
         android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
+        transaction.setCustomAnimations(R.anim.fade_in,
+                0, 0, R.anim.fade_out);
         transaction.replace(R.id.rootLayout, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
@@ -362,10 +367,10 @@ public class Confirmation_fragment extends Fragment {
                     String meassg = jsonObject.getString("message");
                     Log.e("message_confirmation", "" + meassg);
                     if (code.equalsIgnoreCase("200")) {
-                        Toast.makeText(getContext(), "" + meassg, Toast.LENGTH_SHORT).show();
+                     //   Toast.makeText(getContext(), "" + meassg, Toast.LENGTH_SHORT).show();
                         loadFragment(new Fianl_Order_Checkout_freg());
                     } else if (code.equalsIgnoreCase("error")) {
-                        Toast.makeText(getContext(), "" + meassg, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getContext(), "" + meassg, Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
                     Log.e("Exception", "" + e);
@@ -374,7 +379,7 @@ public class Confirmation_fragment extends Fragment {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(getContext(), t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+             //   Toast.makeText(getContext(), t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 

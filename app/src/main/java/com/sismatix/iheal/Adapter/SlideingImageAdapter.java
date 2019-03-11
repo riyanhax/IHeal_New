@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.sismatix.iheal.Model.sliderimage_model;
 import com.sismatix.iheal.R;
@@ -65,7 +66,17 @@ public class SlideingImageAdapter extends PagerAdapter {
 
         image.setVisibility(View.VISIBLE);
         //progressBar_slider_home.setVisibility(View.VISIBLE);
-        Glide.with(context).load(sm.getProd_image()).into(image);
+
+
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.placeholder(R.drawable.app_logo_placeholder);
+        requestOptions.error(R.drawable.app_logo_placeholder);
+
+        Glide.with(context)
+                .setDefaultRequestOptions(requestOptions)
+                .load(sm.getProd_image()).into(image);
+
+        //Glide.with(context).load(sm.getProd_image()).into(image);
 
         // Picasso.with(context).load(imageModel.getUrl()).fit().into(image);
         ((ViewPager) container).addView(view);

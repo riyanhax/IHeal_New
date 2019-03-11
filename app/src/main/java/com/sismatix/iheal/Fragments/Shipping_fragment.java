@@ -323,22 +323,23 @@ public class Shipping_fragment extends Fragment {
         }*/
 
         else {
+            Log.e("firstname_shipping", "" + et_shippingfirstname.getText().toString());
+            Log.e("lastname_shipping", "" + et_shippinglastname.getText().toString());
+            Log.e("zipcode_shipping", "" + et_shippingzipcode.getText().toString());
+            Log.e("city_shipping", "" + et_shippingcity.getText().toString());
+            Log.e("phonenumber_shipping", "" + et_shippingphonenumber.getText().toString());
+            Log.e("company_shipping", "" + et_shippingcompany.getText().toString());
+            Log.e("streetadd_shipping", "" + et_streetadd.getText().toString());
+            Log.e("countryid_shipping", "" + countryid);
+            Log.e("Shipping_cust_id", "" + customer_id);
+            Log.e("saveadd", "" + setdefault);
+            Log.e("shippingmethod", "" + shippingmethod);
+            Log.e("email_id_shipping", "" + email_id);
+            Log.e("quoteidshipping", "" + qidd);
             loadfrag();
         }
 
-        Log.e("firstname_shipping", "" + et_shippingfirstname.getText().toString());
-        Log.e("lastname_shipping", "" + et_shippinglastname.getText().toString());
-        Log.e("zipcode_shipping", "" + et_shippingzipcode.getText().toString());
-        Log.e("city_shipping", "" + et_shippingcity.getText().toString());
-        Log.e("phonenumber_shipping", "" + et_shippingphonenumber.getText().toString());
-        Log.e("company_shipping", "" + et_shippingcompany.getText().toString());
-        Log.e("streetadd_shipping", "" + et_streetadd.getText().toString());
-        Log.e("countryid_shipping", "" + countryid);
-        Log.e("Shipping_cust_id", "" + customer_id);
-        Log.e("saveadd", "" + setdefault);
-        Log.e("shippingmethod", "" + shippingmethod);
-        Log.e("email_id_shipping", "" + email_id);
-        Log.e("quoteidshipping", "" + qidd);
+
         /*Log.e("shippingcode", "" + setdefault);*/
         /*Log.e("address_shipping",""+et_shippingaddress.getText().toString());*/
 
@@ -366,7 +367,8 @@ public class Shipping_fragment extends Fragment {
         bundle.putString("quote_id_shipping", "" + qidd);
         Fragment myFragment = new Payment_fragment();
         myFragment.setArguments(bundle);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout_checkout, myFragment).addToBackStack(null).commit();
+        getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,
+                0, 0, R.anim.fade_out).replace(R.id.frameLayout_checkout, myFragment).addToBackStack(null).commit();
 
     }
 
@@ -424,6 +426,8 @@ public class Shipping_fragment extends Fragment {
         Log.e("clickone", "");
         android.support.v4.app.FragmentManager manager = getFragmentManager();
         android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
+        transaction.setCustomAnimations(R.anim.fade_in,
+                0, 0, R.anim.fade_out);
         transaction.replace(R.id.frameLayout_checkout, fragment);
         transaction.addToBackStack(null);
         transaction.commit();

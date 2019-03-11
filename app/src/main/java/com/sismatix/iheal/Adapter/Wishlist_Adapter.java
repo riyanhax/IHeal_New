@@ -228,14 +228,7 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.MyVi
 
     }
 
-    private void loadFragment(Wishlist_fragment wishlist_fragment) {
-        Log.e("clickone", "");
-        android.support.v4.app.FragmentManager manager = activity.getSupportFragmentManager();
-        android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.rootLayout, wishlist_fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
+
 
     @Override
     public int getItemCount() {

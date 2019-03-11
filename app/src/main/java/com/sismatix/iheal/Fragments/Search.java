@@ -2,6 +2,8 @@ package com.sismatix.iheal.Fragments;
 
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -12,6 +14,9 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -32,6 +37,7 @@ import com.sismatix.iheal.Preference.Login_preference;
 import com.sismatix.iheal.R;
 import com.sismatix.iheal.Retrofit.ApiClient;
 import com.sismatix.iheal.Retrofit.ApiInterface;
+import com.sismatix.iheal.View.CountDrawable;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -71,7 +77,7 @@ public class Search extends Fragment implements SearchView.OnQueryTextListener {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_search, container, false);
         bottom_navigation.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-
+        setHasOptionsMenu(true);
         lv_search = (LinearLayout)v.findViewById(R.id.lv_nodatafound);
         lv_nodatafound = (LinearLayout)v.findViewById(R.id.lv_nodatafound);
 
@@ -101,6 +107,13 @@ public class Search extends Fragment implements SearchView.OnQueryTextListener {
         });*/
 
         return v;
+    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+
+
+        super.onCreateOptionsMenu(menu, inflater);
     }
     private void CALL_Search_Api(String text) {
 

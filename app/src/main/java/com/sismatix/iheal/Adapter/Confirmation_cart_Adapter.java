@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.sismatix.iheal.Model.Cart_Model;
 import com.sismatix.iheal.R;
 
@@ -42,7 +43,18 @@ public class Confirmation_cart_Adapter extends RecyclerView.Adapter<Confirmation
         final Cart_Model cart_model = cartList.get(position);
 
         holder.tv_cart_product_title.setText(cart_model.getProduct_name());
-        Glide.with(context).load(cart_model.getProduct_image()).into(holder.iv_cart_product_image);
+
+
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.placeholder(R.drawable.app_logo_placeholder);
+        requestOptions.error(R.drawable.app_logo_placeholder);
+
+        Glide.with(context)
+                .setDefaultRequestOptions(requestOptions)
+                .load(cart_model.getProduct_image()).into(holder.iv_cart_product_image);
+
+
+
         holder.tv_product_price_total.setText(cart_model.getProduct_price());
         holder.tv_cart_product_description.setText(cart_model.getProduct_description());
         String tot_qty = cart_model.getProduct_qty();
