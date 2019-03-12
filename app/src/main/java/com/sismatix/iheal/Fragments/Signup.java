@@ -8,11 +8,13 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +51,7 @@ public class Signup extends Fragment implements View.OnClickListener {
     Pattern p;
     Matcher m;
     boolean check;
+    LinearLayout lv_signup_parent;
 
     public Signup() {
 
@@ -60,6 +63,7 @@ public class Signup extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_signup, container, false);
         bottom_navigation.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+
         signup_input_layout_fullname = (TextInputLayout) v.findViewById(R.id.signup_input_layout_fullname);
         signup_input_layout_email = (TextInputLayout) v.findViewById(R.id.signup_input_layout_email);
         signup_input_layout_password = (TextInputLayout) v.findViewById(R.id.signup_input_layout_password);
@@ -69,7 +73,10 @@ public class Signup extends Fragment implements View.OnClickListener {
         tv_login = (TextView) v.findViewById(R.id.tv_login);
         tv_signup_title = (TextView) v.findViewById(R.id.tv_signup_title);
         tv_signup_alreadyacc = (TextView) v.findViewById(R.id.tv_signup_alreadyacc);
+        lv_signup_parent = (LinearLayout) v.findViewById(R.id.lv_signup_parent);
 
+
+        setupUI(lv_signup_parent);
         tv_signup_title.setTypeface(Home.roboto_medium);
         signup_fullname.setTypeface(Home.roboto_regular);
         signup_email.setTypeface(Home.roboto_regular);
@@ -184,6 +191,28 @@ public class Signup extends Fragment implements View.OnClickListener {
         return m.matches();
     }
 
+    //hide keybord
+
+    public void setupUI(View view) {
+
+        // Set up touch listener for non-text box views to hide keyboard.
+        if (!(view instanceof EditText)) {
+            view.setOnTouchListener(new View.OnTouchListener() {
+                public boolean onTouch(View v, MotionEvent event) {
+                    Shipping_fragment.hideSoftKeyboard(getActivity());
+                    return false;
+                }
+            });
+        }
+
+        //If a layout container, iterate over children and seed recursion.
+        if (view instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                View innerView = ((ViewGroup) view).getChildAt(i);
+                setupUI(innerView);
+            }
+        }
+    }
     @Override
     public void onClick(View view) {
         if (view == btn_signup) {

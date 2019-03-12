@@ -63,9 +63,9 @@ public class Item_details extends Fragment implements View.OnClickListener, View
     TextView tv_product_name, tv_product_price, tv_short_description, tv_long_descriptionn, tv_main_title,tv_descriptiontitle,tv_id_addtocart;
     ImageView iv_item_desc, iv_show_more;
 
-    String proddd_id, loginflag, iswhishlisted;
+    String proddd_id, loginflag, iswhishlisted,prod_name;
     public static LayerDrawable icon;
-    public String count = "1";
+    public static String count = "0";
     public static CountDrawable badge;
     Toolbar toolbar;
     ProgressBar progressBar_item;
@@ -87,7 +87,6 @@ public class Item_details extends Fragment implements View.OnClickListener, View
         ((Navigation_drawer_activity) getActivity()).setSupportActionBar(toolbar);
         ((Navigation_drawer_activity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((Navigation_drawer_activity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_arrow_left_white_36dp);
-        getActivity().setTitle("Shopping Cart");
 
         tv_main_title.setTypeface(Home.roboto_thin);
         tv_product_name.setTypeface(Home.roboto_bold);
@@ -100,12 +99,14 @@ public class Item_details extends Fragment implements View.OnClickListener, View
         Bundle bundle = this.getArguments();
 
         if (bundle != null) {
-
             proddd_id = bundle.getString("prod_id");
+            prod_name = bundle.getString("prod_name");
             Log.e("prod_itemdetail_id", "" + proddd_id);
             call_item_detail_api(proddd_id);
+            }
 
-        }
+        getActivity().setTitle(prod_name);
+
 
         lv_iteamdetails_click.setOnClickListener(this);
         mPager.addOnPageChangeListener(this);
@@ -261,10 +262,8 @@ public class Item_details extends Fragment implements View.OnClickListener, View
         fillwish = menu.findItem(R.id.fill_wish);
         wish = menu.findItem(R.id.wish);
 
-//        icon = (LayerDrawable) item.getIcon();
         icon = (LayerDrawable) item.getIcon();
 
-        CountDrawable badge;
         // Reuse drawable if possible
         Drawable reuse = icon.findDrawableByLayerId(R.id.ic_group_count);
         if (reuse != null && reuse instanceof CountDrawable) {
@@ -454,7 +453,45 @@ public class Item_details extends Fragment implements View.OnClickListener, View
                         Log.e("quote_iddddd", "" + jsonObject.getString("quote_id"));
                         Login_preference.setiteamqty(getActivity(), jsonObject.getString("items_qty"));
                         Login_preference.setCart_item_count(getActivity(),jsonObject.getString("items_count"));
-                        loadFragment(new Cart());
+
+                        if(jsonObject.getString("items_count").equalsIgnoreCase("null")||jsonObject.getString("items_count").equals("")){
+
+                            Navigation_drawer_activity.tv_bottomcount.setText("0");
+                            Navigation_drawer_activity.item_count.setText("0");
+                            count="0";
+                            if(count.equalsIgnoreCase("null")||count.equals("")){
+                                badge.setCount("0");
+                            }else {
+                                badge.setCount(count);
+                            }
+                            icon.mutate();
+                            icon.setDrawableByLayerId(R.id.ic_group_count, badge);
+
+
+                        }else {
+
+                            Navigation_drawer_activity.tv_bottomcount.setText(jsonObject.getString("items_count"));
+                            Navigation_drawer_activity.item_count.setText(jsonObject.getString("items_count"));
+                            count=jsonObject.getString("items_count");
+                            if(count.equalsIgnoreCase("null")||count.equals("")){
+                                Log.e("count_40", "" + jsonObject.getString("items_count"));
+
+                                badge.setCount("0");
+                                icon.mutate();
+                                icon.setDrawableByLayerId(R.id.ic_group_count, badge);
+
+                            }else {
+                                Log.e("count_80", "" + jsonObject.getString("items_count"));
+
+                                badge.setCount(jsonObject.getString("items_count"));
+                                icon.mutate();
+                                icon.setDrawableByLayerId(R.id.ic_group_count, badge);
+
+                            }
+
+                        }
+
+                       // loadFragment(new Cart());
 
                     } else if (status.equalsIgnoreCase("error")) {
                         Toast.makeText(getContext(), "" + meassg, Toast.LENGTH_SHORT).show();

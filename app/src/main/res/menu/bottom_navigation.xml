@@ -5,27 +5,27 @@
         android:checked="true"
         android:id="@+id/bottom_nav_home"
         android:icon="@drawable/ic_home_black_36dp"
-        android:title="Home" />
+        android:title="@string/Home" />
 
     <item
         android:id="@+id/bottom_nav_search"
         android:icon="@drawable/ic_search_black_36dp"
-        android:title="Search" />
+        android:title="@string/Search" />
 
     <item
         android:id="@+id/bottom_nav_Wishlist"
         android:icon="@drawable/ic_star_border_black_36dp"
-        android:title="Wishlist" />
+        android:title="@string/wishlist" />
 
     <item
         android:id="@+id/bottom_nav_cart"
         android:icon="@drawable/ic_shopping_cart_black_36dp"
-        android:title="Cart" />
+        android:title="@string/Cart" />
 
     <item
         android:id="@+id/bottom_nav_account"
         android:icon="@drawable/ic_account_circle_black_36dp"
-        android:title="Account" />
+        android:title="@string/Account" />
 
 </menu>
     <!--myaccount-->

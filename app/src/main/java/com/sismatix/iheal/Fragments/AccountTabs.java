@@ -55,7 +55,6 @@ public class AccountTabs extends Fragment {
         ((Navigation_drawer_activity) getActivity()).getSupportActionBar()
                 .setDisplayHomeAsUpEnabled(true);
         ((Navigation_drawer_activity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_arrow_left_white_36dp);
-
 /*
         setHasOptionsMenu(true);
         toolbar_myaccount = (Toolbar) v.findViewById(R.id.toolbar_myaccount);
@@ -88,6 +87,7 @@ public class AccountTabs extends Fragment {
                     //tv_tab_titles.setText("MY ORDERS");
                     tv_myaccount_title.setText("MY ORDERS");
                 } else if (tab.getPosition() == 2) {
+                    Meassge_fragment.toolbar_messg.setVisibility(View.GONE);
                     //tv_tab_titles.setText("MESSAGES");
                     tv_myaccount_title.setText("MESSAGES");
                 } else if (tab.getPosition() == 3) {

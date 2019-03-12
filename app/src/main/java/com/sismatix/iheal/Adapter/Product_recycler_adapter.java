@@ -67,6 +67,7 @@ public class Product_recycler_adapter extends RecyclerView.Adapter<Product_recyc
                         Log.e("iddddddddddd", "" + iddd);
                         Bundle b = new Bundle();
                         b.putString("prod_id", iddd);
+                        b.putString("prod_name", product_model.getProducr_title());
                         Log.e("productidd", "" + iddd);
                         AppCompatActivity activity = (AppCompatActivity) view.getContext();
                         Fragment myFragment = new Item_details();

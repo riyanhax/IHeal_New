@@ -8,7 +8,8 @@
     android:layout_marginBottom="?attr/actionBarSize"
     android:background="@drawable/back"
     android:orientation="vertical"
-    tools:context=".Fragments.Signup">
+    tools:context=".Fragments.Signup"
+    android:id="@+id/lv_signup_parent">
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -10,8 +10,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -71,7 +73,8 @@ public class Payment_fragment extends Fragment {
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_payment, container, false);
         AllocateMEmory(v);
-
+        LinearLayout lv_parent=(LinearLayout)v.findViewById(R.id.lv_parent);
+        setupUI(lv_parent);
         tv_payment_title.setTypeface(Home.roboto_bold);
         tv_payconf.setTypeface(Home.roboto_bold);
 
@@ -224,6 +227,28 @@ public class Payment_fragment extends Fragment {
         return v;
     }
 
+    //hide keybord
+
+    public void setupUI(View view) {
+
+        // Set up touch listener for non-text box views to hide keyboard.
+        if (!(view instanceof EditText)) {
+            view.setOnTouchListener(new View.OnTouchListener() {
+                public boolean onTouch(View v, MotionEvent event) {
+                    Shipping_fragment.hideSoftKeyboard(getActivity());
+                    return false;
+                }
+            });
+        }
+
+        //If a layout container, iterate over children and seed recursion.
+        if (view instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                View innerView = ((ViewGroup) view).getChildAt(i);
+                setupUI(innerView);
+            }
+        }
+    }
     private void loadFragment(Fragment fragment) {
         Log.e("clickone", "");
         android.support.v4.app.FragmentManager manager = getFragmentManager();

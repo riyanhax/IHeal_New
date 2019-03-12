@@ -17,8 +17,10 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -63,7 +65,7 @@ public class Search extends Fragment implements SearchView.OnQueryTextListener {
     private List<Product_Grid_Model> product_model = new ArrayList<Product_Grid_Model>();
     private Product_recycler_adapter product_adapter;
 
-    LinearLayout lv_search,lv_nodatafound;
+    LinearLayout lv_search,lv_nodatafound,lv_search_parent;
     TextView tv_search, text;
     View v;
 
@@ -78,8 +80,11 @@ public class Search extends Fragment implements SearchView.OnQueryTextListener {
         v = inflater.inflate(R.layout.fragment_search, container, false);
         bottom_navigation.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
         setHasOptionsMenu(true);
+
+
         lv_search = (LinearLayout)v.findViewById(R.id.lv_nodatafound);
         lv_nodatafound = (LinearLayout)v.findViewById(R.id.lv_nodatafound);
+        lv_search_parent = (LinearLayout)v.findViewById(R.id.lv_search_parent);
 
         searchView = (SearchView)v.findViewById(R.id.search);
         recyclerview_search = (RecyclerView)v.findViewById(R.id.recyclerview_search);
@@ -90,7 +95,7 @@ public class Search extends Fragment implements SearchView.OnQueryTextListener {
         recyclerview_search.setAdapter(product_adapter);
 
         searchView.setOnQueryTextListener(this);
-
+        setupUI(lv_search_parent);
        /* lv_search = (LinearLayout) v.findViewById(R.id.lv_search);
         tv_search = (TextView) v.findViewById(R.id.tv_search);*/
         //text = (TextView) v.findViewById(R.id.text);
@@ -107,6 +112,26 @@ public class Search extends Fragment implements SearchView.OnQueryTextListener {
         });*/
 
         return v;
+    }
+    public void setupUI(View view) {
+
+        // Set up touch listener for non-text box views to hide keyboard.
+        if (!(view instanceof EditText)) {
+            view.setOnTouchListener(new View.OnTouchListener() {
+                public boolean onTouch(View v, MotionEvent event) {
+                    Shipping_fragment.hideSoftKeyboard(getActivity());
+                    return false;
+                }
+            });
+        }
+
+        //If a layout container, iterate over children and seed recursion.
+        if (view instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                View innerView = ((ViewGroup) view).getChildAt(i);
+                setupUI(innerView);
+            }
+        }
     }
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

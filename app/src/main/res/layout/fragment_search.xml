@@ -7,6 +7,7 @@
     android:layout_marginBottom="?attr/actionBarSize"
     android:background="@color/white"
     android:orientation="vertical"
+    android:id="@+id/lv_search_parent"
     tools:context="com.sismatix.iheal.Fragments.Search">
 
     <!-- TODO: Update blank fragment layout -->
@@ -19,6 +20,7 @@
         android:visibility="visible">
 
         <SearchView
+            android:queryBackground="@android:color/transparent"
             android:id="@+id/search"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -54,8 +56,6 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-
-        android:layout_marginBottom="?attr/actionBarSize"
         android:visibility="visible">
 
         <android.support.v7.widget.RecyclerView

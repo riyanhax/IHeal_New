@@ -32,6 +32,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="20dp"
+                android:visibility="gone"
                 android:layout_marginBottom="20dp"
                 android:weightSum="2">
                 <LinearLayout
@@ -93,7 +94,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="How can i help you today ?"
+                    android:text="@string/howcanhelp"
                     android:textSize="14sp"
                     android:textColor="@color/main"
                     android:textStyle="bold"/>
@@ -251,12 +252,12 @@
                     android:gravity="center"
                     android:layout_weight="3.5">
 
-                    <Button
+                    <ImageView
                         android:id="@+id/btn_contact"
-                        android:layout_width="200dp"
-                        android:layout_height="30dp"
-                        android:visibility="gone"
-                        android:background="@drawable/btn_ripple_effect"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible"
+                        android:src="@drawable/chat_icon"
                         android:text="CONTACT A SPECIALIST"
                         android:textColor="@color/white" />
 

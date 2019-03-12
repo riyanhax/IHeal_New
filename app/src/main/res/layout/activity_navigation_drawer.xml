@@ -122,7 +122,7 @@
                     android:layout_marginLeft="20dp"
                     android:gravity="start|center"
                     android:padding="12sp"
-                    android:text="LOG OUT"
+                    android:text="@string/Logout"
                     android:textColor="@color/white"
                     android:textSize="14sp"
                     android:textStyle="bold" />

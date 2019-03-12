@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:layout_marginBottom="?attr/actionBarSize"
     android:orientation="vertical"
+    android:id="@+id/lv_my_account_parent"
     tools:context=".Fragments.My_Account_With_Login">
 
     <android.support.design.widget.AppBarLayout

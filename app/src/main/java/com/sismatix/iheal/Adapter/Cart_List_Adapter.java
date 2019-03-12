@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.sismatix.iheal.Activity.Navigation_drawer_activity;
 import com.sismatix.iheal.Fragments.Cart;
 import com.sismatix.iheal.Fragments.Hair_Cair_fregment;
 import com.sismatix.iheal.Fragments.Home;
@@ -40,11 +41,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.sismatix.iheal.Fragments.Cart.lv_productnot;
+
 import static com.sismatix.iheal.Fragments.Cart.prepare_Cart;
-import static com.sismatix.iheal.Fragments.Cart.progressBar_cart;
-import static com.sismatix.iheal.Fragments.Cart.qoute_id_cart;
-import static com.sismatix.iheal.Fragments.Cart.qt;
 
 public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.MyViewHolder> {
     private Context context;
@@ -203,6 +201,47 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
                         Cart.tv_maintotal.setText(cart_item_grand_total);
                         Cart.cart_items_count = jsonObject.getString("items_count");
                         Login_preference.setCart_item_count(context, Cart.cart_items_count);
+
+                        if(jsonObject.getString("items_count").equalsIgnoreCase("null")||jsonObject.getString("items_count").equals("")){
+
+                            Navigation_drawer_activity.tv_bottomcount.setText("0");
+                            Navigation_drawer_activity.item_count.setText("0");
+                            if(Item_details.count.equalsIgnoreCase("null")|| Item_details.count.equals("")){
+                                Item_details.badge.setCount("0");
+                            }else {
+                                Item_details.badge.setCount(Item_details.count);
+                            }
+                            Item_details.icon.mutate();
+                            Item_details.icon.setDrawableByLayerId(R.id.ic_group_count, Item_details.badge);
+
+                            Log.e("count_remove_40", "" + jsonObject.getString("items_count"));
+
+                        }else {
+                            Log.e("count_remove_80", "" + jsonObject.getString("items_count"));
+
+                            Navigation_drawer_activity.tv_bottomcount.setText(jsonObject.getString("items_count"));
+                            Navigation_drawer_activity.item_count.setText(jsonObject.getString("items_count"));
+                            Item_details.count=jsonObject.getString("items_count");
+
+
+                            if( Item_details.count.equalsIgnoreCase("null")|| Item_details.count.equals("")){
+                                Log.e("count_40", "" + jsonObject.getString("items_count"));
+
+                                Item_details.badge.setCount("0");
+                                Item_details.icon.mutate();
+                                Item_details.icon.setDrawableByLayerId(R.id.ic_group_count,Item_details. badge);
+
+                            }else {
+                                Log.e("count_80", "" + jsonObject.getString("items_count"));
+
+                                Item_details.badge.setCount(jsonObject.getString("items_count"));
+                                Item_details.icon.mutate();
+                                Item_details.icon.setDrawableByLayerId(R.id.ic_group_count, Item_details.badge);
+
+                            }
+
+                        }
+
                         Toast.makeText(context, "" + status, Toast.LENGTH_SHORT).show();
                          // prepare_Cart();
                     } else if (status.equalsIgnoreCase("error")) {

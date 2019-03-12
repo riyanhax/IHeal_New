@@ -10,12 +10,14 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +47,7 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
     TextView tv_forgotpassword, tv_email_title, tv_createdaccount;
     String screen, loginflag;
     Bundle bundle;
+    LinearLayout lv_login_parent;
 
     public EmailLogin() {
         // Required empty public constructor
@@ -59,8 +62,10 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
         bundle = this.getArguments();
 
         AllocateMemory(v);
-        InputMethodManager imgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imgr.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+        lv_login_parent=(LinearLayout)v.findViewById(R.id.lv_login_parent);
+        setupUI(lv_login_parent);
+       // InputMethodManager imgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+       // imgr.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
 
         tv_email_title.setTypeface(Home.roboto_medium);
         login_email.setTypeface(Home.roboto_regular);
@@ -84,6 +89,28 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
         tv_createdaccount = (TextView) v.findViewById(R.id.tv_createdaccount);
     }
 
+    //hide keybord
+
+    public void setupUI(View view) {
+
+        // Set up touch listener for non-text box views to hide keyboard.
+        if (!(view instanceof EditText)) {
+            view.setOnTouchListener(new View.OnTouchListener() {
+                public boolean onTouch(View v, MotionEvent event) {
+                    Shipping_fragment.hideSoftKeyboard(getActivity());
+                    return false;
+                }
+            });
+        }
+
+        //If a layout container, iterate over children and seed recursion.
+        if (view instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                View innerView = ((ViewGroup) view).getChildAt(i);
+                setupUI(innerView);
+            }
+        }
+    }
     private void validateUserData() {
         final String username = login_email.getText().toString();
         final String password = login_password.getText().toString();

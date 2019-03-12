@@ -39,7 +39,7 @@ public class Home extends Fragment implements View.OnClickListener {
 
     ImageView iv_lung, iv_hair_care, iv_brain, iv_eye, iv_nose, iv_mouth, iv_teeth, iv_bones, iv_stomach, iv_liver, iv_kidney, iv_UT;
     LinearLayout lv_withoutlogin, lv_withlogin, lv_creatnewaccount, lv_loginaccount;
-    Button btn_contact;
+    ImageView btn_contact;
     String loginflag;
     TextView tv_hometitlename, tv_home_createacc, tv_home_loginacc, tv_home_howcanihelpyou;
 
@@ -78,11 +78,13 @@ public class Home extends Fragment implements View.OnClickListener {
             btn_contact.setVisibility(View.VISIBLE);
         } else {
             lv_withlogin.setVisibility(View.GONE);
-            lv_withoutlogin.setVisibility(View.VISIBLE);
+           // lv_withoutlogin.setVisibility(View.VISIBLE);
             btn_contact.setVisibility(View.GONE);
         }
 
         tv_hometitlename.setTypeface(Home.roboto_light);
+
+
 
         return v;
     }
@@ -94,7 +96,7 @@ public class Home extends Fragment implements View.OnClickListener {
         lv_withlogin = (LinearLayout) v.findViewById(R.id.lv_withlogin);
         lv_creatnewaccount = (LinearLayout) v.findViewById(R.id.lv_creatnewaccount);
         lv_loginaccount = (LinearLayout) v.findViewById(R.id.lv_loginaccount);
-        btn_contact = (Button) v.findViewById(R.id.btn_contact);
+        btn_contact = (ImageView) v.findViewById(R.id.btn_contact);
 
         tv_hometitlename = (TextView) v.findViewById(R.id.tv_hometitlename);
         tv_home_createacc = (TextView) v.findViewById(R.id.tv_home_createacc);
@@ -143,6 +145,7 @@ public class Home extends Fragment implements View.OnClickListener {
         iv_liver.setOnClickListener(this);
         iv_kidney.setOnClickListener(this);
         iv_UT.setOnClickListener(this);
+        btn_contact.setOnClickListener(this);
     }
 
     private void setFontStyle() {
@@ -168,7 +171,7 @@ public class Home extends Fragment implements View.OnClickListener {
 
     private void loadFragmentt(Fragment fragment) {
         Log.e("clickone", "");
-        android.support.v4.app.FragmentManager manager = getFragmentManager();
+        FragmentManager manager = getFragmentManager();
         android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
         transaction.setCustomAnimations(R.anim.fade_in,
                 0, 0, R.anim.fade_out);
@@ -253,8 +256,6 @@ public class Home extends Fragment implements View.OnClickListener {
                         loadFragment(new Account(), value);
                     }
                 }, 1000);
-
-
                 break;
 
             case R.id.lv_loginaccount:
@@ -267,20 +268,17 @@ public class Home extends Fragment implements View.OnClickListener {
 
                     }
                 }, 1000);
-
-
                 break;
 
             case R.id.iv_brain:
                     value = "20";
                     loadFragment(new Hair_Cair_fregment(), value);
-
-                break;
+                    break;
 
             case R.id.iv_lung:
                     value = "26";
                     loadFragment(new Hair_Cair_fregment(), value);
-                break;
+                    break;
 
             case R.id.iv_eye:
                     value = "21";
@@ -326,6 +324,17 @@ public class Home extends Fragment implements View.OnClickListener {
             case R.id.iv_UT:
                     value = "30";
                     loadFragment(new Hair_Cair_fregment(), value);
+                break;
+            case R.id.btn_contact:
+                Handler handle = new Handler();
+                handle.postDelayed(new Runnable() {
+                    public void run() {
+
+                        loadFragmentt(new Meassge_fragment());
+
+                    }
+                }, 1000);
+
                 break;
 
             default:

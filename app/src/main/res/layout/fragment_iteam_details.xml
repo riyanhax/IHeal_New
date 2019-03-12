@@ -23,66 +23,6 @@
             android:gravity="center"
             app:layout_collapseMode="pin"
             app:popupTheme="@style/AppTheme.PopupOverlay">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-               <!-- <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="2.4"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_keyboard_arrow_left_white_36dp" />
-                </LinearLayout>-->
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:paddingLeft="20dp"
-                    android:text="ScalpClenz Shampoo "
-                    android:textColor="@color/white"
-                    android:textSize="16dp" />
-
-              <!--  <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="2.3"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:id="@+id/iv_wishlist"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_favorite_border_white_36dp" />
-                </LinearLayout>-->
-
-               <!-- <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="2.3"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:id="@+id/iv_itemdetail_cart"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_shopping_cart_black_36dp" />
-
-                </LinearLayout>-->
-
-            </LinearLayout>
-
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>

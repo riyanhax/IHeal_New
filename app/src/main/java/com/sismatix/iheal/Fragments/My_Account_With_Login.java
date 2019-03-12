@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -60,7 +61,7 @@ public class My_Account_With_Login extends Fragment {
     TextView tv_telephone_no, tv_shipping_country, tv_shipping_postcode, tv_shipping_def_add, tv_shipping_city,
             tv_shipping_addr, tv_shipping_company_nm, tv_shipping_lastname, tv_shipping_firstname,tv_region;
 
-    LinearLayout lv_edit_shipping, lv_my_account, lv_update_add;
+    LinearLayout lv_edit_shipping, lv_my_account, lv_update_add,lv_my_account_parent;
 
     EditText edt_edit_ship_first_name,edt_edit_shipping_lastname,edt__edit_shipping_phone_no,edt_edit_shipping_company,
             edt_edit_street,edt_edit_shipping_zipcode,edt_edit_shipping_city,edt_edit_shipping_region;
@@ -92,6 +93,7 @@ public class My_Account_With_Login extends Fragment {
        // MyAddress_Preference.mPrefs = getPreferences(Context.MODE_PRIVATE);
 
         AllocateMemory(v);
+        setupUI(lv_my_account_parent);
 
         if (CheckNetwork.isNetworkAvailable(getActivity())) {
             Countrylist();
@@ -169,6 +171,26 @@ public class My_Account_With_Login extends Fragment {
         return v;
     }
 
+    public void setupUI(View view) {
+
+        // Set up touch listener for non-text box views to hide keyboard.
+        if (!(view instanceof EditText)) {
+            view.setOnTouchListener(new View.OnTouchListener() {
+                public boolean onTouch(View v, MotionEvent event) {
+                    Shipping_fragment.hideSoftKeyboard(getActivity());
+                    return false;
+                }
+            });
+        }
+
+        //If a layout container, iterate over children and seed recursion.
+        if (view instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                View innerView = ((ViewGroup) view).getChildAt(i);
+                setupUI(innerView);
+            }
+        }
+    }
 
 
     private void Countrylist() {
@@ -426,6 +448,7 @@ public class My_Account_With_Login extends Fragment {
         lv_edit_shipping = (LinearLayout) v.findViewById(R.id.lv_edit_shipping);
         lv_my_account = (LinearLayout) v.findViewById(R.id.lv_my_account);
         lv_update_add = (LinearLayout) v.findViewById(R.id.lv_update_add);
+        lv_my_account_parent = (LinearLayout) v.findViewById(R.id.lv_my_account_parent);
 
         tv_edit_shipping = (TextView) v.findViewById(R.id.tv_edit_shipping);
         tv_email = (TextView) v.findViewById(R.id.tv_email);

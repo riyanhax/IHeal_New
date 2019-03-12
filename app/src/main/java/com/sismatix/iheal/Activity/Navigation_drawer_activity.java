@@ -67,12 +67,11 @@ public class Navigation_drawer_activity extends AppCompatActivity
     String cartitem_count;
     public static LinearLayout lv_withlogin_header, login_navigation, lv_logout;
     public static String loginflagmain;
-    public static TextView tv_navidrawer, item_count, tv_logout,tv_bottomcount;
+    public static TextView tv_navidrawer, item_count, tv_logout, tv_bottomcount;
     private View notificationBadge;
 
     //bottom navigation
 
-    private ViewPager viewPager;
     public static BottomNavigationView bottom_navigation;
     private List<View> viewList;
     boolean doubleBackToExitPressedOnce = false;
@@ -89,7 +88,6 @@ public class Navigation_drawer_activity extends AppCompatActivity
 
         AllocateMemory();
 
-
         login_navigation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,14 +102,9 @@ public class Navigation_drawer_activity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
 
-        //  toggle.syncState();
-
         Menu menu = navigationView.getMenu();
-
         for (int i = 0; i < menu.size(); i++) {
             MenuItem mi = menu.getItem(i);
-
-            //for aapplying a font to subMenu ...
             SubMenu subMenu = mi.getSubMenu();
             if (subMenu != null && subMenu.size() > 0) {
                 for (int j = 0; j < subMenu.size(); j++) {
@@ -186,7 +179,7 @@ public class Navigation_drawer_activity extends AppCompatActivity
     }
 
     private void Bootom_Navigation_view() {
-        viewPager = findViewById(R.id.view_pager_bottom_navigation);
+
 
         bottom_navigation = findViewById(R.id.bottom_navigation);
         bottom_navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -198,9 +191,9 @@ public class Navigation_drawer_activity extends AppCompatActivity
         BottomNavigationItemView itemView = (BottomNavigationItemView) menuView.getChildAt(3);
         notificationBadge = LayoutInflater.from(this).inflate(R.layout.badge_row, menuView, false);
         tv_bottomcount = (TextView) notificationBadge.findViewById(R.id.badge);
-        if(cartitem_count.equalsIgnoreCase("null")||cartitem_count.equals("")){
+        if (cartitem_count.equalsIgnoreCase("null") || cartitem_count.equals("")) {
             tv_bottomcount.setText("0");
-        }else {
+        } else {
             tv_bottomcount.setText(cartitem_count);
         }
         itemView.addView(notificationBadge);
@@ -213,6 +206,7 @@ public class Navigation_drawer_activity extends AppCompatActivity
             return false;
         }
     };
+
     private void selectFragment(MenuItem item) {
 
         item.setChecked(true);
@@ -221,35 +215,36 @@ public class Navigation_drawer_activity extends AppCompatActivity
             case R.id.bottom_nav_home:
                 // Action to perform when Home Menu item is selected.
                 pushFragment(new Home(), "Home");//Search
-                viewPager.setCurrentItem(0);
+
                 break;
             case R.id.bottom_nav_search:
                 pushFragment(new Search(), "Search_fragment");//Search
-                viewPager.setCurrentItem(1);
+
                 break;
             case R.id.bottom_nav_Wishlist:
                 if (loginflagmain.equalsIgnoreCase("1") || loginflagmain == "1") {
                     pushFragment(new Wishlist_fragment(), "Wishlist_fragment");
-                    viewPager.setCurrentItem(2);
+
                     break;
                 } else {
                     //Toast.makeText(this, "Please try to login.", Toast.LENGTH_SHORT).show();
                     pushFragment(new Account(), "Wishlist_fragment");
+
                     break;
                 }
             case R.id.bottom_nav_cart:
+
                 pushFragment(new Cart(), "Cart");
-                viewPager.setCurrentItem(3);
                 break;
             case R.id.bottom_nav_account:
                 if (loginflagmain.equalsIgnoreCase("1") || loginflagmain == "1") {
                     pushFragment(new AccountTabs(), "My Account");
-                    viewPager.setCurrentItem(4);
                     break;
 
                 } else {
+                    tv_bottomcount.setText(Login_preference.getCart_item_count(Navigation_drawer_activity.this));
                     pushFragment(new Account(), "Login_myaccount");
-                    viewPager.setCurrentItem(4);
+
                     break;
                 }
         }
@@ -317,7 +312,7 @@ public class Navigation_drawer_activity extends AppCompatActivity
             }*/
             if (loginflagmain.equalsIgnoreCase("1") || loginflagmain == "1") {
                 pushFragment(new Wishlist_fragment(), "Wishlist_fragment");
-                viewPager.setCurrentItem(2);
+
             } else {
                 //Toast.makeText(this, "Please try to login.", Toast.LENGTH_SHORT).show();
                 pushFragment(new Account(), "Wishlist_fragment");
@@ -347,6 +342,7 @@ public class Navigation_drawer_activity extends AppCompatActivity
             }
         }
     }
+
     private void AllocateMemory() {
         //set bydefault itemcount
         Login_preference.setCart_item_count(Navigation_drawer_activity.this, "0");
@@ -361,12 +357,12 @@ public class Navigation_drawer_activity extends AppCompatActivity
         item_count = (TextView) header.findViewById(R.id.item_count);
         lv_withlogin_header = (LinearLayout) header.findViewById(R.id.lv_withlogin_header);
         tv_logout = (TextView) findViewById(R.id.tv_logout);
-        Log.e("Username",""+Login_preference.getfullname(Navigation_drawer_activity.this));
+        Log.e("Username", "" + Login_preference.getfullname(Navigation_drawer_activity.this));
         tv_navidrawer.setTypeface(Home.roboto_bold);
         tv_navidrawer.setText(Login_preference.getfullname(Navigation_drawer_activity.this));
-        if(cartitem_count.equalsIgnoreCase("null")||cartitem_count.equals("")){
-           item_count.setText("0");
-        }else {
+        if (cartitem_count.equalsIgnoreCase("null") || cartitem_count.equals("")) {
+            item_count.setText("0");
+        } else {
             item_count.setText(cartitem_count);
         }
 
@@ -510,72 +506,6 @@ public class Navigation_drawer_activity extends AppCompatActivity
             finish();
         }
     }
-
-    private PagerAdapter pagerAdapter = new PagerAdapter() {
-        @Override
-        public int getCount() {
-            return viewList.size();
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return view == object;
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView(viewList.get(position));
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            container.addView(viewList.get(position));
-            return viewList.get(position);
-        }
-    };
-    private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            ArgbEvaluator evaluator = new ArgbEvaluator();
-          /*  int evaluate = getResources().getColor(R.color.app_blue);
-            if (position == 0) {
-                evaluate = (Integer) evaluator.evaluate(positionOffset, getResources().getColor(R.color.app_blue), getResources().getColor(R.color.app_green));
-            } else if (position == 1) {
-                evaluate = (Integer) evaluator.evaluate(positionOffset, getResources().getColor(R.color.app_green), getResources().getColor(R.color.app_yellow));
-            } else if (position == 2) {
-                evaluate = (Integer) evaluator.evaluate(positionOffset, getResources().getColor(R.color.app_yellow), getResources().getColor(R.color.app_red));
-            } else {
-                evaluate = getResources().getColor(R.color.app_red);
-            }*/
-            // ((View) viewPager.getParent()).setBackgroundColor(evaluate);
-        }
-
-        @Override
-        public void onPageSelected(int position) {
-            switch (position) {
-                case 0:
-                    bottom_navigation.setSelectedItemId(R.id.bottom_nav_home);
-                    break;
-                case 1:
-                    bottom_navigation.setSelectedItemId(R.id.bottom_nav_search);
-                    break;
-                case 2:
-                    bottom_navigation.setSelectedItemId(R.id.bottom_nav_Wishlist);
-
-                    break;
-                case 3:
-                    bottom_navigation.setSelectedItemId(R.id.bottom_nav_cart);
-                    break;
-                case 4:
-                    bottom_navigation.setSelectedItemId(R.id.bottom_nav_account);
-                    break;
-            }
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int state) {
-        }
-    };
 
 
 }

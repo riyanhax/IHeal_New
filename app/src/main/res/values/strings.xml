@@ -90,6 +90,21 @@
     <string name="default_shipping_add">Use as my default shipping address</string>
     <string name="companyy">COMPANY</string>
     <string name="fax">FAX</string>
+    <string name="onlinechat">Online chat</string>
 
+
+    <!--navigation &Bottom manu screen-->
+    <string name="Shop">Shop</string>
+    <string name="productcategoriy">Product Categories</string>
+    <string name="Account">Account</string>
+    <string name="myAccount">My Account</string>
+    <string name="myorder">My Order</string>
+    <string name="wishlist">Wishlist</string>
+    <string name="messages">Messages</string>
+    <string name="notification">Notifications</string>
+    <string name="Home">Home</string>
+    <string name="Search">Search</string>
+    <string name="Cart">Cart</string>
+    <string name="Logout">LOG OUT</string>
 
 </resources>
