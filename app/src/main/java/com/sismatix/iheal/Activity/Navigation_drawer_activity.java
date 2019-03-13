@@ -84,6 +84,8 @@ public class Navigation_drawer_activity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation_drawer);
         loginflagmain = Login_preference.getLogin_flag(Navigation_drawer_activity.this);
+
+
         cartitem_count = Login_preference.getCart_item_count(Navigation_drawer_activity.this);
         Log.e("logingflag", "" + loginflagmain);
 
@@ -165,7 +167,6 @@ public class Navigation_drawer_activity extends AppCompatActivity
             }
         });
         Bootom_Navigation_view();
-
     }
 
     private void applyFontToMenuItem(MenuItem mi) {
@@ -180,8 +181,6 @@ public class Navigation_drawer_activity extends AppCompatActivity
     }
 
     private void Bootom_Navigation_view() {
-
-
         bottom_navigation = findViewById(R.id.bottom_navigation);
         bottom_navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
@@ -216,36 +215,29 @@ public class Navigation_drawer_activity extends AppCompatActivity
             case R.id.bottom_nav_home:
                 // Action to perform when Home Menu item is selected.
                 pushFragment(new Home(), "Home");//Search
-
                 break;
             case R.id.bottom_nav_search:
-                pushFragment(new Search(), "Search_fragment");//Search
-
+                pushFragment(new Nature_Category_freg(), "Natures_fragment");//Search
                 break;
             case R.id.bottom_nav_Wishlist:
                 if (loginflagmain.equalsIgnoreCase("1") || loginflagmain == "1") {
                     pushFragment(new Wishlist_fragment(), "Wishlist_fragment");
-
                     break;
                 } else {
                     //Toast.makeText(this, "Please try to login.", Toast.LENGTH_SHORT).show();
                     pushFragment(new Account(), "Wishlist_fragment");
-
                     break;
                 }
             case R.id.bottom_nav_cart:
-
                 pushFragment(new Cart(), "Cart");
                 break;
             case R.id.bottom_nav_account:
                 if (loginflagmain.equalsIgnoreCase("1") || loginflagmain == "1") {
                     pushFragment(new AccountTabs(), "My Account");
                     break;
-
                 } else {
                     tv_bottomcount.setText(Login_preference.getCart_item_count(Navigation_drawer_activity.this));
                     pushFragment(new Account(), "Login_myaccount");
-
                     break;
                 }
         }

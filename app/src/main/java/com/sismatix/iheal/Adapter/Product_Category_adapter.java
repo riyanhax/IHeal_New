@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.sismatix.iheal.Activity.Navigation_drawer_activity;
 import com.sismatix.iheal.Fragments.Hair_Cair_fregment;
 import com.sismatix.iheal.Fragments.Home;
 import com.sismatix.iheal.Fragments.TransParant_Hair_care_freg;
@@ -45,6 +46,7 @@ public class Product_Category_adapter extends RecyclerView.Adapter<Product_Categ
         final Product_Category_model product_model = models.get(position);
         holder.tv_category_name.setTypeface(Home.roboto_bold);
         holder.tv_category_name.setText(product_model.getCategory_name());
+        Navigation_drawer_activity.Check_String_NULL_Value(holder.tv_category_name,product_model.getCategory_name());
         holder.lv_nature_click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
@@ -65,7 +67,6 @@ public class Product_Category_adapter extends RecyclerView.Adapter<Product_Categ
                 }, 1000);
             }
         });
-
 
     }
 

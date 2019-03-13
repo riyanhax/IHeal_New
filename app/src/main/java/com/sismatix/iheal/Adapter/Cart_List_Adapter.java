@@ -227,6 +227,7 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
                     if (status.equalsIgnoreCase("Success")) {
                         cart_item_grand_total = jsonObject.getString("grand_total");
                         Cart.tv_maintotal.setText(cart_item_grand_total);
+                        Navigation_drawer_activity.Check_String_NULL_Value(Cart.tv_maintotal,cart_item_grand_total);
                         Cart.cart_items_count = jsonObject.getString("items_count");
                         Login_preference.setCart_item_count(context, Cart.cart_items_count);
 
@@ -248,6 +249,7 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
                             Log.e("count_remove_80", "" + jsonObject.getString("items_count"));
 
                             Navigation_drawer_activity.tv_bottomcount.setText(jsonObject.getString("items_count"));
+
                             Navigation_drawer_activity.item_count.setText(jsonObject.getString("items_count"));
                             Item_details.count=jsonObject.getString("items_count");
 

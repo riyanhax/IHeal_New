@@ -26,6 +26,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
+import com.sismatix.iheal.Activity.Navigation_drawer_activity;
 import com.sismatix.iheal.Fragments.Home;
 import com.sismatix.iheal.Fragments.Item_details;
 import com.sismatix.iheal.Model.Product_Grid_Model;
@@ -85,7 +86,9 @@ public class Product_recycler_adapter extends RecyclerView.Adapter<Product_recyc
 
         holder.tv_product_name.setText(product_model.getProducr_title());
         Log.e("titleeeee",""+product_model.getProducr_title());
+        Navigation_drawer_activity.Check_String_NULL_Value(holder.tv_product_name,product_model.getProducr_title());
         holder.tv_product_price.setText(product_model.getProduct_price());
+        Navigation_drawer_activity.Check_String_NULL_Value(holder.tv_product_price,product_model.getProduct_price());
 
        // Glide.with(context).load(product_model.getProduct_image()).into(holder.iv_product_image);
 

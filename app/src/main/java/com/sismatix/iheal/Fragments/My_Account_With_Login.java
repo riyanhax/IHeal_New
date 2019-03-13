@@ -26,6 +26,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hbb20.CountryCodePicker;
 import com.sismatix.iheal.Activity.Navigation_drawer_activity;
 import com.sismatix.iheal.Model.Wishlist_Model;
 import com.sismatix.iheal.Preference.CheckNetwork;
@@ -59,28 +60,28 @@ public class My_Account_With_Login extends Fragment {
     TextView txt_username, tv_email, tv_edit_shipping;
 
     TextView tv_telephone_no, tv_shipping_country, tv_shipping_postcode, tv_shipping_def_add, tv_shipping_city,
-            tv_shipping_addr, tv_shipping_company_nm, tv_shipping_lastname, tv_shipping_firstname,tv_region;
+            tv_shipping_addr, tv_shipping_company_nm, tv_shipping_lastname, tv_shipping_firstname, tv_region;
 
-    LinearLayout lv_edit_shipping, lv_my_account, lv_update_add,lv_my_account_parent,lv_defaul;
+    LinearLayout lv_edit_shipping, lv_my_account, lv_update_add, lv_my_account_parent, lv_defaul;
 
-    EditText edt_edit_ship_first_name,edt_edit_shipping_lastname,edt__edit_shipping_phone_no,edt_edit_shipping_company,
-            edt_edit_street,edt_edit_shipping_zipcode,edt_edit_shipping_city,edt_edit_shipping_region;
+    EditText edt_edit_ship_first_name, edt_edit_shipping_lastname, edt__edit_shipping_phone_no, edt_edit_shipping_company,
+            edt_edit_street, edt_edit_shipping_zipcode, edt_edit_shipping_city, edt_edit_shipping_region;
 
-    String ship_firsname,ship_lastname,ship_phoneno,ship_company,ship_streetadd,ship_fax,ship_zip,ship_city,ship_region,sp_selected;
+    String ship_firsname, ship_lastname, ship_phoneno, ship_company, ship_streetadd, ship_fax, ship_zip, ship_city, ship_region, sp_selected;
 
     Spinner edit_spinner_country_Name;
     String countryid;
+    String countryCodeAndroid = "91",country_namee,country_short_name;
+    CountryCodePicker ccp;
+
     int selected_spinner_pos;
-    public  static ArrayList<String> country_name_code = new ArrayList<String>();
+    public static ArrayList<String> country_name_code = new ArrayList<String>();
     public static ArrayList<String> country_name = new ArrayList<String>();
-
-
     View v;
 
     public My_Account_With_Login() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -88,15 +89,38 @@ public class My_Account_With_Login extends Fragment {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_my__account__with__login, container, false);
         bottom_navigation.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-       // setHasOptionsMenu(true);
 
-       // MyAddress_Preference.mPrefs = getPreferences(Context.MODE_PRIVATE);
+        // setHasOptionsMenu(true);
+        ccp = (CountryCodePicker) v.findViewById(R.id.ccp_myaccount);
+
+        // MyAddress_Preference.mPrefs = getPreferences(Context.MODE_PRIVATE);
 
         AllocateMemory(v);
         setupUI(lv_my_account_parent);
+        ccp.showFlag(false);
+        //ccp.showNameCode(false);
+        ccp.showFullName(true);
+        ccp.showNameCode(false);
+        ccp.setShowPhoneCode(false);
+        ccp.setCcpDialogShowPhoneCode(false);
+
+        ccp.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
+            @Override
+            public void onCountrySelected() {
+                countryCodeAndroid = ccp.getSelectedCountryCode();
+                country_namee = ccp.getSelectedCountryName();
+                country_short_name = ccp.getSelectedCountryNameCode();
+                Log.e("Country_Code",""+countryCodeAndroid);
+                Log.e("country_name",""+country_name);
+                Log.e("cshort_name",""+country_short_name);
+                ccp.showFlag(false);
+                //         ccp.showNameCode(false);
+            }
+        });
+        ccp.setCountryForNameCode(MyAddress_Preference.getCountryId(getActivity()));
 
         if (CheckNetwork.isNetworkAvailable(getActivity())) {
-            Countrylist();
+          //  Countrylist();
             CALL_SHIPPING_ADDRESS_API();
         } else {
             Toast.makeText(getContext(), "Please Check your Internet Connection", Toast.LENGTH_SHORT).show();
@@ -109,6 +133,7 @@ public class My_Account_With_Login extends Fragment {
                 .setDisplayHomeAsUpEnabled(true);
         ((Navigation_drawer_activity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_arrow_left_white_36dp);
 */
+
         txt_username.setText(Login_preference.getfullname(getActivity()));
         tv_email.setText(Login_preference.getemail(getActivity()));
 
@@ -120,7 +145,7 @@ public class My_Account_With_Login extends Fragment {
 
                 int selected_item_position = edit_spinner_country_Name.getSelectedItemPosition();
                 countryid = country_name_code.get(selected_item_position);
-             //   MyAddress_Preference.setCountryId(getActivity(), String.valueOf(selected_item_position));
+                //   MyAddress_Preference.setCountryId(getActivity(), String.valueOf(selected_item_position));
 
                 Log.e("countryid", "" + countryid);
                 String selected_country = String.valueOf(edit_spinner_country_Name.getSelectedItem());
@@ -140,13 +165,13 @@ public class My_Account_With_Login extends Fragment {
             @Override
             public void onClick(View view) {
 
-               // int position= Integer.parseInt(MyAddress_Preference.getCountryId(getActivity()));
-               // Log.e("pos_country_142",""+position);
+                // int position= Integer.parseInt(MyAddress_Preference.getCountryId(getActivity()));
+                // Log.e("pos_country_142",""+position);
                 //edit_spinner_country_Name.setSelection(Integer.parseInt(MyAddress_Preference.getCountryId(getActivity())),true);
                 setValuesToeEditText();
                 lv_my_account.setVisibility(View.GONE);
                 lv_edit_shipping.setVisibility(View.VISIBLE);
-                }
+            }
         });
 
         lv_update_add.setOnClickListener(new View.OnClickListener() {
@@ -161,7 +186,7 @@ public class My_Account_With_Login extends Fragment {
                         lv_my_account.setVisibility(View.VISIBLE);
                         lv_edit_shipping.setVisibility(View.GONE);
 
-                        }
+                    }
                 }, 1000);
             }
         });
@@ -221,6 +246,10 @@ public class My_Account_With_Login extends Fragment {
                         }
                         edit_spinner_country_Name.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, country_name));
 
+                        Log.e("shipping_223", "" + MyAddress_Preference.getCountryId(getActivity()));
+                        int selected_spinner_pos = country_name_code.indexOf(MyAddress_Preference.getCountryId(getActivity()));
+                        Log.e("pos_225", "" + selected_spinner_pos);
+                        edit_spinner_country_Name.setSelection(selected_spinner_pos, true);
 
                     }
                 } catch (Exception e) {
@@ -237,9 +266,10 @@ public class My_Account_With_Login extends Fragment {
 
 
     private void setValuesToeEditText() {
-        Log.e("pos_389",""+selected_spinner_pos);
-        edit_spinner_country_Name.setSelection(selected_spinner_pos,true);
 
+        Log.e("pos_389", "" + selected_spinner_pos);
+       // edit_spinner_country_Name.setSelection(selected_spinner_pos, true);
+        ccp.setCountryForNameCode(MyAddress_Preference.getCountryId(getActivity()));
 
         edt_edit_ship_first_name.setText(MyAddress_Preference.getFirstname(getActivity()));
         Log.e("fnameeee_185", "" + MyAddress_Preference.getFirstname(getActivity()));
@@ -251,6 +281,10 @@ public class My_Account_With_Login extends Fragment {
         edt_edit_shipping_city.setText(MyAddress_Preference.getCity(getActivity()));
         edt_edit_shipping_region.setText(MyAddress_Preference.getRegion(getActivity()));
 
+        Log.e("shipping_223", "" + MyAddress_Preference.getCountryId(getActivity()));
+        int selected_spinner_pos = country_name_code.indexOf(MyAddress_Preference.getCountryId(getActivity()));
+        Log.e("pos_225", "" + selected_spinner_pos);
+        edit_spinner_country_Name.setSelection(selected_spinner_pos, true);
 
     }
 
@@ -268,8 +302,7 @@ public class My_Account_With_Login extends Fragment {
         Log.e("up_zip", "" + edt_edit_shipping_zipcode.getText().toString());
         Log.e("up_city", "" + edt_edit_shipping_city.getText().toString());
         Log.e("up_region", "" + edt_edit_shipping_region.getText().toString());
-
-
+        Log.e("up_country_short_name", "" +country_short_name);
 
         ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
         final Call<ResponseBody> update_addr = api.AppUpdateAddress(MyAddress_Preference.getAddressId(getActivity()),
@@ -278,15 +311,15 @@ public class My_Account_With_Login extends Fragment {
                 edt_edit_shipping_lastname.getText().toString(),
                 edt__edit_shipping_phone_no.getText().toString(),
                 edt_edit_shipping_company.getText().toString(),
-                edt_edit_street.getText().toString(),countryid,
+                edt_edit_street.getText().toString(), country_short_name,
                 edt_edit_shipping_zipcode.getText().toString(),
-                edt_edit_shipping_city.getText().toString()
-                );
+                edt_edit_shipping_city.getText().toString(),
+                edt_edit_shipping_region.getText().toString());
 
-          update_addr.enqueue(new Callback<ResponseBody>() {
+        update_addr.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-              //  Log.e("response_230", "" + response.body().toString());
+                //  Log.e("response_230", "" + response.body().toString());
 
                 //JSONObject jsonObject = null;
                 try {
@@ -309,32 +342,31 @@ public class My_Account_With_Login extends Fragment {
                                 edt_edit_street.setText(addr_object.getString("street"));
                                 edt_edit_shipping_zipcode.setText(addr_object.getString("postcode"));
                                 edt__edit_shipping_phone_no.setText(addr_object.getString("telephone"));
-                                edt_edit_shipping_company.setText(addr_object.getString("company"));
-*/
+                                edt_edit_shipping_company.setText(addr_object.getString("company"));*/
 
                                 String add_id = addr_object.getString("customer_address_id");
                                 Log.e("add_id_my_acc", "" + add_id);
                                 MyAddress_Preference.setAddressId(getActivity(), add_id);
-                                MyAddress_Preference.setFirstname(getActivity(),addr_object.getString("firstname"));
-                                MyAddress_Preference.setLastname(getActivity(),addr_object.getString("lastname"));
-                                MyAddress_Preference.setCity(getActivity(),addr_object.getString("city"));
-                                MyAddress_Preference.setRegion(getActivity(),addr_object.getString("region"));
-                                MyAddress_Preference.setStreetAddress(getActivity(),addr_object.getString("street"));
-                                MyAddress_Preference.setZipcode(getActivity(),addr_object.getString("postcode"));
-                                MyAddress_Preference.setPhoneNumber(getActivity(),addr_object.getString("telephone"));
-                                MyAddress_Preference.setCompanyName(getActivity(),addr_object.getString("company"));
+                                MyAddress_Preference.setFirstname(getActivity(), addr_object.getString("firstname"));
+                                MyAddress_Preference.setLastname(getActivity(), addr_object.getString("lastname"));
+                                MyAddress_Preference.setCity(getActivity(), addr_object.getString("city"));
+                                MyAddress_Preference.setRegion(getActivity(), addr_object.getString("region"));
+                                MyAddress_Preference.setStreetAddress(getActivity(), addr_object.getString("street"));
+                                MyAddress_Preference.setZipcode(getActivity(), addr_object.getString("postcode"));
+                                MyAddress_Preference.setPhoneNumber(getActivity(), addr_object.getString("telephone"));
+                                MyAddress_Preference.setCompanyName(getActivity(), addr_object.getString("company"));
                                 MyAddress_Preference.setCountryId(getActivity(), addr_object.getString("country_id"));
+                                MyAddress_Preference.setRegion(getActivity(), addr_object.getString("region"));
 
-
-                                Navigation_drawer_activity.Check_String_NULL_Value(tv_shipping_firstname,addr_object.getString("firstname"));
-                                Navigation_drawer_activity.Check_String_NULL_Value(tv_shipping_lastname,addr_object.getString("lastname"));
-                                Navigation_drawer_activity.Check_String_NULL_Value(tv_shipping_city,addr_object.getString("city"));
-                                Navigation_drawer_activity.Check_String_NULL_Value(tv_region,addr_object.getString("region"));
-                                Navigation_drawer_activity.Check_String_NULL_Value(tv_shipping_country,addr_object.getString("country_id"));
-                                Navigation_drawer_activity.Check_String_NULL_Value(tv_shipping_addr,addr_object.getString("street"));
-                                Navigation_drawer_activity.Check_String_NULL_Value(tv_shipping_postcode,addr_object.getString("postcode"));
-                                Navigation_drawer_activity.Check_String_NULL_Value(tv_telephone_no,addr_object.getString("telephone"));
-                                Navigation_drawer_activity.Check_String_NULL_Value(tv_shipping_company_nm,addr_object.getString("company"));
+                                Navigation_drawer_activity.Check_String_NULL_Value(tv_shipping_firstname, addr_object.getString("firstname"));
+                                Navigation_drawer_activity.Check_String_NULL_Value(tv_shipping_lastname, addr_object.getString("lastname"));
+                                Navigation_drawer_activity.Check_String_NULL_Value(tv_shipping_city, addr_object.getString("city"));
+                                Navigation_drawer_activity.Check_String_NULL_Value(tv_region, addr_object.getString("region"));
+                                Navigation_drawer_activity.Check_String_NULL_Value(tv_shipping_country, addr_object.getString("country_id"));
+                                Navigation_drawer_activity.Check_String_NULL_Value(tv_shipping_addr, addr_object.getString("street"));
+                                Navigation_drawer_activity.Check_String_NULL_Value(tv_shipping_postcode, addr_object.getString("postcode"));
+                                Navigation_drawer_activity.Check_String_NULL_Value(tv_telephone_no, addr_object.getString("telephone"));
+                                Navigation_drawer_activity.Check_String_NULL_Value(tv_shipping_company_nm, addr_object.getString("company"));
 
                                /* tv_shipping_firstname.setText(addr_object.getString("firstname"));
                                 tv_shipping_lastname.setText(addr_object.getString("lastname"));
@@ -380,7 +412,7 @@ public class My_Account_With_Login extends Fragment {
         shipping_addr.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-              //  Log.e("res_getaddr", "" + response.body().toString());
+                //  Log.e("res_getaddr", "" + response.body().toString());
 
                 JSONObject jsonObject = null;
                 try {
@@ -391,7 +423,7 @@ public class My_Account_With_Login extends Fragment {
                         JSONArray jsonArray = jsonObject.getJSONArray("address");
                         for (int i = 0; i < jsonArray.length(); i++) {
                             try {
-                                Log.e("data_address","'"+jsonArray.getJSONObject(i));
+                                Log.e("data_address", "'" + jsonArray.getJSONObject(i));
                                 JSONObject addr_object = jsonArray.getJSONObject(i);
 
                                 Log.e("Name_wishlist", "" + addr_object.getString("firstname"));
@@ -400,45 +432,44 @@ public class My_Account_With_Login extends Fragment {
 
                                 String add_id = addr_object.getString("customer_address_id");
                                 Log.e("add_id_my_acc", "" + add_id);
-                                if (add_id.equalsIgnoreCase("null")|| add_id.equalsIgnoreCase("")){
-                                  lv_defaul.setVisibility(View.GONE);
-                                }else {
+                                if (add_id.equalsIgnoreCase("null") || add_id.equalsIgnoreCase("")) {
+                                    lv_defaul.setVisibility(View.GONE);
+                                } else {
                                     lv_defaul.setVisibility(View.VISIBLE);
                                 }
                                 MyAddress_Preference.setAddressId(getActivity(), add_id);
-                                MyAddress_Preference.setFirstname(getActivity(),addr_object.getString("firstname"));
-                                MyAddress_Preference.setLastname(getActivity(),addr_object.getString("lastname"));
-                                MyAddress_Preference.setCity(getActivity(),addr_object.getString("city"));
-                                MyAddress_Preference.setRegion(getActivity(),addr_object.getString("region"));
-                                MyAddress_Preference.setStreetAddress(getActivity(),addr_object.getString("street"));
-                                MyAddress_Preference.setZipcode(getActivity(),addr_object.getString("postcode"));
-                                MyAddress_Preference.setPhoneNumber(getActivity(),addr_object.getString("telephone"));
-                                MyAddress_Preference.setCompanyName(getActivity(),addr_object.getString("company"));
-                                 MyAddress_Preference.setCountryId(getActivity(), addr_object.getString("country_id"));
+                                MyAddress_Preference.setFirstname(getActivity(), addr_object.getString("firstname"));
+                                MyAddress_Preference.setLastname(getActivity(), addr_object.getString("lastname"));
+                                MyAddress_Preference.setCity(getActivity(), addr_object.getString("city"));
+                                MyAddress_Preference.setRegion(getActivity(), addr_object.getString("region"));
+                                MyAddress_Preference.setStreetAddress(getActivity(), addr_object.getString("street"));
+                                MyAddress_Preference.setZipcode(getActivity(), addr_object.getString("postcode"));
+                                MyAddress_Preference.setPhoneNumber(getActivity(), addr_object.getString("telephone"));
+                                MyAddress_Preference.setCompanyName(getActivity(), addr_object.getString("company"));
+                                MyAddress_Preference.setCountryId(getActivity(), addr_object.getString("country_id"));
 
+                                //selected_spinner_pos = country_name_code.indexOf(addr_object.getString("country_id"));
+                                ccp.setCountryForNameCode(addr_object.getString("country_id"));
 
+                                Navigation_drawer_activity.Check_String_NULL_Value(tv_shipping_firstname, addr_object.getString("firstname"));
+                                Navigation_drawer_activity.Check_String_NULL_Value(tv_shipping_lastname, addr_object.getString("lastname"));
+                                Navigation_drawer_activity.Check_String_NULL_Value(tv_shipping_city, addr_object.getString("city"));
+                                Navigation_drawer_activity.Check_String_NULL_Value(tv_region, addr_object.getString("region"));
+                                Navigation_drawer_activity.Check_String_NULL_Value(tv_shipping_country, addr_object.getString("country_id"));
+                                Navigation_drawer_activity.Check_String_NULL_Value(tv_shipping_addr, addr_object.getString("street"));
+                                Navigation_drawer_activity.Check_String_NULL_Value(tv_shipping_postcode, addr_object.getString("postcode"));
+                                Navigation_drawer_activity.Check_String_NULL_Value(tv_telephone_no, addr_object.getString("telephone"));
+                                Navigation_drawer_activity.Check_String_NULL_Value(tv_shipping_company_nm, addr_object.getString("company"));
 
-                                 selected_spinner_pos=country_name_code.indexOf(addr_object.getString("country_id"));
-
-
-                                Navigation_drawer_activity.Check_String_NULL_Value(tv_shipping_firstname,addr_object.getString("firstname"));
-                                Navigation_drawer_activity.Check_String_NULL_Value(tv_shipping_lastname,addr_object.getString("lastname"));
-                                Navigation_drawer_activity.Check_String_NULL_Value(tv_shipping_city,addr_object.getString("city"));
-                                Navigation_drawer_activity.Check_String_NULL_Value(tv_region,addr_object.getString("region"));
-                                Navigation_drawer_activity.Check_String_NULL_Value(tv_shipping_country,addr_object.getString("country_id"));
-                                Navigation_drawer_activity.Check_String_NULL_Value(tv_shipping_addr,addr_object.getString("street"));
-                                Navigation_drawer_activity.Check_String_NULL_Value(tv_shipping_postcode,addr_object.getString("postcode"));
-                                Navigation_drawer_activity.Check_String_NULL_Value(tv_telephone_no,addr_object.getString("telephone"));
-                                Navigation_drawer_activity.Check_String_NULL_Value(tv_shipping_company_nm,addr_object.getString("company"));
-                                 //tv_shipping_firstname.setText(addr_object.getString("firstname"));
-                               // tv_shipping_lastname.setText(addr_object.getString("lastname"));
+                                //tv_shipping_firstname.setText(addr_object.getString("firstname"));
+                                // tv_shipping_lastname.setText(addr_object.getString("lastname"));
                                 //tv_shipping_city.setText(addr_object.getString("city"));
                                 ///tv_region.setText(addr_object.getString("region"));
                                 //tv_shipping_country.setText(addr_object.getString("country_id"));
                                 //tv_shipping_addr.setText(addr_object.getString("street"));
-                               // tv_shipping_postcode.setText(addr_object.getString("postcode"));
-                               // tv_telephone_no.setText(addr_object.getString("telephone"));
-                               // tv_shipping_company_nm.setText(addr_object.getString("company"));
+                                // tv_shipping_postcode.setText(addr_object.getString("postcode"));
+                                // tv_telephone_no.setText(addr_object.getString("telephone"));
+                                // tv_shipping_company_nm.setText(addr_object.getString("company"));
 
                             } catch (Exception e) {
                                 Log.e("Exception", "" + e);
@@ -486,18 +517,18 @@ public class My_Account_With_Login extends Fragment {
         tv_shipping_lastname = (TextView) v.findViewById(R.id.tv_shipping_lastname);
         tv_shipping_firstname = (TextView) v.findViewById(R.id.tv_shipping_firstname);
         tv_shipping_def_add = (TextView) v.findViewById(R.id.tv_shipping_def_add);
-        tv_region = (TextView)v.findViewById(R.id.tv_region);
+        tv_region = (TextView) v.findViewById(R.id.tv_region);
 
-        edt_edit_ship_first_name = (EditText)v.findViewById(R.id.edt_edit_ship_first_name);
-        edt_edit_shipping_lastname = (EditText)v.findViewById(R.id.edt_edit_shipping_lastname);
-        edt__edit_shipping_phone_no = (EditText)v.findViewById(R.id.edt__edit_shipping_phone_no);
-        edt_edit_shipping_company = (EditText)v.findViewById(R.id.edt_edit_shipping_company);
-        edt_edit_street = (EditText)v.findViewById(R.id.edt_edit_street);
-        edt_edit_shipping_zipcode = (EditText)v.findViewById(R.id.edt_edit_shipping_zipcode);
-        edt_edit_shipping_city = (EditText)v.findViewById(R.id.edt_edit_shipping_city);
-        edt_edit_shipping_region = (EditText)v.findViewById(R.id.edt_edit_shipping_region);
+        edt_edit_ship_first_name = (EditText) v.findViewById(R.id.edt_edit_ship_first_name);
+        edt_edit_shipping_lastname = (EditText) v.findViewById(R.id.edt_edit_shipping_lastname);
+        edt__edit_shipping_phone_no = (EditText) v.findViewById(R.id.edt__edit_shipping_phone_no);
+        edt_edit_shipping_company = (EditText) v.findViewById(R.id.edt_edit_shipping_company);
+        edt_edit_street = (EditText) v.findViewById(R.id.edt_edit_street);
+        edt_edit_shipping_zipcode = (EditText) v.findViewById(R.id.edt_edit_shipping_zipcode);
+        edt_edit_shipping_city = (EditText) v.findViewById(R.id.edt_edit_shipping_city);
+        edt_edit_shipping_region = (EditText) v.findViewById(R.id.edt_edit_shipping_region);
 
-        edit_spinner_country_Name = (Spinner)v.findViewById(R.id.edit_spinner_country_Name);
+        edit_spinner_country_Name = (Spinner) v.findViewById(R.id.edit_spinner_country_Name);
 
     }
 

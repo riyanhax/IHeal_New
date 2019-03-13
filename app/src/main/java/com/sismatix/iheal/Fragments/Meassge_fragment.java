@@ -47,6 +47,8 @@ public class Meassge_fragment extends Fragment implements JivoDelegate {
         // Inflate the layout for this fragment
         View v=inflater.inflate(R.layout.fragment_meassge_fragment, container, false);
         bottom_navigation.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        //bottom_navigation.setVisibility(View.GONE);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         lv_message_parent=(LinearLayout)v.findViewById(R.id.lv_message_parent);
         //hideKeyboard(getActivity());
         setupUI(lv_message_parent);
@@ -60,7 +62,6 @@ public class Meassge_fragment extends Fragment implements JivoDelegate {
         ((Navigation_drawer_activity) getActivity()).getSupportActionBar()
                 .setDisplayHomeAsUpEnabled(true);
         ((Navigation_drawer_activity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_arrow_left_white_36dp);
-
 
         jivoSdk = new JivoSdk((WebView)v.findViewById(R.id.webview), lang);
         jivoSdk.delegate = this;

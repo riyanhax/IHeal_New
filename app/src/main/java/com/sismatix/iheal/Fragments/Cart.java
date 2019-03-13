@@ -81,7 +81,7 @@ public class Cart extends Fragment {
     String loginflag;
     static String grand_total;
     public static String qt, qoute_id_cart, productslist;
-    public static LinearLayout lv_productnot;
+    public static LinearLayout lv_productnotavelable;
     ImageView iv_close;
     Dialog fullscreenDialog;
 
@@ -362,7 +362,7 @@ public class Cart extends Fragment {
         iv_place_order = (ImageView) v.findViewById(R.id.iv_place_order);
         iv_close = (ImageView) v.findViewById(R.id.iv_close);
         lv_place_order = (LinearLayout) v.findViewById(R.id.lv_place_order);
-        lv_productnot = (LinearLayout) v.findViewById(R.id.lv_productnotavelable);
+        lv_productnotavelable = (LinearLayout) v.findViewById(R.id.lv_productnotavelable);
         tv_maintotal = (TextView) v.findViewById(R.id.tv_maintotal);
         progressBar_cart = (ProgressBar) v.findViewById(R.id.progressBar_cart);
     }
@@ -404,30 +404,37 @@ public class Cart extends Fragment {
                     Log.e("status_prepare_cart", "" + status);
 
                     if (status.equalsIgnoreCase("success")) {
-                        lv_productnot.setVisibility(View.VISIBLE);
+                        lv_productnotavelable.setVisibility(View.VISIBLE);
                         grand_total = jsonObject.getString("grand_total");
                         Log.e("gtot", "" + grand_total);
                         tv_maintotal.setText(grand_total);
+                        Navigation_drawer_activity.Check_String_NULL_Value(tv_maintotal,grand_total);
 
                         qoute_id_cart = jsonObject.getString("quote_id");
                         Log.e("qoute_id_cart", "" + qoute_id_cart);
                         cart_items_count = jsonObject.getString("items_count");
                         Login_preference.setCart_item_count(context,cart_items_count);
                         Log.e("cart_items_total_cart", "" + cart_items_count);
-                        if(cart_items_count.equalsIgnoreCase("null")||cart_items_count.equals("")){
+
+                        if(jsonObject.getString("items_count").equalsIgnoreCase("null")||jsonObject.getString("items_count").equals("")){
+
+                            Navigation_drawer_activity.tv_bottomcount.setText("0");
                             Navigation_drawer_activity.item_count.setText("0");
+
                         }else {
-                            Navigation_drawer_activity.item_count.setText(cart_items_count);
+
+                            Navigation_drawer_activity.tv_bottomcount.setText(jsonObject.getString("items_count"));
+                            Navigation_drawer_activity.item_count.setText(jsonObject.getString("items_count"));
                         }
 
                         productslist = jsonObject.getString("products");
                         Log.e("prod_list_cart", "" + productslist);
                         if (productslist.equalsIgnoreCase("[]") || productslist.equalsIgnoreCase("")) {
 
-                            lv_productnot.setVisibility(View.VISIBLE);
+                            lv_productnotavelable.setVisibility(View.VISIBLE);
 
                         } else {
-                            lv_productnot.setVisibility(View.GONE);
+                            lv_productnotavelable.setVisibility(View.GONE);
                             Login_preference.setCart_item_count(context, cart_items_count);
                             JSONArray jsonArray = jsonObject.getJSONArray("products");
                             Log.e("jsonarr_cart", "" + jsonArray);

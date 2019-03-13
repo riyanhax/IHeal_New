@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sismatix.iheal.Activity.Navigation_drawer_activity;
 import com.sismatix.iheal.Adapter.Cart_List_Adapter;
 import com.sismatix.iheal.Adapter.Confirmation_cart_Adapter;
 import com.sismatix.iheal.Model.Cart_Model;
@@ -57,7 +58,7 @@ import static com.sismatix.iheal.Fragments.Cart.tv_maintotal;
  */
 public class Confirmation_fragment extends Fragment {
     LinearLayout iv_confirm_pay,lv_goback_confirmation;
-    TextView confirm_add,tv_totalconform,tv_add_edit_confirm,tv_cart_edit_confirm,tv_shipping_tit,tv_conf_order,tv_conf_totamt;
+    TextView confirm_add,tv_totalconform,tv_add_edit_confirm,tv_cart_edit_confirm,tv_shipping_title,tv_conf_order,tv_conf_totamt;
     RecyclerView recyclerview_confirmation;
     private List<Cart_Model> cartList = new ArrayList<Cart_Model>();
     private Confirmation_cart_Adapter confirmation_cart_adapter;
@@ -142,7 +143,7 @@ public class Confirmation_fragment extends Fragment {
         }
 
         confirm_add.setText(streetadd_confirm + " " + zipcode_confirm + " " + city_confirm + " " + countryid_confirm);
-
+        Navigation_drawer_activity.Check_String_NULL_Value(confirm_add,streetadd_confirm + " " + zipcode_confirm + " " + city_confirm + " " + countryid_confirm);
         Checkout_fragment.lv_payment_selected.setVisibility(View.INVISIBLE);
         Checkout_fragment.lv_shipping_selected.setVisibility(View.INVISIBLE);
 
@@ -256,7 +257,7 @@ public class Confirmation_fragment extends Fragment {
         tv_totalconform.setTypeface(Home.roboto_bold);
         tv_add_edit_confirm.setTypeface(Home.roboto_bold);
         tv_cart_edit_confirm.setTypeface(Home.roboto_bold);
-        tv_shipping_tit.setTypeface(Home.roboto_bold);
+        tv_shipping_title.setTypeface(Home.roboto_bold);
         tv_conf_order.setTypeface(Home.roboto_bold);
         tv_conf_totamt.setTypeface(Home.roboto_bold);
     }
@@ -292,6 +293,7 @@ public class Confirmation_fragment extends Fragment {
                     if (status.equalsIgnoreCase("success")) {
                         String grand_total = jsonObject.getString("grand_total");
                         tv_totalconform.setText(grand_total);
+                        Navigation_drawer_activity.Check_String_NULL_Value(tv_totalconform,grand_total);
                         Login_preference.setquote_id(context, jsonObject.getString("quote_id"));
                         qoute_id_cart = jsonObject.getString("quote_id");
                         Log.e("qoute_id_confirm_cart", "" + qoute_id_cart);
@@ -401,7 +403,7 @@ public class Confirmation_fragment extends Fragment {
         tv_totalconform = (TextView)v.findViewById(R.id.tv_totalconform);
         tv_add_edit_confirm = (TextView)v.findViewById(R.id.tv_add_edit_confirm);
         tv_cart_edit_confirm = (TextView)v.findViewById(R.id.tv_cart_edit_confirm);
-        tv_shipping_tit = (TextView)v.findViewById(R.id.tv_shipping_tit);
+        tv_shipping_title = (TextView)v.findViewById(R.id.tv_shipping_title);
         tv_conf_order = (TextView)v.findViewById(R.id.tv_conf_order);
         tv_conf_totamt = (TextView)v.findViewById(R.id.tv_conf_totamt);
 

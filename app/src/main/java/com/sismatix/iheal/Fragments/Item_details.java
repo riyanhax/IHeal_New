@@ -60,7 +60,8 @@ public class Item_details extends Fragment implements View.OnClickListener, View
     ImageView iv_wishlist, iv_itemdetail_cart, iv_back;
     LinearLayout lv_iteamdetails_click;
 
-    TextView tv_product_name, tv_product_price, tv_short_description, tv_long_descriptionn, tv_main_title,tv_descriptiontitle,tv_id_addtocart;
+    TextView tv_product_name, tv_product_price, tv_short_description, tv_long_descriptionn, tv_main_title,tv_descriptiontitle,
+            tv_id_addtocart;
     ImageView iv_item_desc, iv_show_more;
 
     String proddd_id, loginflag, iswhishlisted,prod_name;
@@ -164,6 +165,7 @@ public class Item_details extends Fragment implements View.OnClickListener, View
 
                     String main_title = jsonObject.getString("product_name");
                     tv_main_title.setText(main_title);
+                    Navigation_drawer_activity.Check_String_NULL_Value(tv_main_title,main_title);
 
                     iswhishlisted = jsonObject.getString("wishlist");
                     Log.e("ishwishlistedornot", "" + iswhishlisted);
@@ -178,15 +180,18 @@ public class Item_details extends Fragment implements View.OnClickListener, View
 
                     String proname = jsonObject.getString("product_sku");
                     tv_product_name.setText(proname);
+                    Navigation_drawer_activity.Check_String_NULL_Value(tv_product_name,proname);
 
                     String proprice = jsonObject.getString("product_price");
                     tv_product_price.setText(proprice);
+                    Navigation_drawer_activity.Check_String_NULL_Value(tv_product_price,proprice);
 
                     final String desc = jsonObject.getString("description");
                     //tv_long_descriptionn.setText(Html.fromHtml(desc));
 
                     final String shortdesc = jsonObject.getString("short_description");
                     tv_short_description.setText(Html.fromHtml(shortdesc));
+                    Navigation_drawer_activity.Check_String_NULL_Value(tv_short_description,shortdesc);
 
                     iv_item_desc.setOnClickListener(new View.OnClickListener() {
                         @Override

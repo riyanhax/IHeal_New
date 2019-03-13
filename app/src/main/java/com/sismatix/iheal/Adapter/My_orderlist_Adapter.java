@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sismatix.iheal.Activity.Navigation_drawer_activity;
 import com.sismatix.iheal.Fragments.Hair_Cair_fregment;
 import com.sismatix.iheal.Fragments.Home;
 import com.sismatix.iheal.Fragments.Item_details;
@@ -40,11 +41,11 @@ import retrofit2.Response;
 public class My_orderlist_Adapter extends RecyclerView.Adapter<My_orderlist_Adapter.MyViewHolder> {
     Context context;
     private List<My_order_model> myorderModels;
-    String orderidd,custidd;
+    String orderidd, custidd;
 
     public My_orderlist_Adapter(FragmentActivity context, List<My_order_model> myorderModels) {
-        this.context=context;
-        this.myorderModels=myorderModels;
+        this.context = context;
+        this.myorderModels = myorderModels;
     }
 
     @NonNull
@@ -70,6 +71,12 @@ public class My_orderlist_Adapter extends RecyclerView.Adapter<My_orderlist_Adap
         holder.tv_order_id.setText(my_order_model.getIncrement_id());
         holder.tv_paymentmethod.setText(my_order_model.getPayment_method());
         holder.grand_total.setText(my_order_model.getGrand_total());
+
+        Navigation_drawer_activity.Check_String_NULL_Value(holder.tv_created_date, my_order_model.getCreated_at());
+        Navigation_drawer_activity.Check_String_NULL_Value(holder.tv_name, my_order_model.getName());
+        Navigation_drawer_activity.Check_String_NULL_Value(holder.tv_order_id, my_order_model.getIncrement_id());
+        Navigation_drawer_activity.Check_String_NULL_Value(holder.tv_paymentmethod, my_order_model.getPayment_method());
+        Navigation_drawer_activity.Check_String_NULL_Value(holder.grand_total, my_order_model.getGrand_total());
 
         orderidd = my_order_model.getOrder_id();
         Log.e("orderidddd", "" + orderidd);
@@ -103,7 +110,7 @@ public class My_orderlist_Adapter extends RecyclerView.Adapter<My_orderlist_Adap
     private void callReorderapi() {
 
         ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
-        final Call<ResponseBody> reorder = api.AppReorder(custidd,orderidd);
+        final Call<ResponseBody> reorder = api.AppReorder(custidd, orderidd);
         reorder.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -116,6 +123,21 @@ public class My_orderlist_Adapter extends RecyclerView.Adapter<My_orderlist_Adap
                     String status = jsonObject.getString("status");
                     Log.e("status_wishlist", "" + status);
                     if (status.equalsIgnoreCase("Success")) {
+
+                        String count = jsonObject.getString("items_count");
+
+                        if (jsonObject.getString("items_count").equalsIgnoreCase("null") || jsonObject.getString("items_count").equals("")) {
+
+                            Navigation_drawer_activity.tv_bottomcount.setText("0");
+                            Navigation_drawer_activity.item_count.setText("0");
+
+                        } else {
+
+                            Navigation_drawer_activity.tv_bottomcount.setText(jsonObject.getString("items_count"));
+                            Navigation_drawer_activity.item_count.setText(jsonObject.getString("items_count"));
+
+                        }
+
                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                     }
 
@@ -123,6 +145,7 @@ public class My_orderlist_Adapter extends RecyclerView.Adapter<My_orderlist_Adap
                     Log.e("", "" + e);
                 }
             }
+
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Toast.makeText(context, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
@@ -137,8 +160,8 @@ public class My_orderlist_Adapter extends RecyclerView.Adapter<My_orderlist_Adap
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView tv_created_date,tv_order_id,tv_name,tv_paymentmethod,grand_total,tv_wishlist_order_now,tv_wishlist_haircare,
-                tv_orderid_title,tv_rec,tv_pm,tv_tot_total;
+        TextView tv_created_date, tv_order_id, tv_name, tv_paymentmethod, grand_total, tv_wishlist_order_now, tv_wishlist_haircare,
+                tv_orderid_title, tv_rec, tv_pm, tv_tot_total;
 
         public MyViewHolder(@NonNull View view) {
             super(view);
@@ -147,7 +170,7 @@ public class My_orderlist_Adapter extends RecyclerView.Adapter<My_orderlist_Adap
             tv_name = (TextView) view.findViewById(R.id.tv_name);
             tv_paymentmethod = (TextView) view.findViewById(R.id.tv_paymentmethod);
             grand_total = (TextView) view.findViewById(R.id.grand_total);
-            tv_wishlist_order_now=(TextView)view.findViewById(R.id.tv_wishlist_order_now);
+            tv_wishlist_order_now = (TextView) view.findViewById(R.id.tv_wishlist_order_now);
         }
     }
 }

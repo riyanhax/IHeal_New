@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sismatix.iheal.Activity.Navigation_drawer_activity;
 import com.sismatix.iheal.Fragments.Home;
 import com.sismatix.iheal.Model.Cart_Delivery_Model;
 import com.sismatix.iheal.Model.Payment_Method_Model;
@@ -51,6 +52,7 @@ public class Payment_Method_Adapter  extends RecyclerView.Adapter<com.sismatix.i
 
         holder.tv_payment_name.setTypeface(Home.roboto_bold);
         holder.tv_payment_name.setText(payment_model.getLabel());
+        Navigation_drawer_activity.Check_String_NULL_Value(holder.tv_payment_name,payment_model.getLabel());
         holder.lv_greylayout_click.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override

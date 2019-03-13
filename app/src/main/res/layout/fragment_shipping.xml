@@ -374,27 +374,17 @@
                                     android:paddingBottom="12dp">
 
                                     <Spinner
+                                        android:visibility="gone"
                                         android:id="@+id/spinner_country_Name"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content" />
 
-                                    <EditText
-                                        android:id="@+id/et_country"
+                                    <com.hbb20.CountryCodePicker
+                                        android:id="@+id/ccp"
                                         android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_gravity="center"
-                                        android:background="@null"
-                                        android:gravity="center|start"
-                                        android:hint="@string/country"
-                                        android:imeOptions="actionNext"
-                                        android:inputType="text"
-                                        android:maxLines="1"
-                                        android:singleLine="true"
-                                        android:textColor="@color/edittextpay"
-                                        android:textColorHint="@color/edittextpay"
-                                        android:textSize="14sp"
-                                        android:textStyle="bold"
-                                        android:visibility="gone" />
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center" />
+
                                 </LinearLayout>
                             </LinearLayout>
 

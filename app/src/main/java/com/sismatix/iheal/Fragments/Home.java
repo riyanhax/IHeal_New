@@ -68,7 +68,7 @@ public class Home extends Fragment implements View.OnClickListener {
         setonclicklistners();
         setFontStyle();
 
-        Navigation_drawer_activity.item_count.setText(Login_preference.getCart_item_count(getActivity()));
+      //  Navigation_drawer_activity.item_count.setText(Login_preference.getCart_item_count(getActivity()));
 
         if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
             String fullname = Login_preference.getfullname(getActivity());

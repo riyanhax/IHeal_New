@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sismatix.iheal.Activity.Navigation_drawer_activity;
 import com.sismatix.iheal.Preference.Login_preference;
 import com.sismatix.iheal.R;
 
@@ -60,6 +61,7 @@ public class Checkout_fragment extends Fragment implements View.OnClickListener 
         }
 
         checkout_total.setText(tot_cart);
+        Navigation_drawer_activity.Check_String_NULL_Value(checkout_total,tot_cart);
 
         lv_shipping.setOnClickListener(this);
         lv_confirmation.setOnClickListener(this);

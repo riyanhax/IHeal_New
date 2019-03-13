@@ -57,7 +57,7 @@ public interface ApiInterface {
     @POST("AppAddToCart.php")
     @FormUrlEncoded
     Call<ResponseBody>addtocart_wish(@Field("product_id") String product_id,
-                                          @Field("customerid") String customer_id,
+                                          @Field("customer_id") String customer_id,
                                           @Field("removeWishlist") String removeWishlist);
 
     @POST("AppAddToCart.php")
@@ -79,7 +79,7 @@ public interface ApiInterface {
     @POST("AppAddWishlist.php")
     @FormUrlEncoded
     Call<ResponseBody> add_to_wishlist(@Field("productid") String product_id,
-                                       @Field("customerid") String customerid,
+                                       @Field("customer_id") String customerid,
                                        @Field("action") String action);
 
     //remove from wishlist api
@@ -88,7 +88,7 @@ public interface ApiInterface {
     @POST("AppRemoveWishlistProduct.php")
     @FormUrlEncoded
     Call<ResponseBody> remove_from_wishlist(@Field("productid") String product_id,
-                                            @Field("customerid") String customerid);
+                                            @Field("customer_id") String customerid);
 
     //remove from cartlist
     //https://ihealkuwait.com/customapi/AppRemoveFromCart.php?product_id=4&email=developertest2018@gmail.com
@@ -103,13 +103,13 @@ public interface ApiInterface {
 
     @POST("AppGetWishlist.php")
     @FormUrlEncoded
-    Call<ResponseBody> GetWishlist(@Field("customerid") String email);
+    Call<ResponseBody> GetWishlist(@Field("customer_id") String email);
 
     @POST("AppAddWishlist.php")
     @FormUrlEncoded
     Call<ResponseBody> Wishlistactions(@Field("action") String action,
                                        @Field("productid") String productid,
-                                       @Field("customerid") String customerid);
+                                       @Field("customer_id") String customerid);
 
     //country list
     //https://ihealkuwait.com/customapi/AppGetCountryList.php
@@ -181,7 +181,8 @@ public interface ApiInterface {
                                         @Field("street") String street,
                                         @Field("countryid") String countryid,
                                         @Field("postcode") String postcode,
-                                        @Field("city") String city);
+                                        @Field("city") String city,
+                                        @Field("region")String region);
 
     @POST("AppOrderList.php")
     @FormUrlEncoded
@@ -191,8 +192,6 @@ public interface ApiInterface {
     @FormUrlEncoded
     Call<ResponseBody> AppReorder(@Field("customer_id") String customer_id,
                                     @Field("order_id")String order_id);
-
-
     @POST("AppCatalogSearch.php")
     @FormUrlEncoded
     Call<ResponseBody> AppSearchCategory(@Field("searchterm") String searchterm);

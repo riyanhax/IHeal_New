@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.sismatix.iheal.Activity.Navigation_drawer_activity;
 import com.sismatix.iheal.Fragments.Cart;
 import com.sismatix.iheal.Fragments.Home;
 import com.sismatix.iheal.Fragments.Item_details;
@@ -82,8 +83,11 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.MyVi
         });
 
         holder.tv_wishlist_haircare.setText(wishlist_model.getProduct_category());
+        Navigation_drawer_activity.Check_String_NULL_Value(holder.tv_wishlist_haircare,wishlist_model.getProduct_category());
         holder.tv_wishlist_product_name.setText(wishlist_model.getProduct_name());
+        Navigation_drawer_activity.Check_String_NULL_Value(holder.tv_wishlist_product_name,wishlist_model.getProduct_name());
         holder.tv_wishlist_product_price.setText(wishlist_model.getProduct_price());
+        Navigation_drawer_activity.Check_String_NULL_Value(holder.tv_wishlist_product_price,wishlist_model.getProduct_price());
         Glide.with(context).load(wishlist_model.getProduct_image()).into(holder.iv_wishlist_image);
 
         final String wishliist_product_id = wishlist_model.getProduct_id();

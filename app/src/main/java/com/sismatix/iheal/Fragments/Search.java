@@ -81,7 +81,6 @@ public class Search extends Fragment implements SearchView.OnQueryTextListener {
         bottom_navigation.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
         setHasOptionsMenu(true);
 
-
         lv_search = (LinearLayout)v.findViewById(R.id.lv_nodatafound);
         lv_nodatafound = (LinearLayout)v.findViewById(R.id.lv_nodatafound);
         lv_search_parent = (LinearLayout)v.findViewById(R.id.lv_search_parent);
@@ -113,6 +112,7 @@ public class Search extends Fragment implements SearchView.OnQueryTextListener {
 
         return v;
     }
+
     public void setupUI(View view) {
 
         // Set up touch listener for non-text box views to hide keyboard.
@@ -133,6 +133,7 @@ public class Search extends Fragment implements SearchView.OnQueryTextListener {
             }
         }
     }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();

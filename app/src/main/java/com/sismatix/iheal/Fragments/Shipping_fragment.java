@@ -27,6 +27,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hbb20.CountryCodePicker;
+import com.sismatix.iheal.Activity.Navigation_drawer_activity;
 import com.sismatix.iheal.Adapter.Cart_Delivery_Adapter;
 import com.sismatix.iheal.Model.Cart_Delivery_Model;
 import com.sismatix.iheal.Preference.CheckNetwork;
@@ -75,7 +77,8 @@ public class Shipping_fragment extends Fragment {
     public static ArrayList<String> country_name_code = new ArrayList<String>();
     public static ArrayList<String> country_name = new ArrayList<String>();
     String qidd, email_id, customer_id, firstName, lastName, countryid, postcode, city, region, telephone, company, street;
-
+    String countryCodeAndroid = "91",country_namee,country_short_name;
+    CountryCodePicker ccp;
     public Shipping_fragment() {
         // Required empty public constructor
     }
@@ -86,11 +89,36 @@ public class Shipping_fragment extends Fragment {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_shipping, container, false);
         loginflag = Login_preference.getLogin_flag(getActivity());
-
+        cart_delivery_models.clear();
         AllocateMEmory(v);
+        ccp=(CountryCodePicker) v.findViewById(R.id.ccp);
         setTypeface();
         RelativeLayout parent=v.findViewById(R.id.relativeLayout);
         setupUI(parent);
+
+        ccp.showFlag(false);
+        //ccp.showNameCode(false);
+        ccp.showFullName(true);
+        ccp.showNameCode(false);
+        ccp.setShowPhoneCode(false);
+        ccp.setCcpDialogShowPhoneCode(false);
+
+
+
+        ccp.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
+            @Override
+            public void onCountrySelected() {
+                countryCodeAndroid = ccp.getSelectedCountryCode();
+                country_namee = ccp.getSelectedCountryName();
+                country_short_name = ccp.getSelectedCountryNameCode();
+                Log.e("Country_Code",""+countryCodeAndroid);
+                Log.e("country_name",""+country_name);
+                Log.e("cshort_name",""+country_short_name);
+                ccp.showFlag(false);
+                //         ccp.showNameCode(false);
+            }
+        });
+        ccp.setCountryForNameCode(MyAddress_Preference.getCountryId(getActivity()));
 
        /* v.findViewById(R.id.relativeLayout).setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -101,10 +129,10 @@ public class Shipping_fragment extends Fragment {
             }
         });*/
 
-        cart_delivery_models.clear();
+
         setValuesToeEditText();
         if (CheckNetwork.isNetworkAvailable(getActivity())) {
-            Countrylist();
+            //Countrylist();
             CALL_CART_DELIVERY();
         } else {
             Toast.makeText(getContext(), "Please Check your Internet Connection", Toast.LENGTH_SHORT).show();
@@ -134,7 +162,6 @@ public class Shipping_fragment extends Fragment {
         Bundle bundleee = this.getArguments();
         if (bundleee != null) {
 
-            cart_delivery_models.clear();
             fname_payment = bundleee.getString("Firstname_shipping");
             lname_payment = bundleee.getString("Lastname_shipping");
             zip_payment = bundleee.getString("Zipcode_shipping");
@@ -178,15 +205,24 @@ public class Shipping_fragment extends Fragment {
             Log.e("last_emailid", "" + email_payment);
             Log.e("last_qid", "" + quote_payment);
             Log.e("last_reg", "" + reg_payment);
+            ccp.setCountryForNameCode(MyAddress_Preference.getCountryId(getActivity()));
 
             et_shippingfirstname.setText(fname_payment);
+            Navigation_drawer_activity.Check_String_NULL_Value(et_shippingfirstname,fname_payment);
             et_shippinglastname.setText(lname_payment);
+            Navigation_drawer_activity.Check_String_NULL_Value(et_shippinglastname,lname_payment);
             et_shippingzipcode.setText(zip_payment);
+            Navigation_drawer_activity.Check_String_NULL_Value(et_shippingzipcode,zip_payment);
             et_shippingcity.setText(city_payment);
+            Navigation_drawer_activity.Check_String_NULL_Value(et_shippingcity,city_payment);
             et_shippingphonenumber.setText(phone_payment);
+            Navigation_drawer_activity.Check_String_NULL_Value(et_shippingphonenumber,phone_payment);
             et_shippingcompany.setText(company_payment);
+            Navigation_drawer_activity.Check_String_NULL_Value(et_shippingcompany,company_payment);
             et_streetadd.setText(street_payment);
+            Navigation_drawer_activity.Check_String_NULL_Value(et_streetadd,street_payment);
             et_shippingregion.setText(reg_payment);
+            Navigation_drawer_activity.Check_String_NULL_Value(et_shippingregion,reg_payment);
 
             if (saveadd_payment.equals("1")) {
                 Log.e("last_saveadd_final", "" + saveadd_payment);
@@ -316,11 +352,20 @@ public class Shipping_fragment extends Fragment {
         et_shippingzipcode.setText(MyAddress_Preference.getZipcode(getActivity()));
         et_shippingcity.setText(MyAddress_Preference.getCity(getActivity()));
         et_shippingregion.setText(MyAddress_Preference.getRegion(getActivity()));
+        ccp.setCountryForNameCode(MyAddress_Preference.getCountryId(getActivity()));
+
+        Navigation_drawer_activity.Check_String_NULL_Value(et_shippingfirstname,MyAddress_Preference.getFirstname(getActivity()));
+        Navigation_drawer_activity.Check_String_NULL_Value(et_shippinglastname,MyAddress_Preference.getLastname(getActivity()));
+        Navigation_drawer_activity.Check_String_NULL_Value(et_shippingphonenumber,MyAddress_Preference.getPhoneNumber(getActivity()));
+        Navigation_drawer_activity.Check_String_NULL_Value(et_shippingcompany,MyAddress_Preference.getCompanyName(getActivity()));
+        Navigation_drawer_activity.Check_String_NULL_Value(et_streetadd,MyAddress_Preference.getStreetAddress(getActivity()));
+        Navigation_drawer_activity.Check_String_NULL_Value(et_shippingzipcode,MyAddress_Preference.getZipcode(getActivity()));
+        Navigation_drawer_activity.Check_String_NULL_Value(et_shippingcity,MyAddress_Preference.getCity(getActivity()));
+        Navigation_drawer_activity.Check_String_NULL_Value(et_shippingregion,MyAddress_Preference.getRegion(getActivity()));
 
     }
 
     private boolean validateShippingData() {
-        cart_delivery_models.clear();
         customer_id = Login_preference.getcustomer_id(getActivity());
         email_id = Login_preference.getemail(getActivity());
 
@@ -395,7 +440,6 @@ public class Shipping_fragment extends Fragment {
     }
 
     private void loadfrag() {
-        cart_delivery_models.clear();
         Bundle bundle = new Bundle();
         bundle.putString("Firstname_shipping", "" + et_shippingfirstname.getText().toString());
         bundle.putString("Lastname_shipping", "" + et_shippinglastname.getText().toString());
@@ -405,7 +449,7 @@ public class Shipping_fragment extends Fragment {
         bundle.putString("Company_shipping", "" + et_shippingcompany.getText().toString());
         bundle.putString("streetadd_shipping", "" + et_streetadd.getText().toString());
         bundle.putString("region_shipping", "" + et_shippingregion.getText().toString());
-        bundle.putString("Countryid_shipping", "" + countryid);
+        bundle.putString("Countryid_shipping", "" + country_short_name);
         bundle.putString("customer_id_shipping", "" + customer_id);
         bundle.putString("saveadd_shipping", "" + setdefault);
         bundle.putString("shippingmethod", "" + shippingmethod);
@@ -420,7 +464,6 @@ public class Shipping_fragment extends Fragment {
 
 
     private void Countrylist() {
-        cart_delivery_models.clear();
         ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
         final Call<ResponseBody> countrylist = api.get_country_list();
         countrylist.enqueue(new Callback<ResponseBody>() {
@@ -480,7 +523,6 @@ public class Shipping_fragment extends Fragment {
     }
 
     private void CALL_CART_DELIVERY() {
-        cart_delivery_models.clear();
         ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
         Call<ResponseBody> shippingmethods = api.getShippingMethods();
         shippingmethods.enqueue(new Callback<ResponseBody>() {

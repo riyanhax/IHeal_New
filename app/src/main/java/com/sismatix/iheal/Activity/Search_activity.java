@@ -54,7 +54,7 @@ public class Search_activity extends AppCompatActivity {
         Log.e("withscreen====++", "" + width);
         Log.e("hight====++", "" + hight);
 
-       // Allocatememory();
+        // Allocatememory();
         //searchview.setOnQueryTextListener(this);
 
     }
@@ -71,9 +71,6 @@ public class Search_activity extends AppCompatActivity {
         lv_nodatafound = (LinearLayout) findViewById(R.id.lv_nodatafound);
         loc_view = (View) findViewById(R.id.loc_view);
         cat_view = (View) findViewById(R.id.cat_view);
-
-
-
     }
 
     public void ADD_View(View v) {
@@ -187,7 +184,7 @@ public class Search_activity extends AppCompatActivity {
                                             TextView rowTextView = new TextView(Search_activity.this);
                                             View v = new View(Search_activity.this);
                                             //ADD_View(v);
-                                           // TextView_style(rowTextView);
+                                            // TextView_style(rowTextView);
 
                                             rowTextView.setText(loc_nm);
                                             rowTextView.setTag(loc_object.getString("location_id"));
@@ -291,6 +288,7 @@ public class Search_activity extends AppCompatActivity {
 
         return true;
     }
+
     @Override
     public void onBackPressed() {
         Intent i = new Intent(Search_activity.this, Home.class);
@@ -307,12 +305,12 @@ public class Search_activity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-         /* *//*  Intent i = new Intent(Search_activity.this, Home.class);
+            /* *//*  Intent i = new Intent(Search_activity.this, Home.class);
             //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(i);*//*
             onBackPressed();
             //  overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);*/
-            Intent i = new Intent(Search_activity.this,Navigation_drawer_activity.class);
+            Intent i = new Intent(Search_activity.this, Navigation_drawer_activity.class);
             startActivity(i);
 
         }

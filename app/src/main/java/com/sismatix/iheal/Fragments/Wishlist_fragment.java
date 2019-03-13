@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,6 +62,8 @@ public class Wishlist_fragment extends Fragment {
     static ProgressBar progressBar;
     static AppCompatActivity activity;
     TextView tv_wishlist_title;
+
+    static LinearLayout lv_productnotavelablewish;
 
     public Wishlist_fragment() {
         // Required empty public constructor
@@ -120,23 +123,32 @@ public class Wishlist_fragment extends Fragment {
                     String status = jsonObject.getString("status");
                     Log.e("status_wishlist", "" + status);
                     if (status.equalsIgnoreCase("success")) {
-                        JSONArray jsonArray = jsonObject.getJSONArray("product");
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            try {
-                                JSONObject wish_object = jsonArray.getJSONObject(i);
-                                Log.e("Name_wishlist", "" + wish_object.getString("name"));
-                                wishlist_models.add(new Wishlist_Model("" + wish_object.getString("image"),
-                                        "" + wish_object.getString("name"),
-                                        "" + wish_object.getString("price"),
-                                        "" + wish_object.getString("category"),
-                                        "" + wish_object.getString("product_id")));
-                            } catch (Exception e) {
-                                Log.e("Exception", "" + e);
-                            } finally {
-                                wishlist_adapter.notifyItemChanged(i);
-                                wishlist_adapter.notifyDataSetChanged();
+                        String data=jsonObject.getString("product");
+                        Log.e("data_wishlist",""+data);
+
+                        if (data.equalsIgnoreCase("[]") || data.equalsIgnoreCase("")) {
+                            lv_productnotavelablewish.setVisibility(View.VISIBLE);
+                        } else {
+                            lv_productnotavelablewish.setVisibility(View.GONE);
+                            JSONArray jsonArray = jsonObject.getJSONArray("product");
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                try {
+                                    JSONObject wish_object = jsonArray.getJSONObject(i);
+                                    Log.e("Name_wishlist", "" + wish_object.getString("name"));
+                                    wishlist_models.add(new Wishlist_Model("" + wish_object.getString("image"),
+                                            "" + wish_object.getString("name"),
+                                            "" + wish_object.getString("price"),
+                                            "" + wish_object.getString("category"),
+                                            "" + wish_object.getString("product_id")));
+                                } catch (Exception e) {
+                                    Log.e("Exception", "" + e);
+                                } finally {
+                                    wishlist_adapter.notifyItemChanged(i);
+                                    wishlist_adapter.notifyDataSetChanged();
+                                }
                             }
                         }
+
                     } else if (status.equalsIgnoreCase("error")) {
 
                     }
@@ -157,9 +169,10 @@ public class Wishlist_fragment extends Fragment {
 
     private void AllocateMemory(View v) {
         recycler_wishlist = (RecyclerView) v.findViewById(R.id.recycler_wishlist);
-        tv_wishlist_title = (TextView)v.findViewById(R.id.tv_wishlist_title);
+        tv_wishlist_title = (TextView) v.findViewById(R.id.tv_wishlist_title);
         activity = (AppCompatActivity) getContext();
         progressBar = (ProgressBar) v.findViewById(R.id.progressBar);
+        lv_productnotavelablewish = (LinearLayout) v.findViewById(R.id.lv_productnotavelable);
     }
 
     @Override
@@ -183,9 +196,9 @@ public class Wishlist_fragment extends Fragment {
         }
         count = Login_preference.getCart_item_count(getActivity());
         Log.e("count_142", "" + count);
-        if(count.equalsIgnoreCase("null")||count.equals("")){
+        if (count.equalsIgnoreCase("null") || count.equals("")) {
             badge.setCount("0");
-        }else {
+        } else {
             badge.setCount(count);
         }
         icon.mutate();
