@@ -17,6 +17,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
+import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.TextAppearanceSpan;
@@ -333,7 +334,30 @@ public class Navigation_drawer_activity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+    public static void Check_String_NULL_Value( TextView textview, String text) {
 
+
+        if(text.equalsIgnoreCase("null")==true)
+        {
+            textview.setText("");
+        }else {
+
+            textview.setText(Html.fromHtml(Convert_String_First_Letter(text)));
+        }
+
+    }
+    public static String  Convert_String_First_Letter(String convert_string)
+    {
+        String upperString ;
+
+        if(convert_string.length() > 0)
+        {
+            upperString = convert_string.substring(0,1).toUpperCase() + convert_string.substring(1);
+        }else {
+            upperString=" ";
+        }
+        return upperString;
+    }
     private void disableNavigationViewScrollbars(NavigationView navigationView) {
         if (navigationView != null) {
             NavigationMenuView navigationMenuView = (NavigationMenuView) navigationView.getChildAt(0);

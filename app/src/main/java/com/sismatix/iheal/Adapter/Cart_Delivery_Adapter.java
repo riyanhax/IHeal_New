@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sismatix.iheal.Activity.Navigation_drawer_activity;
 import com.sismatix.iheal.Model.Cart_Delivery_Model;
 import com.sismatix.iheal.R;
 
@@ -48,9 +49,11 @@ public class Cart_Delivery_Adapter extends RecyclerView.Adapter<com.sismatix.ihe
     public void onBindViewHolder(final Cart_Delivery_Adapter.MyViewHolder holder, final int position) {
         final Cart_Delivery_Model cart_delivery_model = model.get(position);
 
-        holder.tv_product_delivery_type.setText(cart_delivery_model.getTitle());
+        Navigation_drawer_activity.Check_String_NULL_Value(holder.tv_product_delivery_type,cart_delivery_model.getTitle());
+        Navigation_drawer_activity.Check_String_NULL_Value(holder.tv_delivery_price,cart_delivery_model.getPrice());
+        //holder.tv_product_delivery_type.setText(cart_delivery_model.getTitle());
         Log.e("shipping_title",""+cart_delivery_model.getTitle());
-        holder.tv_delivery_price.setText(cart_delivery_model.getPrice());
+        //holder.tv_delivery_price.setText(cart_delivery_model.getPrice());
         Log.e("shipping_price",""+cart_delivery_model.getPrice());
 
         holder.lv_greylayout_click.setOnClickListener(new View.OnClickListener() {

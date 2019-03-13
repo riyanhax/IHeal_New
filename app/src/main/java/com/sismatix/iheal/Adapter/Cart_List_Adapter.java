@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.gson.JsonArray;
 import com.sismatix.iheal.Activity.Navigation_drawer_activity;
 import com.sismatix.iheal.Fragments.Cart;
 import com.sismatix.iheal.Fragments.Hair_Cair_fregment;
@@ -43,6 +44,7 @@ import retrofit2.Response;
 
 
 import static com.sismatix.iheal.Fragments.Cart.prepare_Cart;
+import static java.security.AccessController.getContext;
 
 public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.MyViewHolder> {
     private Context context;
@@ -74,7 +76,17 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
         holder.tv_cart_product_description.setTypeface(Home.roboto_light);
         holder.tv_product_price_total.setTypeface(Home.roboto_black);
 
-        holder.tv_cart_product_title.setText(cart_model.getProduct_name());
+
+        Navigation_drawer_activity.Check_String_NULL_Value(holder.tv_cart_product_title,cart_model.getProduct_name());
+        Navigation_drawer_activity.Check_String_NULL_Value(holder.tv_product_price_total,cart_model.getProduct_price());
+        Navigation_drawer_activity.Check_String_NULL_Value(holder.tv_cart_product_description,cart_model.getProduct_description());
+        Navigation_drawer_activity.Check_String_NULL_Value(holder.tv_cart_quantity_total,cart_model.getProduct_qty());
+
+
+      //  holder.tv_cart_product_title.setText(cart_model.getProduct_name());
+        //holder.tv_product_price_total.setText(cart_model.getProduct_price());
+        //holder.tv_cart_product_description.setText(cart_model.getProduct_description());
+        //holder.tv_cart_quantity_total.setText(cart_model.getProduct_qty());
 
         RequestOptions requestOptions = new RequestOptions();
         requestOptions.placeholder(R.drawable.app_logo_placeholder);
@@ -87,22 +99,22 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
 
 
         Log.e("total_price",""+cart_model.getProduct_price());
-        holder.tv_product_price_total.setText(cart_model.getProduct_price());
-        holder.tv_cart_product_description.setText(cart_model.getProduct_description());
-        holder.tv_cart_quantity_total.setText(cart_model.getProduct_qty());
 
         holder.iv_cart_quantity_increase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 holder.iv_cart_quantity_increase.setEnabled(false);
+
                 int textqut= Integer.parseInt(holder.tv_cart_quantity_total.getText().toString());
                 //quantity = textqut + 1;
                 int Result=textqut + 1;
                 itemid_cart = cart_model.getItemid();
                 quoteid_cart=Login_preference.getquote_id(context);
                 callAppUpdateCart(Result,itemid_cart,quoteid_cart,view, holder);
-            }
-        });
+
+               }
+
+            });
 
         holder.iv_cart_quantity_decrease.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,6 +157,22 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
                     if (status.equalsIgnoreCase("success")) {
                         holder.iv_cart_quantity_increase.setEnabled(true);
                         holder.iv_cart_quantity_decrease.setEnabled(true);
+                        /*JSONArray jsonArray = jsonObject.getJSONArray("products");
+                        Log.e("jsonarr_cart", "" + jsonArray);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            try {
+                                JSONObject vac_object = jsonArray.getJSONObject(i);
+                                Log.e("product_qty_160", "" + vac_object.getString("product_qty"));
+                                Cart_Model model = new Cart_Model(vac_object.getString("product_qty"));
+                                model.setProduct_qty(vac_object.getString("product_qty"));
+                                holder.tv_cart_quantity_total.setText(model.getProduct_qty());
+
+                            } catch (Exception e) {
+                                Log.e("Exception", "" + e);
+                            } finally {
+                                ///cart_adapter.notifyItemChanged(i);
+                            }
+                        }*/
                          prepare_Cart();
                        /* AppCompatActivity activity = (AppCompatActivity) view.getContext();
                         Fragment myFragment = new Cart();

@@ -71,6 +71,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:text="30.00 KD"
+                            android:visibility="gone"
                             android:textColor="@color/edittext"
                             android:textSize="14sp"
                             android:textStyle="bold" />
