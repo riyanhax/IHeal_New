@@ -53,9 +53,22 @@ import com.sismatix.iheal.Fragments.MyOrderDetails;
 import com.sismatix.iheal.Fragments.Nature_Category_freg;
 import com.sismatix.iheal.Fragments.Search;
 import com.sismatix.iheal.Fragments.Wishlist_fragment;
+import com.sismatix.iheal.Model.Cart_Model;
 import com.sismatix.iheal.Preference.Login_preference;
 import com.sismatix.iheal.R;
+import com.sismatix.iheal.Retrofit.ApiClient;
+import com.sismatix.iheal.Retrofit.ApiInterface;
 import com.sismatix.iheal.View.CustomTypefaceSpan;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.sismatix.iheal.Fragments.Cart.cartlistt;
 
 public class Navigation_drawer_activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -85,8 +98,8 @@ public class Navigation_drawer_activity extends AppCompatActivity
         setContentView(R.layout.activity_navigation_drawer);
         loginflagmain = Login_preference.getLogin_flag(Navigation_drawer_activity.this);
 
-
         cartitem_count = Login_preference.getCart_item_count(Navigation_drawer_activity.this);
+        Log.e("cart_total_items", "" + cartitem_count);
         Log.e("logingflag", "" + loginflagmain);
 
         AllocateMemory();
@@ -115,7 +128,6 @@ public class Navigation_drawer_activity extends AppCompatActivity
                     applyFontToMenuItem(subMenuItem);
                 }
             }
-
             //the method we have create in activity
             applyFontToMenuItem(mi);
         }
@@ -166,7 +178,70 @@ public class Navigation_drawer_activity extends AppCompatActivity
                 startActivity(intent);
             }
         });
+
         Bootom_Navigation_view();
+
+        if (loginflagmain.equalsIgnoreCase("1") || loginflagmain == "1") {
+            CALL_CART_COUNT_API();
+        }
+    }
+
+    private void CALL_CART_COUNT_API() {
+
+        String email = Login_preference.getemail(Navigation_drawer_activity.this);
+
+        String loginflag = Login_preference.getLogin_flag(Navigation_drawer_activity.this);
+        Log.e("customeriddd", "" + Login_preference.getcustomer_id(Navigation_drawer_activity.this));
+        if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
+            Log.e("with_login", "");
+            ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
+            cartlistt = api.Cartlist(email);
+        }
+
+        cartlistt.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Log.e("responseeeeee", "" + response.body().toString());
+
+                JSONObject jsonObject = null;
+                try {
+
+                    jsonObject = new JSONObject(response.body().string());
+                    String status = jsonObject.getString("status");
+                    Log.e("status_prepare_cart", "" + status);
+
+                    if (status.equalsIgnoreCase("success")) {
+
+                        String cart_items_count = jsonObject.getString("items_count");
+                        Login_preference.setCart_item_count(Navigation_drawer_activity.this, cart_items_count);
+                        Log.e("cart_items_total_cart", "" + cart_items_count);
+
+                        if (jsonObject.getString("items_count").equalsIgnoreCase("null") || jsonObject.getString("items_count").equals("")) {
+
+                            Navigation_drawer_activity.tv_bottomcount.setText("0");
+                            Navigation_drawer_activity.item_count.setText("0");
+
+                        } else {
+
+                            Navigation_drawer_activity.tv_bottomcount.setText(jsonObject.getString("items_count"));
+                            Navigation_drawer_activity.item_count.setText(jsonObject.getString("items_count"));
+
+                        }
+
+                    } else if (status.equalsIgnoreCase("error")) {
+
+                    }
+
+                } catch (Exception e) {
+                    Log.e("nav_exc", "" + e);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(Navigation_drawer_activity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void applyFontToMenuItem(MenuItem mi) {
@@ -326,30 +401,30 @@ public class Navigation_drawer_activity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    public static void Check_String_NULL_Value( TextView textview, String text) {
+
+    public static void Check_String_NULL_Value(TextView textview, String text) {
 
 
-        if(text.equalsIgnoreCase("null")==true)
-        {
+        if (text.equalsIgnoreCase("null") == true) {
             textview.setText("");
-        }else {
+        } else {
 
             textview.setText(Html.fromHtml(Convert_String_First_Letter(text)));
         }
 
     }
-    public static String  Convert_String_First_Letter(String convert_string)
-    {
-        String upperString ;
 
-        if(convert_string.length() > 0)
-        {
-            upperString = convert_string.substring(0,1).toUpperCase() + convert_string.substring(1);
-        }else {
-            upperString=" ";
+    public static String Convert_String_First_Letter(String convert_string) {
+        String upperString;
+
+        if (convert_string.length() > 0) {
+            upperString = convert_string.substring(0, 1).toUpperCase() + convert_string.substring(1);
+        } else {
+            upperString = " ";
         }
         return upperString;
     }
+
     private void disableNavigationViewScrollbars(NavigationView navigationView) {
         if (navigationView != null) {
             NavigationMenuView navigationMenuView = (NavigationMenuView) navigationView.getChildAt(0);
@@ -476,6 +551,7 @@ public class Navigation_drawer_activity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
+
         Log.e("countt_vinod", "" + count);
         if (count == 1) {
             if (doubleBackToExitPressedOnce) {

@@ -9,8 +9,9 @@
 
     <item
         android:id="@+id/bottom_nav_search"
-        android:icon="@drawable/ic_search_black_36dp"
-        android:title="@string/Search" />
+        android:icon="@drawable/product_cat"
+        android:iconTint="@color/white"
+        android:title="Categories" />
 
     <item
         android:id="@+id/bottom_nav_Wishlist"

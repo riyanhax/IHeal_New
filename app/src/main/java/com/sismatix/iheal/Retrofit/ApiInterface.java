@@ -15,10 +15,13 @@ public interface ApiInterface {
                               @Field("email") String email,
                               @Field("password") String password);
 
+    /*https://ihealkuwait.com/customapi/AppLogin.php?email=developertest2018@gmail.com&password=admin@123&quote_id=963*/
+
     @POST("AppLogin.php")
     @FormUrlEncoded
     Call<ResponseBody> login(@Field("email") String username,
-                             @Field("password") String password);
+                             @Field("password") String password,
+                             @Field("quote_id") String quote_id);
 
     @POST("logout.php")
     @FormUrlEncoded
@@ -54,16 +57,17 @@ public interface ApiInterface {
     @FormUrlEncoded
     Call<ResponseBody> withoutlogin_addtocart(@Field("product_id") String product_id,
                                               @Field("quote_id") String quote_id);
+
     @POST("AppAddToCart.php")
     @FormUrlEncoded
-    Call<ResponseBody>addtocart_wish(@Field("product_id") String product_id,
-                                          @Field("customer_id") String customer_id,
-                                          @Field("removeWishlist") String removeWishlist);
+    Call<ResponseBody> addtocart_wish(@Field("product_id") String product_id,
+                                      @Field("customer_id") String customer_id,
+                                      @Field("removeWishlist") String removeWishlist);
 
     @POST("AppAddToCart.php")
     @FormUrlEncoded
     Call<ResponseBody> withoutlg_quote_addtocart_wish(@Field("product_id") String product_id,
-                                                             @Field("removeWishlist") String removeWishlist);
+                                                      @Field("removeWishlist") String removeWishlist);
 
     @POST("AppCartList.php")
     @FormUrlEncoded
@@ -182,7 +186,7 @@ public interface ApiInterface {
                                         @Field("countryid") String countryid,
                                         @Field("postcode") String postcode,
                                         @Field("city") String city,
-                                        @Field("region")String region);
+                                        @Field("region") String region);
 
     @POST("AppOrderList.php")
     @FormUrlEncoded
@@ -191,11 +195,11 @@ public interface ApiInterface {
     @POST("AppReorder.php")
     @FormUrlEncoded
     Call<ResponseBody> AppReorder(@Field("customer_id") String customer_id,
-                                    @Field("order_id")String order_id);
+                                  @Field("order_id") String order_id);
+
     @POST("AppCatalogSearch.php")
     @FormUrlEncoded
     Call<ResponseBody> AppSearchCategory(@Field("searchterm") String searchterm);
-
 
 
 }

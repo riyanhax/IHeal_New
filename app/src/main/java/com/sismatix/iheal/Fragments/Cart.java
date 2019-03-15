@@ -60,6 +60,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navigation;
+import static com.sismatix.iheal.Fragments.EmailLogin.login_quote_id;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -225,7 +226,7 @@ public class Cart extends Fragment {
 
         //makin g api call
         ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
-        Call<ResponseBody> login = api.login(username, password);
+        Call<ResponseBody> login = api.login(username, password,login_quote_id);
 
         login.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -241,7 +242,7 @@ public class Cart extends Fragment {
                     String meassg = jsonObject.getString("message");
                     Log.e("message", "" + meassg);
                     if (status.equalsIgnoreCase("success")) {
-                     //   Toast.makeText(getContext(), "" + meassg, Toast.LENGTH_SHORT).show();
+                        //   Toast.makeText(getContext(), "" + meassg, Toast.LENGTH_SHORT).show();
                         Login_preference.setLogin_flag(getActivity(), "1");
                         Login_preference.setcustomer_id(getActivity(), jsonObject.getString("customer_id"));
                         Login_preference.setemail(getActivity(), jsonObject.getString("email"));
@@ -263,7 +264,7 @@ public class Cart extends Fragment {
                                 .addToBackStack(null)
                                 .commit();*/
                     } else if (status.equalsIgnoreCase("error")) {
-                     //   Toast.makeText(getContext(), "" + meassg, Toast.LENGTH_SHORT).show();
+                        //   Toast.makeText(getContext(), "" + meassg, Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (Exception e) {
@@ -306,11 +307,16 @@ public class Cart extends Fragment {
 
                 if (direction == ItemTouchHelper.LEFT) {
                     cart_adapter.removeItem(position);
-                }/*else if(direction == ItemTouchHelper.RIGHT)
+                }
+
+                /*else if(direction == ItemTouchHelper.RIGHT)
                 {
+
                     Toast.makeText(getActivity(), "edit data", Toast.LENGTH_SHORT).show();
 
-                }*/ else {
+                }*/
+
+                else {
                     removeView();
                 }
             }
@@ -385,7 +391,7 @@ public class Cart extends Fragment {
         } else {
             Log.e("without_login", "");
             String quote_id = Login_preference.getquote_id(context);
-            Log.e("quoteidd", "" + quote_id);
+            Log.e("quoteidd_cart", "" + quote_id);
             ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
             cartlistt = api.getlistcart(quote_id);
         }
@@ -408,23 +414,24 @@ public class Cart extends Fragment {
                         grand_total = jsonObject.getString("grand_total");
                         Log.e("gtot", "" + grand_total);
                         tv_maintotal.setText(grand_total);
-                        Navigation_drawer_activity.Check_String_NULL_Value(tv_maintotal,grand_total);
+                        Navigation_drawer_activity.Check_String_NULL_Value(tv_maintotal, grand_total);
 
                         qoute_id_cart = jsonObject.getString("quote_id");
                         Log.e("qoute_id_cart", "" + qoute_id_cart);
                         cart_items_count = jsonObject.getString("items_count");
-                        Login_preference.setCart_item_count(context,cart_items_count);
+                        Login_preference.setCart_item_count(context, cart_items_count);
                         Log.e("cart_items_total_cart", "" + cart_items_count);
 
-                        if(jsonObject.getString("items_count").equalsIgnoreCase("null")||jsonObject.getString("items_count").equals("")){
+                        if (jsonObject.getString("items_count").equalsIgnoreCase("null") || jsonObject.getString("items_count").equals("")) {
 
                             Navigation_drawer_activity.tv_bottomcount.setText("0");
                             Navigation_drawer_activity.item_count.setText("0");
 
-                        }else {
+                        } else {
 
                             Navigation_drawer_activity.tv_bottomcount.setText(jsonObject.getString("items_count"));
                             Navigation_drawer_activity.item_count.setText(jsonObject.getString("items_count"));
+
                         }
 
                         productslist = jsonObject.getString("products");

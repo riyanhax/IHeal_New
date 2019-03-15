@@ -61,7 +61,7 @@ public class Checkout_fragment extends Fragment implements View.OnClickListener 
         }
 
         checkout_total.setText(tot_cart);
-        Navigation_drawer_activity.Check_String_NULL_Value(checkout_total,tot_cart);
+//        Navigation_drawer_activity.Check_String_NULL_Value(checkout_total,tot_cart);
 
         lv_shipping.setOnClickListener(this);
         lv_confirmation.setOnClickListener(this);
@@ -83,7 +83,6 @@ public class Checkout_fragment extends Fragment implements View.OnClickListener 
     }
 
     private void AllocateMemory(View v) {
-
         lv_shipping = (LinearLayout) v.findViewById(R.id.lv_shipping);
         lv_confirmation = (LinearLayout) v.findViewById(R.id.lv_confirmation);
         lv_payment = (LinearLayout) v.findViewById(R.id.lv_payment);

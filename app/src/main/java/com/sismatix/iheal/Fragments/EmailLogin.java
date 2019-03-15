@@ -46,6 +46,7 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
     Button btn_login;
     TextView tv_forgotpassword, tv_email_title, tv_createdaccount;
     String screen, loginflag;
+    public static String login_quote_id;
     Bundle bundle;
     LinearLayout lv_login_parent;
 
@@ -76,6 +77,9 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
         btn_login.setOnClickListener(this);
         tv_forgotpassword.setOnClickListener(this);
         tv_createdaccount.setOnClickListener(this);
+
+        login_quote_id = (Login_preference.getquote_id(getContext()));
+        Log.e("login_quoteid",""+login_quote_id);
 
         return v;
     }
@@ -153,7 +157,7 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
 
         //makin g api call
         ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
-        Call<ResponseBody> login = api.login(username, password);
+        Call<ResponseBody> login = api.login(username, password,login_quote_id);
 
         login.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -176,6 +180,9 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
                         Login_preference.setfullname(getActivity(), jsonObject.getString("fullname"));
                         Log.e("screennn", "" + screen);
                         Log.e("bundleee", "" + bundle);
+                        String qid_login = jsonObject.getString("quote_id");
+                        Log.e("qid_login",""+qid_login);
+                        Login_preference.setquote_id(getContext(),qid_login);
                         if (bundle != null) {
                             Navigation_drawer_activity.loginflagmain = Login_preference.getLogin_flag(getActivity());
                             loginflag = Login_preference.getLogin_flag(getActivity());

@@ -48,11 +48,20 @@
 
         </android.support.design.widget.AppBarLayout>
     </LinearLayout>
-    <WebView xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <!--<Button
+        android:id="@+id/help_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="help_button" />-->
+
+   <!-- <WebView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"/>
+        android:layout_alignParentTop="true"/>-->
 
 </LinearLayout>
