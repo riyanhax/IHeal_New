@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,7 +54,7 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
     int current_price = 30;
     int product_total = current_price;
     Call<ResponseBody> remove_from_cart = null;
-    String itemid_cart, quoteid_cart;
+    String itemid_cart, quoteid_cart, item_qty;
 
     public static String cart_item_grand_total;
 
@@ -76,14 +77,15 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
         holder.tv_cart_product_description.setTypeface(Home.roboto_light);
         holder.tv_product_price_total.setTypeface(Home.roboto_black);
 
+        item_qty = cart_model.getProduct_qty();
 
-        Navigation_drawer_activity.Check_String_NULL_Value(holder.tv_cart_product_title,cart_model.getProduct_name());
-        Navigation_drawer_activity.Check_String_NULL_Value(holder.tv_product_price_total,cart_model.getProduct_price());
-        Navigation_drawer_activity.Check_String_NULL_Value(holder.tv_cart_product_description,cart_model.getProduct_description());
-        Navigation_drawer_activity.Check_String_NULL_Value(holder.tv_cart_quantity_total,cart_model.getProduct_qty());
+        Navigation_drawer_activity.Check_String_NULL_Value(holder.tv_cart_product_title, cart_model.getProduct_name());
+        Navigation_drawer_activity.Check_String_NULL_Value(holder.tv_product_price_total, cart_model.getProduct_price());
+        Navigation_drawer_activity.Check_String_NULL_Value(holder.tv_cart_product_description, cart_model.getProduct_description());
+        Navigation_drawer_activity.Check_String_NULL_Value(holder.tv_cart_quantity_total, cart_model.getProduct_qty());
 
 
-      //  holder.tv_cart_product_title.setText(cart_model.getProduct_name());
+        //  holder.tv_cart_product_title.setText(cart_model.getProduct_name());
         //holder.tv_product_price_total.setText(cart_model.getProduct_price());
         //holder.tv_cart_product_description.setText(cart_model.getProduct_description());
         //holder.tv_cart_quantity_total.setText(cart_model.getProduct_qty());
@@ -96,41 +98,42 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
                 .setDefaultRequestOptions(requestOptions)
                 .load(cart_model.getProduct_image()).into(holder.iv_cart_product_image);
 
+        Log.e("total_price", "" + cart_model.getProduct_price());
 
+        Log.e("itemid_cart", "" + cart_model.getItemid());
+        Log.e("quoteid_cart", "" + Login_preference.getquote_id(context));
 
-        Log.e("total_price",""+cart_model.getProduct_price());
 
         holder.iv_cart_quantity_increase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 holder.iv_cart_quantity_increase.setEnabled(false);
 
-                int textqut= Integer.parseInt(holder.tv_cart_quantity_total.getText().toString());
+                int textqut = Integer.parseInt(holder.tv_cart_quantity_total.getText().toString());
                 //quantity = textqut + 1;
-                int Result=textqut + 1;
+                int Result = textqut + 1;
                 itemid_cart = cart_model.getItemid();
-                quoteid_cart=Login_preference.getquote_id(context);
-                callAppUpdateCart(Result,itemid_cart,quoteid_cart,view, holder);
+                quoteid_cart = Login_preference.getquote_id(context);
+                callAppUpdateCart(Result, itemid_cart, quoteid_cart, view, holder);
+            }
 
-               }
-
-            });
+        });
 
         holder.iv_cart_quantity_decrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 holder.iv_cart_quantity_decrease.setEnabled(false);
-                int textqut= Integer.parseInt(holder.tv_cart_quantity_total.getText().toString());
+                int textqut = Integer.parseInt(holder.tv_cart_quantity_total.getText().toString());
                 itemid_cart = cart_model.getItemid();
-                quoteid_cart=Login_preference.getquote_id(context);
+                quoteid_cart = Login_preference.getquote_id(context);
                 if (textqut != 0) {
                     int Result = textqut - 1;
                     if (Result == 0) {
                         Result = 1;
-                        callAppUpdateCart(Result,itemid_cart,quoteid_cart,view, holder);
+                        callAppUpdateCart(Result, itemid_cart, quoteid_cart, view, holder);
                         // product_total = product_total - current_price;
                     } else {
-                        callAppUpdateCart(Result,itemid_cart,quoteid_cart,view,holder);
+                        callAppUpdateCart(Result, itemid_cart, quoteid_cart, view, holder);
                     }
                 } else {
                 }
@@ -139,8 +142,9 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
 
     }
 
-    private void callAppUpdateCart(int Resultt, String itemid_carttt, String quoteid_carttt, final View view, final MyViewHolder holder) {
-       // progressBar_cart.setVisibility(View.VISIBLE);
+    private void callAppUpdateCart(final int Resultt, String itemid_carttt, String quoteid_carttt, final View view, final MyViewHolder holder) {
+        holder.cart_count_pb.setVisibility(View.VISIBLE);
+
         ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
         Call<ResponseBody> appupdate = api.appUpdatecart(quoteid_carttt, String.valueOf(Resultt), itemid_carttt);
         appupdate.enqueue(new Callback<ResponseBody>() {
@@ -150,46 +154,36 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
 
                 JSONObject jsonObject = null;
                 try {
-                    //progressBar_cart.setVisibility(View.GONE);
+                    holder.cart_count_pb.setVisibility(View.GONE);
                     jsonObject = new JSONObject(response.body().string());
                     String status = jsonObject.getString("status");
                     Log.e("status_prepare_cart", "" + status);
                     if (status.equalsIgnoreCase("success")) {
                         holder.iv_cart_quantity_increase.setEnabled(true);
                         holder.iv_cart_quantity_decrease.setEnabled(true);
-                        /*JSONArray jsonArray = jsonObject.getJSONArray("products");
-                        Log.e("jsonarr_cart", "" + jsonArray);
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            try {
-                                JSONObject vac_object = jsonArray.getJSONObject(i);
-                                Log.e("product_qty_160", "" + vac_object.getString("product_qty"));
-                                Cart_Model model = new Cart_Model(vac_object.getString("product_qty"));
-                                model.setProduct_qty(vac_object.getString("product_qty"));
-                                holder.tv_cart_quantity_total.setText(model.getProduct_qty());
 
-                            } catch (Exception e) {
-                                Log.e("Exception", "" + e);
-                            } finally {
-                                ///cart_adapter.notifyItemChanged(i);
-                            }
-                        }*/
-                         prepare_Cart();
-                       /* AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                        Fragment myFragment = new Cart();
-                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.rootLayout, myFragment).addToBackStack(null).commit();*/
+                        //prepare_Cart();
+
+                        holder.tv_cart_quantity_total.setText(String.valueOf(Resultt));
+
+                        //holder.tv_cart_quantity_total.setText(item_qty);
+
                     } else if (status.equalsIgnoreCase("error")) {
+
                     }
 
                 } catch (Exception e) {
                     Log.e("exception", "" + e);
                 }
             }
+
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Toast.makeText(context, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
     @Override
     public int getItemCount() {
         return cartList.size();
@@ -227,17 +221,17 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
                     if (status.equalsIgnoreCase("Success")) {
                         cart_item_grand_total = jsonObject.getString("grand_total");
                         Cart.tv_maintotal.setText(cart_item_grand_total);
-                        Navigation_drawer_activity.Check_String_NULL_Value(Cart.tv_maintotal,cart_item_grand_total);
+                        Navigation_drawer_activity.Check_String_NULL_Value(Cart.tv_maintotal, cart_item_grand_total);
                         Cart.cart_items_count = jsonObject.getString("items_count");
                         Login_preference.setCart_item_count(context, Cart.cart_items_count);
 
-                        if(jsonObject.getString("items_count").equalsIgnoreCase("null")||jsonObject.getString("items_count").equals("")){
+                        if (jsonObject.getString("items_count").equalsIgnoreCase("null") || jsonObject.getString("items_count").equals("")) {
 
                             Navigation_drawer_activity.tv_bottomcount.setText("0");
                             Navigation_drawer_activity.item_count.setText("0");
-                            if(Item_details.count.equalsIgnoreCase("null")|| Item_details.count.equals("")){
+                            if (Item_details.count.equalsIgnoreCase("null") || Item_details.count.equals("")) {
                                 Item_details.badge.setCount("0");
-                            }else {
+                            } else {
                                 Item_details.badge.setCount(Item_details.count);
                             }
                             Item_details.icon.mutate();
@@ -245,23 +239,23 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
 
                             Log.e("count_remove_40", "" + jsonObject.getString("items_count"));
 
-                        }else {
+                        } else {
                             Log.e("count_remove_80", "" + jsonObject.getString("items_count"));
 
                             Navigation_drawer_activity.tv_bottomcount.setText(jsonObject.getString("items_count"));
 
                             Navigation_drawer_activity.item_count.setText(jsonObject.getString("items_count"));
-                            Item_details.count=jsonObject.getString("items_count");
+                            Item_details.count = jsonObject.getString("items_count");
 
 
-                            if( Item_details.count.equalsIgnoreCase("null")|| Item_details.count.equals("")){
+                            if (Item_details.count.equalsIgnoreCase("null") || Item_details.count.equals("")) {
                                 Log.e("count_40", "" + jsonObject.getString("items_count"));
 
                                 Item_details.badge.setCount("0");
                                 Item_details.icon.mutate();
-                                Item_details.icon.setDrawableByLayerId(R.id.ic_group_count,Item_details. badge);
+                                Item_details.icon.setDrawableByLayerId(R.id.ic_group_count, Item_details.badge);
 
-                            }else {
+                            } else {
                                 Log.e("count_80", "" + jsonObject.getString("items_count"));
 
                                 Item_details.badge.setCount(jsonObject.getString("items_count"));
@@ -273,7 +267,7 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
                         }
 
                         Toast.makeText(context, "" + status, Toast.LENGTH_SHORT).show();
-                         // prepare_Cart();
+                        // prepare_Cart();
                     } else if (status.equalsIgnoreCase("error")) {
                         // Toast.makeText(context, ""+meassg, Toast.LENGTH_SHORT).show();
                     }
@@ -288,10 +282,12 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
             }
         });
     }
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView tv_cart_product_title, tv_cart_product_description, tv_product_price_total, tv_cart_quantity_total;
         public ImageView iv_cart_product_image, iv_cart_quantity_decrease, iv_cart_quantity_increase;
         public RelativeLayout viewForeground;
+        ProgressBar cart_count_pb;
 
         public MyViewHolder(View view) {
             super(view);
@@ -303,6 +299,7 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
             iv_cart_quantity_decrease = (ImageView) view.findViewById(R.id.iv_cart_quantity_decrease);
             iv_cart_quantity_increase = (ImageView) view.findViewById(R.id.iv_cart_quantity_increase);
             viewForeground = (RelativeLayout) view.findViewById(R.id.view_foreground);
+            cart_count_pb = (ProgressBar) view.findViewById(R.id.cart_count_pb);
         }
     }
 }

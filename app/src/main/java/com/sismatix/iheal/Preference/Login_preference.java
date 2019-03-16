@@ -8,8 +8,6 @@ public class Login_preference {
     public static SharedPreferences mPrefs;
     public static SharedPreferences.Editor prefsEditor;
 
-
-
     public static void setLogin_flag(Context context, String value)
     {
         mPrefs = PreferenceManager.getDefaultSharedPreferences(context);

@@ -52,6 +52,7 @@ import static com.sismatix.iheal.Fragments.Cart.context;
 import static com.sismatix.iheal.Fragments.Cart.qoute_id_cart;
 import static com.sismatix.iheal.Fragments.Cart.qt;
 import static com.sismatix.iheal.Fragments.Cart.tv_maintotal;
+import static com.sismatix.iheal.Fragments.Wishlist_fragment.activity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -393,6 +394,32 @@ public class Confirmation_fragment extends Fragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if(getView() == null){
+            return;
+        }
+
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
+                    Fragment myFragment = new Home();
+                    activity.getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,
+                            0, 0, R.anim.fade_out).setCustomAnimations(R.anim.fade_in,
+                            0, 0, R.anim.fade_out).replace(R.id.rootLayout, myFragment).addToBackStack(null).commit();
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
     private void Allocatememory(View v) {
         recyclerview_confirmation = (RecyclerView) v.findViewById(R.id.recyclerview_confirmation);
         iv_confirm_pay = (LinearLayout) v.findViewById(R.id.lv_confirm_pay);
@@ -408,7 +435,9 @@ public class Confirmation_fragment extends Fragment {
         tv_conf_totamt = (TextView)v.findViewById(R.id.tv_conf_totamt);
 
         confirmation_cart_adapter = new Confirmation_cart_Adapter(getActivity(), cartList);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        mLayoutManager.setReverseLayout(true);
+        mLayoutManager.setStackFromEnd(true);
         recyclerview_confirmation.setLayoutManager(mLayoutManager);
         recyclerview_confirmation.setItemAnimator(new DefaultItemAnimator());
         recyclerview_confirmation.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));

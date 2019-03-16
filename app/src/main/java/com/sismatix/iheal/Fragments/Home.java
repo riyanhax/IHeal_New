@@ -29,6 +29,7 @@ import java.util.Locale;
 
 import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navigation;
 import static com.sismatix.iheal.Activity.Navigation_drawer_activity.drawer;
+import static com.sismatix.iheal.Fragments.Wishlist_fragment.activity;
 
 
 /**
@@ -48,9 +49,16 @@ public class Home extends Fragment implements View.OnClickListener {
 
     String value;
 
-    private long lastPressedTime;
+    /*private long lastPressedTime;
     private static final int PERIOD = 2000;
     boolean doubleBackToExitPressedOnce = false;
+*/
+    //boolean doubleBackToExitPressedOnce = false;
+
+    private static long back_pressed_time;
+    private static long PERIOD = 2000;
+
+
 
     public Home() {
         // Required empty public constructor
@@ -68,7 +76,7 @@ public class Home extends Fragment implements View.OnClickListener {
         setonclicklistners();
         setFontStyle();
 
-      //  Navigation_drawer_activity.item_count.setText(Login_preference.getCart_item_count(getActivity()));
+        //  Navigation_drawer_activity.item_count.setText(Login_preference.getCart_item_count(getActivity()));
 
         if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
             String fullname = Login_preference.getfullname(getActivity());
@@ -78,12 +86,11 @@ public class Home extends Fragment implements View.OnClickListener {
             btn_contact.setVisibility(View.VISIBLE);
         } else {
             lv_withlogin.setVisibility(View.GONE);
-           // lv_withoutlogin.setVisibility(View.VISIBLE);
+            // lv_withoutlogin.setVisibility(View.VISIBLE);
             btn_contact.setVisibility(View.GONE);
         }
 
         tv_hometitlename.setTypeface(Home.roboto_light);
-
 
 
         return v;
@@ -198,6 +205,35 @@ public class Home extends Fragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
 
+        if (getView() == null) {
+            return;
+        }
+
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                    Fragment myFragment = new Home();
+                    getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,
+                            0, 0, R.anim.fade_out).setCustomAnimations(R.anim.fade_in,
+                            0, 0, R.anim.fade_out).replace(R.id.rootLayout, myFragment).addToBackStack(null).commit();
+                    return true;
+                }
+                if (back_pressed_time + PERIOD > System.currentTimeMillis()) getActivity().onBackPressed();
+                else Toast.makeText(getContext(), "Press once again to exit!", Toast.LENGTH_SHORT).show();
+                back_pressed_time = System.currentTimeMillis();
+                return false;
+            }
+        });
+    }
+
+    /*@Override
+    public void onResume() {
+        super.onResume();
+
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
         getView().setOnKeyListener(new View.OnKeyListener() {
@@ -239,14 +275,14 @@ public class Home extends Fragment implements View.OnClickListener {
                 return false;
             }
         });
-    }
+    }*/
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
 
             case R.id.iv_hair_care:
-                    Toast.makeText(getActivity(), "Product is not Available", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Product is not Available", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.lv_creatnewaccount:
@@ -271,59 +307,59 @@ public class Home extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.iv_brain:
-                    value = "20";
-                    loadFragment(new Hair_Cair_fregment(), value);
-                    break;
+                value = "20";
+                loadFragment(new Hair_Cair_fregment(), value);
+                break;
 
             case R.id.iv_lung:
-                    value = "26";
-                    loadFragment(new Hair_Cair_fregment(), value);
-                    break;
+                value = "26";
+                loadFragment(new Hair_Cair_fregment(), value);
+                break;
 
             case R.id.iv_eye:
-                    value = "21";
-                    loadFragment(new Hair_Cair_fregment(), value);
+                value = "21";
+                loadFragment(new Hair_Cair_fregment(), value);
                 break;
 
             case R.id.iv_nose:
-                    value = "22";
-                    loadFragment(new Hair_Cair_fregment(), value);
+                value = "22";
+                loadFragment(new Hair_Cair_fregment(), value);
                 break;
 
             case R.id.iv_mouth:
 
-                    value = "23";
-                    loadFragment(new Hair_Cair_fregment(), value);
+                value = "23";
+                loadFragment(new Hair_Cair_fregment(), value);
                 break;
 
             case R.id.iv_teeth:
-                    value = "24";
-                    loadFragment(new Hair_Cair_fregment(), value);
+                value = "24";
+                loadFragment(new Hair_Cair_fregment(), value);
                 break;
 
             case R.id.iv_bones:
-                    value = "25";
-                    loadFragment(new Hair_Cair_fregment(), value);
+                value = "25";
+                loadFragment(new Hair_Cair_fregment(), value);
                 break;
 
             case R.id.iv_stomach:
-                    value = "27";
-                    loadFragment(new Hair_Cair_fregment(), value);
+                value = "27";
+                loadFragment(new Hair_Cair_fregment(), value);
                 break;
 
             case R.id.iv_liver:
-                    value = "28";
-                    loadFragment(new Hair_Cair_fregment(), value);
+                value = "28";
+                loadFragment(new Hair_Cair_fregment(), value);
                 break;
 
             case R.id.iv_kidney:
-                    value = "29";
-                    loadFragment(new Hair_Cair_fregment(), value);
+                value = "29";
+                loadFragment(new Hair_Cair_fregment(), value);
                 break;
 
             case R.id.iv_UT:
-                    value = "30";
-                    loadFragment(new Hair_Cair_fregment(), value);
+                value = "30";
+                loadFragment(new Hair_Cair_fregment(), value);
                 break;
             case R.id.btn_contact:
                 Handler handle = new Handler();
