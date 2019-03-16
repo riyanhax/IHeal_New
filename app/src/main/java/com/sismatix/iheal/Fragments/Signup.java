@@ -75,6 +75,7 @@ public class Signup extends Fragment implements View.OnClickListener {
         tv_signup_alreadyacc = (TextView) v.findViewById(R.id.tv_signup_alreadyacc);
         lv_signup_parent = (LinearLayout) v.findViewById(R.id.lv_signup_parent);
 
+        bottom_navigation.setVisibility(View.VISIBLE);
 
         setupUI(lv_signup_parent);
         tv_signup_title.setTypeface(Home.roboto_medium);

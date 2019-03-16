@@ -78,12 +78,12 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
         holder.tv_product_price_total.setTypeface(Home.roboto_black);
 
         item_qty = cart_model.getProduct_qty();
+        Log.e("item_qty_81", "" + item_qty);
 
         Navigation_drawer_activity.Check_String_NULL_Value(holder.tv_cart_product_title, cart_model.getProduct_name());
         Navigation_drawer_activity.Check_String_NULL_Value(holder.tv_product_price_total, cart_model.getProduct_price());
         Navigation_drawer_activity.Check_String_NULL_Value(holder.tv_cart_product_description, cart_model.getProduct_description());
         Navigation_drawer_activity.Check_String_NULL_Value(holder.tv_cart_quantity_total, cart_model.getProduct_qty());
-
 
         //  holder.tv_cart_product_title.setText(cart_model.getProduct_name());
         //holder.tv_product_price_total.setText(cart_model.getProduct_price());
@@ -99,10 +99,8 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
                 .load(cart_model.getProduct_image()).into(holder.iv_cart_product_image);
 
         Log.e("total_price", "" + cart_model.getProduct_price());
-
         Log.e("itemid_cart", "" + cart_model.getItemid());
         Log.e("quoteid_cart", "" + Login_preference.getquote_id(context));
-
 
         holder.iv_cart_quantity_increase.setOnClickListener(new View.OnClickListener() {
             @Override

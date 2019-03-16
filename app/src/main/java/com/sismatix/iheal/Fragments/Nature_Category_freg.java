@@ -104,6 +104,8 @@ public class Nature_Category_freg extends Fragment {
         recycler_product_category = (RecyclerView) view.findViewById(R.id.recycler_product_category);
         progressBar = (ProgressBar)view.findViewById(R.id.nature_progressBar);
 
+        bottom_navigation.setVisibility(View.VISIBLE);
+
         if (CheckNetwork.isNetworkAvailable(getActivity())) {
             CALL_PRODUCT_CATEGORY_API();
         } else {

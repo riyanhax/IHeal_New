@@ -33,6 +33,9 @@ import com.sismatix.iheal.R;
 import com.sismatix.iheal.sdk.JivoDelegate;
 import com.sismatix.iheal.sdk.JivoSdk;
 
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
+
 import java.util.Locale;
 
 /*import zendesk.core.AnonymousIdentity;
@@ -48,7 +51,7 @@ import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navi
  * A simple {@link Fragment} subclass.
  */
 
-public class Meassge_fragment extends Fragment {
+public class Meassge_fragment extends Fragment implements JivoDelegate{
     public static Toolbar toolbar_messg;
     LinearLayout lv_message_parent;
     Button help_button;
@@ -58,9 +61,6 @@ public class Meassge_fragment extends Fragment {
     public Meassge_fragment() {
         // Required empty public constructor
     }
-
-//okook ohhhkkkkk
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -68,15 +68,15 @@ public class Meassge_fragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_meassge_fragment, container, false);
         bottom_navigation.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
         //bottom_navigation.setVisibility(View.GONE);
-        //getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         lv_message_parent = (LinearLayout) v.findViewById(R.id.lv_message_parent);
         //help_button = (Button) v.findViewById(R.id.help_button);
         //hideKeyboard(getActivity());
         setupUI(lv_message_parent);
-
         setHasOptionsMenu(true);
 
-        //String lang = Locale.getDefault().getLanguage().indexOf("ru") >= 0 ? "ru" : "en";
+        String lang = Locale.getDefault().getLanguage().indexOf("ru") >= 0 ? "ru" : "en";
+
         //*********************************************************
 
         toolbar_messg = (Toolbar) v.findViewById(R.id.toolbar_messg);
@@ -85,87 +85,26 @@ public class Meassge_fragment extends Fragment {
                 .setDisplayHomeAsUpEnabled(true);
         ((Navigation_drawer_activity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_arrow_left_white_36dp);
 
-        /*SendBird.init("A5DBF5CD-8E29-4C68-9048-B0F7F71FC3EE", getContext());
+        jivoSdk = new JivoSdk((WebView) v.findViewById(R.id.webview), lang);
+        jivoSdk.delegate = this;
+        jivoSdk.prepare();
 
-        SendBird.connect("Dolphin", new SendBird.ConnectHandler() {
-            @Override
-            public void onConnected(User user, SendBirdException e) {
-                if (e != null) {    // Error.
-                    return;
-                }
-            }
-        });
+        bottom_navigation.setVisibility(View.VISIBLE);
 
-        OpenChannel.createChannel(new OpenChannel.OpenChannelCreateHandler() {
-            @Override
-            public void onResult(OpenChannel openChannel, SendBirdException e) {
-                if (e != null) {    // Error.
-                    return;
-                }
-            }
-        });
-
-        OpenChannel.getChannel("sendbird_open_channel_49268_27b162c4b36dcd871d53912d03b488fc55b0c21c", new OpenChannel.OpenChannelGetHandler() {
-            @Override
-            public void onResult(OpenChannel openChannel, SendBirdException e) {
-                if (e != null) {    // Error.
-                    return;
-                }
-
-                openChannel.enter(new OpenChannel.OpenChannelEnterHandler() {
+        KeyboardVisibilityEvent.setEventListener(
+                getActivity(),
+                new KeyboardVisibilityEventListener() {
                     @Override
-                    public void onResult(SendBirdException e) {
-                        if (e != null) {    // Error.
-                            return;
-                        }
+                    public void onVisibilityChanged(boolean isOpen) {
+                        bottom_navigation.setVisibility(View.GONE);
                     }
                 });
-            }
-        });*/
-
-        /*channel.sendUserMessage(MESSAGE, new BaseChannel.SendUserMessageHandler() {
-            @Override
-            public void onSent(UserMessage userMessage, SendBirdException e) {
-                if (e != null) {    // Error.
-                    return;
-                }
-            }
-        });*/
-
-
-       /* Zendesk.INSTANCE.init(getContext(), "https://dolphinwebsolution.zendesk.com",
-                "f3fea79c9188b306d43856994e20e03d8bdf4d4619b92b2f",
-                "mobile_sdk_client_16584b9c21dca9280662");
-        Support.INSTANCE.init(Zendesk.INSTANCE);*/
-
-     /*   Zendesk.INSTANCE.init(getContext(), "https://dolphinwebsolution.zendesk.com",
-                "f3fea79c9188b306d43856994e20e03d8bdf4d4619b92b2f",
-                "mobile_sdk_client_16584b9c21dca9280662");
-        Support.INSTANCE.init(Zendesk.INSTANCE);
-
-        Identity identity = new AnonymousIdentity();
-        Zendesk.INSTANCE.setIdentity(identity);
-        Support.INSTANCE.init(Zendesk.INSTANCE);
-
-        HelpCenterActivity.builder()
-                .show(getContext());*/
-
-        /*help_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HelpCenterActivity.builder()
-                        .show(getContext());
-            }
-        });*/
-
-      /*  jivoSdk = new JivoSdk((WebView) v.findViewById(R.id.webview), lang);
-        jivoSdk.delegate = this;
-        jivoSdk.prepare();*/
 
         return v;
+
     }
 
-   /* @Override
+    @Override
     public void onEvent(String name, String data) {
         if (name.equals("url.click")) {
             if (data.length() > 2) {
@@ -174,7 +113,7 @@ public class Meassge_fragment extends Fragment {
                 startActivity(browserIntent);
             }
         }
-    }*/
+    }
 
     public void setupUI(View view) {
 

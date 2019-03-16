@@ -34,6 +34,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navigation;
 import static com.sismatix.iheal.Fragments.Wishlist_fragment.progressBar;
 
 /**
@@ -60,6 +61,9 @@ public class MyOrder extends Fragment {
         my_orderlist_adapter = new My_orderlist_Adapter(getActivity(), my_order_models);
         recycler_orderlist.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         recycler_orderlist.setAdapter(my_orderlist_adapter);
+
+        bottom_navigation.setVisibility(View.VISIBLE);
+
         // snapHelper.attachToRecyclerView(recycler_wishlist);
 
         if (CheckNetwork.isNetworkAvailable(getActivity())) {

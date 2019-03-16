@@ -42,6 +42,8 @@ public class Account extends Fragment {
         tv_account_suwe = (TextView)v.findViewById(R.id.tv_account_suwe);
         tv_account_ahaa = (TextView)v.findViewById(R.id.tv_account_ahaa);
 
+        bottom_navigation.setVisibility(View.VISIBLE);
+
         tv_account_suwe.setTypeface(Home.roboto_medium);
         tv_account_ahaa.setTypeface(Home.roboto_regular);
 

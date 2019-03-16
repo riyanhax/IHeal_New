@@ -62,6 +62,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:17.3.4'
     implementation 'com.google.firebase:firebase-core:16.0.1'
 
+    implementation 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:2.2.1'
+
     //implementation group: 'com.zendesk', name: 'support', version: '2.2.1'
     //implementation 'com.sendbird.sdk:sendbird-android-sdk:3.0.88'
 }

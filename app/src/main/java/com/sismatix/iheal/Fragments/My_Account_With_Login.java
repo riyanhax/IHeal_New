@@ -104,6 +104,8 @@ public class My_Account_With_Login extends Fragment {
         ccp.setShowPhoneCode(false);
         ccp.setCcpDialogShowPhoneCode(false);
 
+        bottom_navigation.setVisibility(View.VISIBLE);
+
         ccp.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
             @Override
             public void onCountrySelected() {

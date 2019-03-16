@@ -84,6 +84,8 @@ public class Wishlist_fragment extends Fragment {
         toolbar_mywishlist = (Toolbar) v.findViewById(R.id.toolbar_mywishlist);
         // toolbar_mywishlist.setTitle("My Wishlist");
 
+        bottom_navigation.setVisibility(View.VISIBLE);
+
         ((Navigation_drawer_activity) getActivity()).setSupportActionBar(toolbar_mywishlist);
         ((Navigation_drawer_activity) getActivity()).getSupportActionBar()
                 .setDisplayHomeAsUpEnabled(true);

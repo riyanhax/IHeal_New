@@ -48,6 +48,8 @@ public class Forgotpassword_fragment extends Fragment implements View.OnClickLis
         btn_submit.setOnClickListener(this);
         iv_forget_password.setOnClickListener(this);
 
+        bottom_navigation.setVisibility(View.VISIBLE);
+
         return v;
     }
 

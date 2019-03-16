@@ -60,11 +60,11 @@ public class Item_details extends Fragment implements View.OnClickListener, View
     ImageView iv_wishlist, iv_itemdetail_cart, iv_back;
     LinearLayout lv_iteamdetails_click;
 
-    TextView tv_product_name, tv_product_price, tv_short_description, tv_long_descriptionn, tv_main_title,tv_descriptiontitle,
+    TextView tv_product_name, tv_product_price, tv_short_description, tv_long_descriptionn, tv_main_title, tv_descriptiontitle,
             tv_id_addtocart;
     ImageView iv_item_desc, iv_show_more;
 
-    String proddd_id, loginflag, iswhishlisted,prod_name;
+    String proddd_id, loginflag, iswhishlisted, prod_name;
     public static LayerDrawable icon;
     public static String count = "0";
     public static CountDrawable badge;
@@ -89,6 +89,8 @@ public class Item_details extends Fragment implements View.OnClickListener, View
         ((Navigation_drawer_activity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((Navigation_drawer_activity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_arrow_left_white_36dp);
 
+        bottom_navigation.setVisibility(View.VISIBLE);
+
         tv_main_title.setTypeface(Home.roboto_thin);
         tv_product_name.setTypeface(Home.roboto_bold);
         tv_product_price.setTypeface(Home.roboto_light);
@@ -104,7 +106,7 @@ public class Item_details extends Fragment implements View.OnClickListener, View
             prod_name = bundle.getString("prod_name");
             Log.e("prod_itemdetail_id", "" + proddd_id);
             call_item_detail_api(proddd_id);
-            }
+        }
 
         getActivity().setTitle(prod_name);
 
@@ -165,7 +167,7 @@ public class Item_details extends Fragment implements View.OnClickListener, View
 
                     String main_title = jsonObject.getString("product_name");
                     tv_main_title.setText(main_title);
-                    Navigation_drawer_activity.Check_String_NULL_Value(tv_main_title,main_title);
+                    Navigation_drawer_activity.Check_String_NULL_Value(tv_main_title, main_title);
 
                     iswhishlisted = jsonObject.getString("wishlist");
                     Log.e("ishwishlistedornot", "" + iswhishlisted);
@@ -180,18 +182,18 @@ public class Item_details extends Fragment implements View.OnClickListener, View
 
                     String proname = jsonObject.getString("product_sku");
                     tv_product_name.setText(proname);
-                    Navigation_drawer_activity.Check_String_NULL_Value(tv_product_name,proname);
+                    Navigation_drawer_activity.Check_String_NULL_Value(tv_product_name, proname);
 
                     String proprice = jsonObject.getString("product_price");
                     tv_product_price.setText(proprice);
-                    Navigation_drawer_activity.Check_String_NULL_Value(tv_product_price,proprice);
+                    Navigation_drawer_activity.Check_String_NULL_Value(tv_product_price, proprice);
 
                     final String desc = jsonObject.getString("description");
                     //tv_long_descriptionn.setText(Html.fromHtml(desc));
 
                     final String shortdesc = jsonObject.getString("short_description");
                     tv_short_description.setText(Html.fromHtml(shortdesc));
-                    Navigation_drawer_activity.Check_String_NULL_Value(tv_short_description,shortdesc);
+                    Navigation_drawer_activity.Check_String_NULL_Value(tv_short_description, shortdesc);
 
                     iv_item_desc.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -278,9 +280,9 @@ public class Item_details extends Fragment implements View.OnClickListener, View
         }
         count = Login_preference.getCart_item_count(getActivity());
         Log.e("count_142", "" + count);
-        if(count.equalsIgnoreCase("null")||count.equals("")){
+        if (count.equalsIgnoreCase("null") || count.equals("")) {
             badge.setCount("0");
-        }else {
+        } else {
             badge.setCount(count);
         }
         icon.mutate();
@@ -428,16 +430,18 @@ public class Item_details extends Fragment implements View.OnClickListener, View
 
         } else {
             String quote_id = Login_preference.getquote_id(getActivity());
+            Log.e("logout_431",""+quote_id);
+
             if (quote_id.equalsIgnoreCase("") || quote_id == "null") {
                 Log.e("without_quote_login", "");
                 ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
                 addtocart = api.withoutlogin_quote_addtocart(proddd_id);
-                Log.e("proddd_id_witoutquote", "" + proddd_id);
+                Log.e("proddd_id__437", "" + proddd_id);
 
             } else {
                 Log.e("without_login_withquote", "");
                 ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
-                Log.e("with_pass_quote_id_492", "" + Login_preference.getquote_id(getActivity()));
+                Log.e("with_pass_quote_id_442", "" + Login_preference.getquote_id(getActivity()));
                 addtocart = api.withoutlogin_addtocart(proddd_id, Login_preference.getquote_id(getActivity()));
             }
         }
@@ -454,38 +458,37 @@ public class Item_details extends Fragment implements View.OnClickListener, View
                     Log.e("message", "" + meassg);
                     if (status.equalsIgnoreCase("success")) {
                         Toast.makeText(getContext(), "" + meassg, Toast.LENGTH_SHORT).show();
-                        Login_preference.setquote_id(getActivity(), jsonObject.getString("quote_id"));
                         Log.e("quote_iddddd", "" + jsonObject.getString("quote_id"));
+                        Login_preference.setquote_id(getActivity(), jsonObject.getString("quote_id"));
                         Login_preference.setiteamqty(getActivity(), jsonObject.getString("items_qty"));
-                        Login_preference.setCart_item_count(getActivity(),jsonObject.getString("items_count"));
+                        Login_preference.setCart_item_count(getActivity(), jsonObject.getString("items_count"));
 
-                        if(jsonObject.getString("items_count").equalsIgnoreCase("null")||jsonObject.getString("items_count").equals("")){
+                        if (jsonObject.getString("items_count").equalsIgnoreCase("null") || jsonObject.getString("items_count").equals("")) {
 
                             Navigation_drawer_activity.tv_bottomcount.setText("0");
                             Navigation_drawer_activity.item_count.setText("0");
-                            count="0";
-                            if(count.equalsIgnoreCase("null")||count.equals("")){
+                            count = "0";
+                            if (count.equalsIgnoreCase("null") || count.equals("")) {
                                 badge.setCount("0");
-                            }else {
+                            } else {
                                 badge.setCount(count);
                             }
                             icon.mutate();
                             icon.setDrawableByLayerId(R.id.ic_group_count, badge);
 
-
-                        }else {
+                        } else {
 
                             Navigation_drawer_activity.tv_bottomcount.setText(jsonObject.getString("items_count"));
                             Navigation_drawer_activity.item_count.setText(jsonObject.getString("items_count"));
-                            count=jsonObject.getString("items_count");
-                            if(count.equalsIgnoreCase("null")||count.equals("")){
+                            count = jsonObject.getString("items_count");
+                            if (count.equalsIgnoreCase("null") || count.equals("")) {
                                 Log.e("count_40", "" + jsonObject.getString("items_count"));
 
                                 badge.setCount("0");
                                 icon.mutate();
                                 icon.setDrawableByLayerId(R.id.ic_group_count, badge);
 
-                            }else {
+                            } else {
                                 Log.e("count_80", "" + jsonObject.getString("items_count"));
 
                                 badge.setCount(jsonObject.getString("items_count"));
@@ -496,7 +499,7 @@ public class Item_details extends Fragment implements View.OnClickListener, View
 
                         }
 
-                       // loadFragment(new Cart());
+                        // loadFragment(new Cart());
 
                     } else if (status.equalsIgnoreCase("error")) {
                         Toast.makeText(getContext(), "" + meassg, Toast.LENGTH_SHORT).show();

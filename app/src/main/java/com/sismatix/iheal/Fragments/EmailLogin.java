@@ -46,7 +46,7 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
     Button btn_login;
     TextView tv_forgotpassword, tv_email_title, tv_createdaccount;
     String screen, loginflag;
-    public static String login_quote_id;
+    String login_quote_id;
     Bundle bundle;
     LinearLayout lv_login_parent;
 
@@ -68,6 +68,8 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
        // InputMethodManager imgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
        // imgr.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
 
+        bottom_navigation.setVisibility(View.VISIBLE);
+
         tv_email_title.setTypeface(Home.roboto_medium);
         login_email.setTypeface(Home.roboto_regular);
         login_password.setTypeface(Home.roboto_regular);
@@ -82,6 +84,7 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
         Log.e("login_quoteid",""+login_quote_id);
 
         return v;
+
     }
 
     private void AllocateMemory(View v) {
@@ -126,7 +129,7 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
             /*signup_input_layout_password.setError("Please enter your Password");*/
             Toast.makeText(getContext(), "Please enter your Password", Toast.LENGTH_SHORT).show();
         } else {
-            loginUser(username, password);
+            loginUser(username, password,login_quote_id);
         }
 
         //checking if username is empty
@@ -150,14 +153,27 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
         //Login User if everything is fine
     }
 
-    private void loginUser(String username, String password) {
+    private void loginUser(String username, String password, String login_quote_id_pass) {
 
-        Log.e("username ", "" + username);
-        Log.e("password ", "" + password);
+       /* Log.e("username ", "" + username);
+        Log.e("password ", "" + password);*/
+
+        Log.e("login_email", "" + username);
+        Log.e("login_password", "" + password);
+
+        if (login_quote_id_pass.equalsIgnoreCase("") == true || login_quote_id_pass == ""){
+            Log.e("login_quote__163",""+ login_quote_id_pass);
+        }
+
+        Log.e("login_quote__161",""+ login_quote_id_pass);
 
         //makin g api call
         ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
-        Call<ResponseBody> login = api.login(username, password,login_quote_id);
+        Call<ResponseBody> login = api.login(username, password, login_quote_id);
+
+       /* Log.e("login_email",""+username);
+        Log.e("login_password",""+password);
+        Log.e("login_quote",""+login_quote_id);*/
 
         login.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -178,11 +194,12 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
                         Login_preference.setcustomer_id(getActivity(), jsonObject.getString("customer_id"));
                         Login_preference.setemail(getActivity(), jsonObject.getString("email"));
                         Login_preference.setfullname(getActivity(), jsonObject.getString("fullname"));
+                        Log.e("fullname_lofin",""+jsonObject.getString("fullname"));
+                        String qid_login = jsonObject.getString("quote_id");
+                        Log.e("qid_login",""+jsonObject.getString("quote_id"));
+                        Login_preference.setquote_id(getContext(),jsonObject.getString("quote_id"));
                         Log.e("screennn", "" + screen);
                         Log.e("bundleee", "" + bundle);
-                        String qid_login = jsonObject.getString("quote_id");
-                        Log.e("qid_login",""+qid_login);
-                        Login_preference.setquote_id(getContext(),qid_login);
                         if (bundle != null) {
                             Navigation_drawer_activity.loginflagmain = Login_preference.getLogin_flag(getActivity());
                             loginflag = Login_preference.getLogin_flag(getActivity());

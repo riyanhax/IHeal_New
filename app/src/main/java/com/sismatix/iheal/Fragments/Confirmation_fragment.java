@@ -89,6 +89,8 @@ public class Confirmation_fragment extends Fragment {
             Toast.makeText(getContext(), "Please Check your Internet Connection", Toast.LENGTH_SHORT).show();
         }
 
+        bottom_navigation.setVisibility(View.VISIBLE);
+
         Bundle bundle = this.getArguments();
 
         if (bundle != null) {

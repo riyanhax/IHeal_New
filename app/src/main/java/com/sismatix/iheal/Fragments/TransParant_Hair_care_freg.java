@@ -63,6 +63,8 @@ public class TransParant_Hair_care_freg extends Fragment {
 
         setHasOptionsMenu(true);
 
+        bottom_navigation.setVisibility(View.VISIBLE);
+
         Bundle bundle = this.getArguments();
 
         cat_id =bundle.getString("cat_id");

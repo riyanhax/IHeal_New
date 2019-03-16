@@ -78,6 +78,8 @@ public class Payment_fragment extends Fragment {
         tv_payment_title.setTypeface(Home.roboto_bold);
         tv_payconf.setTypeface(Home.roboto_bold);
 
+        bottom_navigation.setVisibility(View.VISIBLE);
+
         if (CheckNetwork.isNetworkAvailable(getActivity())) {
             CALL_PAYMENT_API();
         } else {

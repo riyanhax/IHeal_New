@@ -66,6 +66,8 @@ public class Product_category_freg extends Fragment {
             Toast.makeText(getContext(), "Please Check your Internet Connection", Toast.LENGTH_SHORT).show();
         }
 
+        bottom_navigation.setVisibility(View.VISIBLE);
+
         product_category_adapter = new Product_Category_adapter(getActivity(), product_model);
         recycler_product_category.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         recycler_product_category.setItemAnimator(new DefaultItemAnimator());

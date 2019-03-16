@@ -29,6 +29,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navigation;
 import static com.sismatix.iheal.Fragments.Hair_Cair_fregment.product_array;
 
 /**
@@ -68,6 +69,9 @@ public class Tablayout_hair_fregment extends Fragment {
         recycler_product.setItemAnimator(new DefaultItemAnimator());
         recycler_product.setAdapter(product_adapter);
         CALL_PRODUCT_API();
+
+        bottom_navigation.setVisibility(View.VISIBLE);
+
         return v;
     }
     private void CALL_PRODUCT_API() {

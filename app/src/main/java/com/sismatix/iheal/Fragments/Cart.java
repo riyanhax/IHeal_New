@@ -60,7 +60,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navigation;
-import static com.sismatix.iheal.Fragments.EmailLogin.login_quote_id;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -101,6 +100,8 @@ public class Cart extends Fragment {
         } else {
             Toast.makeText(getContext(), "Please Check your Internet Connection", Toast.LENGTH_SHORT).show();
         }
+
+        bottom_navigation.setVisibility(View.VISIBLE);
 
         cart_adapter = new Cart_List_Adapter(getActivity(), cartList);
         // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
@@ -221,8 +222,9 @@ public class Cart extends Fragment {
 
     private void loginUser(String username, String password) {
 
-        Log.e("username ", "" + username);
-        Log.e("password ", "" + password);
+        String login_quote_id = Login_preference.getquote_id(getContext());
+        Log.e("username_cart ", "" + username);
+        Log.e("password_cart ", "" + password);
 
         //makin g api call
         ApiInterface api = ApiClient.getClient().create(ApiInterface.class);

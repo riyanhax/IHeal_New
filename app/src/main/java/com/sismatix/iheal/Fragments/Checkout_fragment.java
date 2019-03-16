@@ -46,6 +46,8 @@ public class Checkout_fragment extends Fragment implements View.OnClickListener 
 
         AllocateMemory(v);
 
+        bottom_navigation.setVisibility(View.VISIBLE);
+
         tv_checkout_title.setTypeface(Home.roboto_bold);
         tv_shipping.setTypeface(Home.roboto_regular);
         tv_payment.setTypeface(Home.roboto_regular);

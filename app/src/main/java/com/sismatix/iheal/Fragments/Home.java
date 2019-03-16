@@ -76,6 +76,8 @@ public class Home extends Fragment implements View.OnClickListener {
         setonclicklistners();
         setFontStyle();
 
+        bottom_navigation.setVisibility(View.VISIBLE);
+
         //  Navigation_drawer_activity.item_count.setText(Login_preference.getCart_item_count(getActivity()));
 
         if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {

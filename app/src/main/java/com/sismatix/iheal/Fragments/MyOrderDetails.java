@@ -19,6 +19,8 @@ import com.sismatix.iheal.Preference.Login_preference;
 import com.sismatix.iheal.R;
 import com.sismatix.iheal.View.CountDrawable;
 
+import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navigation;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -46,6 +48,8 @@ public class MyOrderDetails extends Fragment {
         Log.e("cust_final",""+customer_id_final);
 
         Bundle bundle = this.getArguments();
+
+        bottom_navigation.setVisibility(View.VISIBLE);
 
         if (bundle != null) {
 

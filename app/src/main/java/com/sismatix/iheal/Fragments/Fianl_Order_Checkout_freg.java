@@ -43,6 +43,8 @@ public class Fianl_Order_Checkout_freg extends Fragment {
             }
         });
 
+        bottom_navigation.setVisibility(View.VISIBLE);
+
         return v;
     }
 

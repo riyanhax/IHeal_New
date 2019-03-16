@@ -101,6 +101,8 @@ public class Hair_Cair_fregment extends Fragment {
         setHasOptionsMenu(true);
         Bundle bundle = this.getArguments();
 
+        bottom_navigation.setVisibility(View.VISIBLE);
+
 /*        collapsingToolbar.setCollapsedTitleTypeface(Home.roboto_medium);
         collapsingToolbar.setExpandedTitleTypeface(Home.roboto_medium);*/
 

@@ -52,6 +52,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
+import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navigation;
 import static com.sismatix.iheal.Adapter.Cart_Delivery_Adapter.shippingmethod;
 import static com.sismatix.iheal.Adapter.Payment_Method_Adapter.paymentcode_ada;
 
@@ -103,7 +104,7 @@ public class Shipping_fragment extends Fragment {
         ccp.setShowPhoneCode(false);
         ccp.setCcpDialogShowPhoneCode(false);
 
-
+        bottom_navigation.setVisibility(View.VISIBLE);
 
         ccp.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
             @Override

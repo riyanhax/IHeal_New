@@ -174,6 +174,9 @@ public class Navigation_drawer_activity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 Login_preference.setLogin_flag(Navigation_drawer_activity.this, "0");
+                Cart.cartList.clear();
+                Login_preference.prefsEditor.remove("quote_id").apply();
+                Login_preference.prefsEditor.remove("item_count").apply();
                 Intent intent = new Intent(Navigation_drawer_activity.this, Navigation_drawer_activity.class);
                 startActivity(intent);
             }
