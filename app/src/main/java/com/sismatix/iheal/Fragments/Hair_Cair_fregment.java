@@ -171,7 +171,6 @@ public class Hair_Cair_fregment extends Fragment {
                     String categoryimage = jsonObject.getString("categoryimage");
                     Log.e("categoryimage", "" + categoryimage);
 
-
                     RequestOptions requestOptions = new RequestOptions();
                     requestOptions.placeholder(R.drawable.app_logo_placeholder);
                     requestOptions.error(R.drawable.app_logo_placeholder);

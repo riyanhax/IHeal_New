@@ -58,8 +58,6 @@ public class Home extends Fragment implements View.OnClickListener {
     private static long back_pressed_time;
     private static long PERIOD = 2000;
 
-
-
     public Home() {
         // Required empty public constructor
     }
@@ -93,7 +91,6 @@ public class Home extends Fragment implements View.OnClickListener {
         }
 
         tv_hometitlename.setTypeface(Home.roboto_light);
-
 
         return v;
     }

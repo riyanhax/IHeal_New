@@ -28,7 +28,7 @@ public class Cart_Delivery_Adapter extends RecyclerView.Adapter<com.sismatix.ihe
     private List<Cart_Delivery_Model> model;
     //int minteger = 1;
     int current_price = 30;
-  public static   int selectedPosition = -1;
+  public static int selectedPosition = -1;
     public static String shippingmethod;
     //int product_total = current_price;
 
