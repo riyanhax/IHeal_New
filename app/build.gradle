@@ -17,15 +17,6 @@ android {
         }
     }
 }
-
-/*repositories {
-    maven { url 'https://zendesk.jfrog.io/zendesk/repo' }//aa ok 6
-}*/
-
-/*repositories {
-    maven { url "https://raw.githubusercontent.com/smilefam/SendBird-SDK-Android/master/" }
-}*/
-
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:28.0.0'
@@ -61,6 +52,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:16.0.0'
     implementation 'com.google.firebase:firebase-messaging:17.3.4'
     implementation 'com.google.firebase:firebase-core:16.0.1'
+    implementation 'com.github.Tap-Payments:goSellSDK-Android:1.1.2'
 
     implementation 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:2.2.1'
 

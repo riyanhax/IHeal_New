@@ -1,6 +1,7 @@
 package com.sismatix.iheal.Fragments;
 
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sismatix.iheal.Activity.Navigation_drawer_activity;
+import com.sismatix.iheal.Activity.Web_tappayment;
 import com.sismatix.iheal.Adapter.Cart_List_Adapter;
 import com.sismatix.iheal.Adapter.Confirmation_cart_Adapter;
 import com.sismatix.iheal.Model.Cart_Model;
@@ -35,13 +37,21 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import company.tap.gosellapi.api.facade.APIRequestCallback;
+import company.tap.gosellapi.api.facade.GoSellAPI;
+import company.tap.gosellapi.api.facade.GoSellError;
+import company.tap.gosellapi.api.model.Charge;
+import company.tap.gosellapi.api.model.Redirect;
+import company.tap.gosellapi.api.requests.CreateChargeRequest;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.android.volley.VolleyLog.TAG;
 import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navigation;
 import static com.sismatix.iheal.Adapter.Cart_Delivery_Adapter.shippingmethod;
 import static com.sismatix.iheal.Adapter.Payment_Method_Adapter.paymentcode_ada;
@@ -68,6 +78,7 @@ public class Confirmation_fragment extends Fragment {
     String paycode;
     LinearLayout lv_confirm_pay;
     ProgressBar progressBar;
+    private Charge charge;
     View v;
 
     public Confirmation_fragment() {
@@ -168,7 +179,8 @@ public class Confirmation_fragment extends Fragment {
                 handler.postDelayed(new Runnable() {
                     public void run() {
 
-                        CONFIRMATION_CART();
+                        //CONFIRMATION_CART();
+                        conform_TPApayment();
 
                         /*loadFragment(new Fianl_Order_Checkout_freg());*/
 
@@ -253,6 +265,50 @@ public class Confirmation_fragment extends Fragment {
         });
 
         return v;
+    }
+
+    private void conform_TPApayment() {
+        //final Source source = new Source("card", "12", "20", "4242424242424242", "123");
+        HashMap chargeMetadata = new HashMap<>();
+        chargeMetadata.put("Order Number", "ORD-1001");
+        Log.e("",""+chargeMetadata);
+        GoSellAPI.getInstance("sk_test_stR9ydEPWUcaN3kZ74TfuAYg").createCharge(
+                new CreateChargeRequest
+                        .Builder(1000, "KWD", new Redirect("https://ihealkuwait.com/", "https://ihealkuwait.com/"))
+                        .source(null)
+                        .statement_descriptor("Test Txn 001")
+                        .description("Test Transaction")
+                        .metadata(chargeMetadata)
+                        .receipt_sms("96598989898")
+                        .receipt_email("test@test.com")
+                        .capture(true)
+                        .threeds(true)
+                        .reference("123456")
+                        .first_name("John")
+                        .last_name("Doe")
+                        .build(),
+                new APIRequestCallback<Charge>() {
+                    @Override
+                    public void onSuccess(int responseCode, Charge serializedResponse) {
+                        Log.d(TAG, "onSuccess createCharge: serializedResponse:" + serializedResponse);
+                        charge = serializedResponse;
+                        Log.e("vinod_URL",""+charge.getRedirect());
+                        Log.e("URL_main",""+ charge.getRedirect().getUrl());
+                        Intent intent= new Intent(getActivity(),Web_tappayment.class);
+                        intent.putExtra("url",charge.getRedirect().getUrl());
+                        startActivity(intent);
+                        /*Intent i = new Intent(Intent.ACTION_VIEW);
+                        i.setData(Uri.parse(charge.getRedirect().getUrl()));
+                        startActivity(i);*/
+
+                    }
+
+                    @Override
+                    public void onFailure(GoSellError errorDetails) {
+                        Log.d(TAG, "onFailure createCharge, errorCode: " + errorDetails.getErrorCode() + ", errorBody: " + errorDetails.getErrorBody() + ", throwable: " + errorDetails.getThrowable());
+                    }
+                }
+        );
     }
 
     private void settypeface() {

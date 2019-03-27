@@ -43,7 +43,9 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".Activity.Chat_meassge"></activity>
+        <activity android:name=".Activity.Chat_meassge" />
+        <activity android:name=".Activity.Web_tappayment" />
+        <activity android:name=".Activity.Confirmation_screen"></activity>
     </application>
 
 </manifest>
