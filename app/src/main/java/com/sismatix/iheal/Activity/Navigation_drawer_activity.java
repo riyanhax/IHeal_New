@@ -390,8 +390,9 @@ public class Navigation_drawer_activity extends AppCompatActivity
             }
         } else if (id == R.id.nav_messages) {
             if (loginflagmain.equalsIgnoreCase("1") || loginflagmain == "1") {
-
-                pushFragment(new Meassge_fragment(), "Meassge");
+                Intent intent=new Intent(Navigation_drawer_activity.this,Chat_meassge.class);
+                startActivity(intent);
+               /// pushFragment(new Meassge_fragment(), "Meassge");
             } else {
 
                 pushFragment(new Account(), "Login_myaccount");

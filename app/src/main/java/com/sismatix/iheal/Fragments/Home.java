@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sismatix.iheal.Activity.Chat_meassge;
 import com.sismatix.iheal.Activity.Navigation_drawer_activity;
 import com.sismatix.iheal.Preference.Login_preference;
 import com.sismatix.iheal.R;
@@ -364,8 +365,9 @@ public class Home extends Fragment implements View.OnClickListener {
                 Handler handle = new Handler();
                 handle.postDelayed(new Runnable() {
                     public void run() {
-
-                        loadFragmentt(new Meassge_fragment());
+                        Intent intent=new Intent(getActivity(),Chat_meassge.class);
+                        startActivity(intent);
+                        //loadFragmentt(new Meassge_fragment());
 
                     }
                 }, 1000);

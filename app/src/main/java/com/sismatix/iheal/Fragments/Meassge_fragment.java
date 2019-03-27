@@ -28,6 +28,7 @@ import com.sendbird.android.SendBird;
 import com.sendbird.android.SendBirdException;
 import com.sendbird.android.User;
 import com.sendbird.android.UserMessage;*/
+import com.sismatix.iheal.Activity.Chat_meassge;
 import com.sismatix.iheal.Activity.Navigation_drawer_activity;
 import com.sismatix.iheal.R;
 import com.sismatix.iheal.sdk.JivoDelegate;
@@ -51,9 +52,9 @@ import static com.sismatix.iheal.Activity.Navigation_drawer_activity.bottom_navi
  * A simple {@link Fragment} subclass.
  */
 
-public class Meassge_fragment extends Fragment implements JivoDelegate{
+public class Meassge_fragment extends Fragment{
     public static Toolbar toolbar_messg;
-    LinearLayout lv_message_parent;
+    LinearLayout lv_message_parent,lv_chat;
     Button help_button;
 
     JivoSdk jivoSdk;
@@ -70,12 +71,19 @@ public class Meassge_fragment extends Fragment implements JivoDelegate{
         //bottom_navigation.setVisibility(View.GONE);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         lv_message_parent = (LinearLayout) v.findViewById(R.id.lv_message_parent);
+        lv_chat = (LinearLayout) v.findViewById(R.id.lv_chat);
         //help_button = (Button) v.findViewById(R.id.help_button);
         //hideKeyboard(getActivity());
-        setupUI(lv_message_parent);
+       // setupUI(lv_message_parent);
         setHasOptionsMenu(true);
-
-        String lang = Locale.getDefault().getLanguage().indexOf("ru") >= 0 ? "ru" : "en";
+        lv_chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getActivity(),Chat_meassge.class);
+                startActivity(intent);
+            }
+        });
+        //String lang = Locale.getDefault().getLanguage().indexOf("ru") >= 0 ? "ru" : "en";
 
         //*********************************************************
 
@@ -85,26 +93,26 @@ public class Meassge_fragment extends Fragment implements JivoDelegate{
                 .setDisplayHomeAsUpEnabled(true);
         ((Navigation_drawer_activity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_arrow_left_white_36dp);
 
-        jivoSdk = new JivoSdk((WebView) v.findViewById(R.id.webview), lang);
+        /*jivoSdk = new JivoSdk((WebView) v.findViewById(R.id.webview), lang);
         jivoSdk.delegate = this;
-        jivoSdk.prepare();
+        jivoSdk.prepare();*/
 
         bottom_navigation.setVisibility(View.VISIBLE);
 
-        KeyboardVisibilityEvent.setEventListener(
+       /* KeyboardVisibilityEvent.setEventListener(
                 getActivity(),
                 new KeyboardVisibilityEventListener() {
                     @Override
                     public void onVisibilityChanged(boolean isOpen) {
                         bottom_navigation.setVisibility(View.GONE);
                     }
-                });
+                });*/
 
         return v;
 
     }
 
-    @Override
+   /* @Override
     public void onEvent(String name, String data) {
         if (name.equals("url.click")) {
             if (data.length() > 2) {
@@ -113,8 +121,8 @@ public class Meassge_fragment extends Fragment implements JivoDelegate{
                 startActivity(browserIntent);
             }
         }
-    }
-
+    }*/
+/*
     public void setupUI(View view) {
 
         // Set up touch listener for non-text box views to hide keyboard.
@@ -134,7 +142,7 @@ public class Meassge_fragment extends Fragment implements JivoDelegate{
                 setupUI(innerView);
             }
         }
-    }
+    }*/
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

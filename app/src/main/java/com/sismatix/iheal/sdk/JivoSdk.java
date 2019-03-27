@@ -1,21 +1,17 @@
 package com.sismatix.iheal.sdk;
 
 import android.app.Activity;
-import android.app.NativeActivity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
-import android.support.v7.app.AppCompatActivity;
+import android.net.Uri;
 import android.util.DisplayMetrics;
-import android.view.View;
 import android.view.ViewTreeObserver;
-import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebViewClient;
-
-import com.sismatix.iheal.Activity.Navigation_drawer_activity;
-import com.sismatix.iheal.Fragments.AccountTabs;
 
 public class JivoSdk {
 
@@ -37,12 +33,8 @@ public class JivoSdk {
     }
 
     public void prepare(){
-
-     //   AppCompatActivity activity = (AppCompatActivity) view.getContext();
         DisplayMetrics dm = new DisplayMetrics();
-        int height = dm.heightPixels;
-        int width = dm.widthPixels;
-        /*((Activity)delegate).getWindowManager().getDefaultDisplay().getMetrics(dm);*/
+        ((Activity)delegate).getWindowManager().getDefaultDisplay().getMetrics(dm);
         final float density = dm.density;
 
         ViewTreeObserver.OnGlobalLayoutListener list = new ViewTreeObserver.OnGlobalLayoutListener() {
