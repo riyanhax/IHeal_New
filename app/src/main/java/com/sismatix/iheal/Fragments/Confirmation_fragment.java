@@ -15,7 +15,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -23,7 +22,6 @@ import android.widget.Toast;
 
 import com.sismatix.iheal.Activity.Navigation_drawer_activity;
 import com.sismatix.iheal.Activity.Web_tappayment;
-import com.sismatix.iheal.Adapter.Cart_List_Adapter;
 import com.sismatix.iheal.Adapter.Confirmation_cart_Adapter;
 import com.sismatix.iheal.Model.Cart_Model;
 import com.sismatix.iheal.Preference.CheckNetwork;
@@ -39,6 +37,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 
 import company.tap.gosellapi.api.facade.APIRequestCallback;
 import company.tap.gosellapi.api.facade.GoSellAPI;
@@ -61,7 +60,6 @@ import static com.sismatix.iheal.Fragments.Cart.cartlistt;
 import static com.sismatix.iheal.Fragments.Cart.context;
 import static com.sismatix.iheal.Fragments.Cart.qoute_id_cart;
 import static com.sismatix.iheal.Fragments.Cart.qt;
-import static com.sismatix.iheal.Fragments.Cart.tv_maintotal;
 import static com.sismatix.iheal.Fragments.Wishlist_fragment.activity;
 
 /**
@@ -76,9 +74,10 @@ public class Confirmation_fragment extends Fragment {
     String fname_confirm, lname_confirm, zipcode_confirm, city_confirm, phone_confirm, fax_confirm, company_confirm, streetadd_confirm,
             countryid_confirm, customerid_confirm, saveaddress_confirm, shipping_confirm, email_confirm, quote_confirm,reg_confirm;
     String paycode;
+    double price;
+    Charge charge;
     LinearLayout lv_confirm_pay;
     ProgressBar progressBar;
-    private Charge charge;
     View v;
 
     public Confirmation_fragment() {
@@ -94,11 +93,6 @@ public class Confirmation_fragment extends Fragment {
         Allocatememory(v);
         settypeface();
 
-        if (CheckNetwork.isNetworkAvailable(getActivity())) {
-            prepareConfirmCart();
-        } else {
-            Toast.makeText(getContext(), "Please Check your Internet Connection", Toast.LENGTH_SHORT).show();
-        }
 
         bottom_navigation.setVisibility(View.VISIBLE);
 
@@ -179,8 +173,7 @@ public class Confirmation_fragment extends Fragment {
                 handler.postDelayed(new Runnable() {
                     public void run() {
 
-                        //CONFIRMATION_CART();
-                        conform_TPApayment();
+                        CONFIRMATION_CART();
 
                         /*loadFragment(new Fianl_Order_Checkout_freg());*/
 
@@ -264,32 +257,40 @@ public class Confirmation_fragment extends Fragment {
             }
         });
 
+        if (CheckNetwork.isNetworkAvailable(getActivity())) {
+            prepareConfirmCart();
+        } else {
+            Toast.makeText(getContext(), "Please Check your Internet Connection", Toast.LENGTH_SHORT).show();
+        }
+
+
         return v;
     }
 
-    private void conform_TPApayment() {
-        //final Source source = new Source("card", "12", "20", "4242424242424242", "123");
-        HashMap chargeMetadata = new HashMap<>();
+    private void conform_TPApayment(String order) {
+        progressBar.setVisibility(View.VISIBLE);
+        HashMap<String, String> chargeMetadata = new HashMap<>();
         chargeMetadata.put("Order Number", "ORD-1001");
-        Log.e("",""+chargeMetadata);
+
         GoSellAPI.getInstance("sk_test_stR9ydEPWUcaN3kZ74TfuAYg").createCharge(
                 new CreateChargeRequest
-                        .Builder(1000, "KWD", new Redirect("https://ihealkuwait.com/", "https://ihealkuwait.com/"))
+                        .Builder(5.00,
+                        "KWD",
+                        new CreateChargeRequest.Customer(email_confirm, phone_confirm, fname_confirm),
+                        new Redirect("https://ihealkuwait.com/", "https://ihealkuwait.com/"))
+                        .threeDSecure(true)
+                        .transaction_reference(order)
+                        .reference_order(order)
+                        .statement_descriptor("")
+                        .receipt(new Charge.Receipt(true, true))
                         .source(null)
-                        .statement_descriptor("Test Txn 001")
-                        .description("Test Transaction")
+                        .description("")
                         .metadata(chargeMetadata)
-                        .receipt_sms("96598989898")
-                        .receipt_email("test@test.com")
-                        .capture(true)
-                        .threeds(true)
-                        .reference("123456")
-                        .first_name("John")
-                        .last_name("Doe")
                         .build(),
                 new APIRequestCallback<Charge>() {
                     @Override
                     public void onSuccess(int responseCode, Charge serializedResponse) {
+                        progressBar.setVisibility(View.GONE);
                         Log.d(TAG, "onSuccess createCharge: serializedResponse:" + serializedResponse);
                         charge = serializedResponse;
                         Log.e("vinod_URL",""+charge.getRedirect());
@@ -297,14 +298,12 @@ public class Confirmation_fragment extends Fragment {
                         Intent intent= new Intent(getActivity(),Web_tappayment.class);
                         intent.putExtra("url",charge.getRedirect().getUrl());
                         startActivity(intent);
-                        /*Intent i = new Intent(Intent.ACTION_VIEW);
-                        i.setData(Uri.parse(charge.getRedirect().getUrl()));
-                        startActivity(i);*/
-
                     }
 
                     @Override
                     public void onFailure(GoSellError errorDetails) {
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(getActivity(), "errorCode:"+ errorDetails.getErrorCode() + ", errorBody: " + errorDetails.getErrorBody() + ", throwable: " + errorDetails.getThrowable(), Toast.LENGTH_SHORT).show();
                         Log.d(TAG, "onFailure createCharge, errorCode: " + errorDetails.getErrorCode() + ", errorBody: " + errorDetails.getErrorBody() + ", throwable: " + errorDetails.getThrowable());
                     }
                 }
@@ -323,14 +322,19 @@ public class Confirmation_fragment extends Fragment {
 
     private void prepareConfirmCart() {
         cartList.clear();
-        String email = Login_preference.getemail(context);
-
-        String loginflag = Login_preference.getLogin_flag(context);
+        String email = Login_preference.getemail(getActivity());
+        Log.e("emailsss",""+email);
+        String loginflag = Login_preference.getLogin_flag(getActivity());
         Log.e("customeriddd", "" + Login_preference.getcustomer_id(context));
         if (loginflag.equalsIgnoreCase("1") || loginflag == "1") {
             Log.e("with_login", "");
             ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
-            cartlistt = api.Cartlist(email);
+            Log.e("emai_id",email);
+            Log.e("review","1");
+            Log.e("country_id",countryid_confirm);
+            Log.e("paycode",paycode);
+            Log.e("shipping_confirm",shipping_confirm);
+            cartlistt = api.Cartlist_totoal(email,"1",countryid_confirm,paycode,shipping_confirm);
         } else {
             Log.e("without_login", "");
             String quote_id = Login_preference.getquote_id(context);//359
@@ -342,7 +346,7 @@ public class Confirmation_fragment extends Fragment {
         cartlistt.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Log.e("responseeeeee_confirm", "" + response.body().toString());
+                Log.e("responseeeeee_confirm", "" + response);
 
                 JSONObject jsonObject = null;
                 try {
@@ -351,6 +355,11 @@ public class Confirmation_fragment extends Fragment {
                     Log.e("status_confirm_cart", "" + status);
                     if (status.equalsIgnoreCase("success")) {
                         String grand_total = jsonObject.getString("grand_total");
+                        String currentString = grand_total;
+                        String[] separated = currentString.split("KWD");
+                        String A =separated[0]; // this will contain "Fruit"
+                        price= Double.parseDouble(separated[1]); // this will contain " they taste good"
+                        Log.e("price_pass",""+price);
                         tv_totalconform.setText(grand_total);
                         Navigation_drawer_activity.Check_String_NULL_Value(tv_totalconform,grand_total);
                         Login_preference.setquote_id(context, jsonObject.getString("quote_id"));
@@ -418,7 +427,7 @@ public class Confirmation_fragment extends Fragment {
         confirm.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Log.e("response", "" + response.body().toString());
+                Log.e("response", "" + response);
                 progressBar.setVisibility(View.GONE);
                 JSONObject jsonObject = null;
                 try {
@@ -429,7 +438,9 @@ public class Confirmation_fragment extends Fragment {
                     Log.e("message_confirmation", "" + meassg);
                     if (code.equalsIgnoreCase("200")) {
                      //   Toast.makeText(getContext(), "" + meassg, Toast.LENGTH_SHORT).show();
-                        loadFragment(new Fianl_Order_Checkout_freg());
+                        String order=jsonObject.getString("order_id");
+                        conform_TPApayment(order);
+                        //loadFragment(new Fianl_Order_Checkout_freg());
                     } else if (code.equalsIgnoreCase("error")) {
                         //Toast.makeText(getContext(), "" + meassg, Toast.LENGTH_SHORT).show();
                     }

@@ -228,15 +228,13 @@ public class Cart extends Fragment {
 
         //makin g api call
         ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
-        Call<ResponseBody> login = api.login(username, password,login_quote_id);
+        Call<ResponseBody> login = api.login(username, password,login_quote_id,Login_preference.getdevicetoken(getActivity()),"Android");
 
         login.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Log.e("response", "" + response.body().toString());
-
+                Log.e("response", "" +response);
                 JSONObject jsonObject = null;
-
                 try {
                     jsonObject = new JSONObject(response.body().string());
                     String status = jsonObject.getString("status");
@@ -249,9 +247,7 @@ public class Cart extends Fragment {
                         Login_preference.setcustomer_id(getActivity(), jsonObject.getString("customer_id"));
                         Login_preference.setemail(getActivity(), jsonObject.getString("email"));
                         Login_preference.setfullname(getActivity(), jsonObject.getString("fullname"));
-
                         Toast.makeText(getActivity(), "Login succcessfull", Toast.LENGTH_SHORT).show();
-
                         getActivity().finish();
                         getActivity().overridePendingTransition(0, 0);
                         startActivity(getActivity().getIntent());
@@ -268,12 +264,10 @@ public class Cart extends Fragment {
                     } else if (status.equalsIgnoreCase("error")) {
                         //   Toast.makeText(getContext(), "" + meassg, Toast.LENGTH_SHORT).show();
                     }
-
                 } catch (Exception e) {
                     Log.e("", "" + e);
                 }
             }
-
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Toast.makeText(getContext(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
@@ -352,18 +346,15 @@ public class Cart extends Fragment {
                 super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
             }
         };
-
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(cart_recyclerview);
 
     }
-
     private void removeView() {
         if (view.getParent() != null) {
             ((ViewGroup) view.getParent()).removeView(view);
         }
     }
-
     private void AllocateMemory(View v) {
         cart_recyclerview = v.findViewById(R.id.cart_recyclerview);
         toolbar = (Toolbar) v.findViewById(R.id.toolbar_cart);
@@ -401,7 +392,7 @@ public class Cart extends Fragment {
         cartlistt.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Log.e("responseeeeee", "" + response.body().toString());
+                Log.e("responseeeeee", "" + response);
 
                 JSONObject jsonObject = null;
                 try {

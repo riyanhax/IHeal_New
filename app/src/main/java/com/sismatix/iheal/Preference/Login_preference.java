@@ -98,4 +98,17 @@ public class Login_preference {
         return mPrefs.getString("quote_id", "");
     }
 
+    public static void setdevicetoken(Context context, String value)
+    {
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        prefsEditor = mPrefs.edit();
+        prefsEditor.putString("devicetoken", value);
+        prefsEditor.commit();
+    }
+    public static String getdevicetoken(Context context)
+    {
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return mPrefs.getString("devicetoken", "");
+    }
+
 }

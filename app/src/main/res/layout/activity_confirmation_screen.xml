@@ -34,6 +34,7 @@
                     android:weightSum="6">
 
                     <LinearLayout
+                        android:id="@+id/lv_close"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center|start"
@@ -89,9 +90,11 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/sucess"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:visibility="visible"
         android:weightSum="4">
 
 

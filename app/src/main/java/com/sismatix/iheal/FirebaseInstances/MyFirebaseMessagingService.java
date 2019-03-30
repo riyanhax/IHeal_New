@@ -68,6 +68,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         String message = remoteMessage.getData().get("message");
         //imageUri will contain URL of the image to be displayed with Notification
         String imageUri = remoteMessage.getData().get("image");
+
         //If the key AnotherActivity has  value as True then when the user taps on notification, in the app AnotherActivity will be opened.
         //If the key AnotherActivity has  value as False then when the user taps on notification, in the app MainActivity will be opened.
         String TrueOrFlase = remoteMessage.getData().get("AnotherActivity");

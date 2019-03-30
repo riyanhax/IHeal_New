@@ -43,7 +43,6 @@ public class Cart_Delivery_Adapter extends RecyclerView.Adapter<com.sismatix.ihe
                 .inflate(R.layout.shipping_delivery_row, parent, false);
         return new Cart_Delivery_Adapter.MyViewHolder(itemView);
     }
-
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onBindViewHolder(final Cart_Delivery_Adapter.MyViewHolder holder, final int position) {

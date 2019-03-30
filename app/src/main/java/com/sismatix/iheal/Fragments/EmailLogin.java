@@ -166,10 +166,11 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
         }
 
         Log.e("login_quote__161",""+ login_quote_id_pass);
+        Log.e("device_token",""+ Login_preference.getdevicetoken(getActivity()));
 
         //makin g api call
         ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
-        Call<ResponseBody> login = api.login(username, password, login_quote_id);
+        Call<ResponseBody> login = api.login(username, password, login_quote_id,Login_preference.getdevicetoken(getActivity()),"Android");
 
        /* Log.e("login_email",""+username);
         Log.e("login_password",""+password);
@@ -178,10 +179,9 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
         login.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Log.e("response", "" + response.body().toString());
+                Log.e("response", "" + response);
 
                 JSONObject jsonObject = null;
-
                 try {
                     jsonObject = new JSONObject(response.body().string());
                     String status = jsonObject.getString("status");
@@ -265,7 +265,6 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
             loadFragment(nextFrag);
         }
     }
-
     @Override
     public void onResume() {
         super.onResume();

@@ -204,7 +204,7 @@ public class Navigation_drawer_activity extends AppCompatActivity
         cartlistt.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Log.e("responseeeeee", "" + response.body().toString());
+                Log.e("responseeeeee", "" + response);
 
                 JSONObject jsonObject = null;
                 try {
@@ -399,7 +399,6 @@ public class Navigation_drawer_activity extends AppCompatActivity
 
             }
             //pushFragment(new MyOrderDetails(), "MyOrder_details");
-        } else if (id == R.id.nav_notification) {
         }
 
         drawer.closeDrawer(GravityCompat.START);

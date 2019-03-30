@@ -3,12 +3,12 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/IHealComplete.iml" filepath="$PROJECT_DIR$/IHealComplete.iml" />
-      <module fileurl="file://$PROJECT_DIR$/IHeal_New.iml" filepath="$PROJECT_DIR$/IHeal_New.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/IHeal_New.iml" filepath="$PROJECT_DIR$/.idea/IHeal_New.iml" />
+      <module fileurl="file://$PROJECT_DIR$/IHeal_New.iml" filepath="$PROJECT_DIR$/IHeal_New.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/iHeal_git.iml" filepath="$PROJECT_DIR$/iHeal_git.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/iHeal_git.iml" filepath="$PROJECT_DIR$/.idea/iHeal_git.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/iHeal_git.iml" filepath="$PROJECT_DIR$/.idea/iHeal_git.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
     </modules>
   </component>
 </project>

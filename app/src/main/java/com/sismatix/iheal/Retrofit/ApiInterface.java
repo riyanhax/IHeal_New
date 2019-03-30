@@ -21,7 +21,9 @@ public interface ApiInterface {
     @FormUrlEncoded
     Call<ResponseBody> login(@Field("email") String username,
                              @Field("password") String password,
-                             @Field("quote_id") String quote_id);
+                             @Field("quote_id") String quote_id,
+                             @Field("token") String token,
+                             @Field("device") String device);
 
     @POST("logout.php")
     @FormUrlEncoded
@@ -72,6 +74,14 @@ public interface ApiInterface {
     @POST("AppCartList.php")
     @FormUrlEncoded
     Call<ResponseBody> Cartlist(@Field("email") String email);
+
+    @POST("AppCartList.php")
+    @FormUrlEncoded
+    Call<ResponseBody> Cartlist_totoal(@Field("email") String email,
+                                       @Field("review") String review,
+                                       @Field("country_id") String country_id,
+                                       @Field("paymentmethod") String paymentmethod,
+                                       @Field("shipping") String shipping);
 
     @POST("AppCartList.php")
     @FormUrlEncoded
@@ -200,6 +210,15 @@ public interface ApiInterface {
     @POST("AppCatalogSearch.php")
     @FormUrlEncoded
     Call<ResponseBody> AppSearchCategory(@Field("searchterm") String searchterm);
+
+    @POST("AppTapPaymentResponse.php")
+    @FormUrlEncoded
+    Call<ResponseBody> AppTapPaymentResponse(@Field("ref") String customer_id,
+                                             @Field("result") String result,
+                                             @Field("trackid") String trackid,
+                                             @Field("crdtype") String crdtype,
+                                             @Field("payid") String payid,
+                                             @Field("hash") String hash);
 
 
 }
