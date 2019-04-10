@@ -3,6 +3,9 @@ package com.sismatix.iheal.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +16,7 @@ import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import com.sismatix.iheal.Fragments.Fianl_Order_Checkout_freg;
+import com.sismatix.iheal.Fragments.Hair_Cair_fregment;
 import com.sismatix.iheal.Fragments.Nature_Category_freg;
 import com.sismatix.iheal.R;
 import com.sismatix.iheal.Retrofit.ApiClient;
@@ -29,10 +33,10 @@ public class Web_tappayment extends AppCompatActivity {
 
     WebView web_view;
     private String mUrl = "";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_web_tappayment);
         web_view=(WebView)findViewById(R.id.web_view);
         Intent intent=getIntent();
@@ -45,21 +49,6 @@ public class Web_tappayment extends AppCompatActivity {
     // Custom method to render a web page
     protected void renderWebPage(String urlToRender){
         web_view.setWebViewClient(new WebViewClient(){
-            /*
-                public void onPageStarted (WebView view, String url, Bitmap favicon)
-                    Notify the host application that a page has started loading. This method is
-                    called once for each main frame load so a page with iframes or framesets will
-                    call onPageStarted one time for the main frame. This also means that
-                    onPageStarted will not be called when the contents of an embedded frame changes,
-                    i.e. clicking a link whose target is an iframe, it will also not be called for
-                    fragment navigations (navigations to #fragment_id).
-
-                Parameters
-                    view : The WebView that is initiating the callback.
-                    url : The url to be loaded.
-                    favicon : The favicon for this page if it already exists in the database.
-
-            */
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon){
 
@@ -85,17 +74,13 @@ public class Web_tappayment extends AppCompatActivity {
                 }else {
 
                 }
-                // Update the action ba
-                getSupportActionBar().setSubtitle(mUrl);
+
             }
 
             @Override
             public void onPageFinished(WebView view, String url){
                 mUrl = view.getUrl();
                 Log.e("Pageloadedfinished_get2",""+mUrl);
-
-
-               // getSupportActionBar().setSubtitle(mUrl);
             }
 
         });
@@ -124,6 +109,7 @@ public class Web_tappayment extends AppCompatActivity {
                     String meassg = jsonObject.getString("message");
                     Log.e("message_confirmation", "" + meassg);
                     if (code.equalsIgnoreCase("200")) {
+
                         Intent intent=new Intent(Web_tappayment.this,Confirmation_screen.class);
                         startActivity(intent);
                         finish();

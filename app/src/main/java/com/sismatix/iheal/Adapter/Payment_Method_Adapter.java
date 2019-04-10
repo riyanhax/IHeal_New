@@ -37,14 +37,12 @@ public class Payment_Method_Adapter  extends RecyclerView.Adapter<com.sismatix.i
         this.context = context;
         this.model = cartList;
     }
-
     @Override
     public Payment_Method_Adapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.payment_method_row, parent, false);
         return new Payment_Method_Adapter.MyViewHolder(itemView);
     }
-
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onBindViewHolder(final Payment_Method_Adapter.MyViewHolder holder, final int position) {
@@ -52,6 +50,10 @@ public class Payment_Method_Adapter  extends RecyclerView.Adapter<com.sismatix.i
 
         holder.tv_payment_name.setTypeface(Home.roboto_bold);
         holder.tv_payment_name.setText(payment_model.getLabel());
+        Log.e("paymen",""+payment_model.getLabel());
+        if (payment_model.getLabel().equalsIgnoreCase("Tap")){
+            holder.iv_payment_icon.setImageResource(R.drawable.tap);
+        }
         Navigation_drawer_activity.Check_String_NULL_Value(holder.tv_payment_name,payment_model.getLabel());
         holder.lv_greylayout_click.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
@@ -85,12 +87,14 @@ public class Payment_Method_Adapter  extends RecyclerView.Adapter<com.sismatix.i
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView tv_payment_name;
         LinearLayout lv_greylayout_click, lv_greenlayout;
+        ImageView iv_payment_icon;
 
         public MyViewHolder(View view) {
             super(view);
             tv_payment_name = (TextView) view.findViewById(R.id.tv_payment_name);
             lv_greylayout_click = (LinearLayout) view.findViewById(R.id.lv_greylayout_click);
             lv_greenlayout = (LinearLayout) view.findViewById(R.id.lv_greenlayout);
+            iv_payment_icon = (ImageView) view.findViewById(R.id.iv_payment_icon);
         }
     }
 }

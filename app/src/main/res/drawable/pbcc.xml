@@ -9,7 +9,6 @@
         <gradient android:type="sweep" android:useLevel="false"
             android:startColor="@color/main"
             android:endColor="@color/cardview_light_background"
-            android:angle="0"
-            />
+            android:angle="0"/>
     </shape>
 </rotate>

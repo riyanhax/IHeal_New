@@ -168,7 +168,7 @@ public class Item_details extends Fragment implements View.OnClickListener, View
                     String main_title = jsonObject.getString("product_name");
                     tv_main_title.setText(main_title);
                     Navigation_drawer_activity.Check_String_NULL_Value(tv_main_title, main_title);
-
+                    Log.e("ishwishlistedornot11", "" + jsonObject.getString("wishlist"));
                     iswhishlisted = jsonObject.getString("wishlist");
                     Log.e("ishwishlistedornot", "" + iswhishlisted);
 
@@ -179,7 +179,6 @@ public class Item_details extends Fragment implements View.OnClickListener, View
                         wish.setVisible(true);
                         fillwish.setVisible(false);
                     }
-
                     String proname = jsonObject.getString("product_sku");
                     tv_product_name.setText(proname);
                     Navigation_drawer_activity.Check_String_NULL_Value(tv_product_name, proname);
@@ -522,7 +521,6 @@ public class Item_details extends Fragment implements View.OnClickListener, View
     public void onPageSelected(int i) {
 
     }
-
     @Override
     public void onPageScrollStateChanged(int i) {
 

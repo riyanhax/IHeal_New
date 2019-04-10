@@ -159,17 +159,11 @@ public class Cart_List_Adapter extends RecyclerView.Adapter<Cart_List_Adapter.My
                     if (status.equalsIgnoreCase("success")) {
                         holder.iv_cart_quantity_increase.setEnabled(true);
                         holder.iv_cart_quantity_decrease.setEnabled(true);
-
                         //prepare_Cart();
-
                         holder.tv_cart_quantity_total.setText(String.valueOf(Resultt));
-
                         //holder.tv_cart_quantity_total.setText(item_qty);
-
                     } else if (status.equalsIgnoreCase("error")) {
-
                     }
-
                 } catch (Exception e) {
                     Log.e("exception", "" + e);
                 }

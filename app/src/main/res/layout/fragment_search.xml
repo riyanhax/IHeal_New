@@ -32,23 +32,6 @@
         </SearchView>
 
     </LinearLayout>
-
-    <!--<LinearLayout
-        android:id="@+id/lv_nodatafound"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="20dp"
-        android:visibility="gone">
-       <TextView
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="No Products Found"
-           android:textSize="20dp"
-           android:gravity="center"
-           android:layout_gravity="center"/>
-    </LinearLayout>-->
-
     <LinearLayout
         android:id="@+id/lv_search"
         android:layout_width="match_parent"

@@ -10,10 +10,21 @@
     android:orientation="vertical"
     android:id="@+id/lv_login_parent">
     <!--android:background="@drawable/back"-->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="150dp"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:indeterminateDrawable="@drawable/pbcc"
+        android:visibility="gone" />
     <LinearLayout
+        android:id="@+id/lv_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:visibility="visible"
         android:weightSum="4">
 
         <LinearLayout

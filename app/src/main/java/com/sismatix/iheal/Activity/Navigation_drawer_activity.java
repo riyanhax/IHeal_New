@@ -534,28 +534,13 @@ public class Navigation_drawer_activity extends AppCompatActivity
     @Override
     public void onBackPressed() {
 
-        int seletedItemId = bottom_navigation.getSelectedItemId();
-        if (R.id.home != seletedItemId) {
-            setHomeItem(Navigation_drawer_activity.this);
-        } else {
-            super.onBackPressed();
-        }
-
-        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            getFragmentManager().popBackStack();
-        } else {
-            super.onBackPressed();
-        }
-
-
         FragmentManager fragmentManager = getSupportFragmentManager();
         int count = fragmentManager.getBackStackEntryCount();
         //String name=fragmentManager.get
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
-
-        Log.e("countt_vinod", "" + count);
+        Log.e("", "" + count);
         if (count == 1) {
             if (doubleBackToExitPressedOnce) {
                 super.onBackPressed();

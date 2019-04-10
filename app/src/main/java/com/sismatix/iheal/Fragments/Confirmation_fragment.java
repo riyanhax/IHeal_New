@@ -262,11 +262,8 @@ public class Confirmation_fragment extends Fragment {
         } else {
             Toast.makeText(getContext(), "Please Check your Internet Connection", Toast.LENGTH_SHORT).show();
         }
-
-
         return v;
     }
-
     private void conform_TPApayment(String order) {
         progressBar.setVisibility(View.VISIBLE);
         HashMap<String, String> chargeMetadata = new HashMap<>();
@@ -274,7 +271,7 @@ public class Confirmation_fragment extends Fragment {
 
         GoSellAPI.getInstance("sk_test_stR9ydEPWUcaN3kZ74TfuAYg").createCharge(
                 new CreateChargeRequest
-                        .Builder(5.00,
+                        .Builder(price,
                         "KWD",
                         new CreateChargeRequest.Customer(email_confirm, phone_confirm, fname_confirm),
                         new Redirect("https://ihealkuwait.com/", "https://ihealkuwait.com/"))

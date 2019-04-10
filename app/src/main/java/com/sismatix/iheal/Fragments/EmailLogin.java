@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,7 +49,8 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
     String screen, loginflag;
     String login_quote_id;
     Bundle bundle;
-    LinearLayout lv_login_parent;
+    ProgressBar progressBar;
+    LinearLayout lv_login_parent,lv_main;
 
     public EmailLogin() {
         // Required empty public constructor
@@ -64,6 +66,8 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
 
         AllocateMemory(v);
         lv_login_parent=(LinearLayout)v.findViewById(R.id.lv_login_parent);
+        lv_main=(LinearLayout)v.findViewById(R.id.lv_main);
+        progressBar=(ProgressBar)v.findViewById(R.id.progressBar);
         setupUI(lv_login_parent);
        // InputMethodManager imgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
        // imgr.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
@@ -154,7 +158,8 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
     }
 
     private void loginUser(String username, String password, String login_quote_id_pass) {
-
+        lv_main.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
        /* Log.e("username ", "" + username);
         Log.e("password ", "" + password);*/
 
@@ -179,7 +184,10 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
         login.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                lv_main.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
                 Log.e("response", "" + response);
+
 
                 JSONObject jsonObject = null;
                 try {
@@ -235,6 +243,8 @@ public class EmailLogin extends Fragment implements View.OnClickListener {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                lv_main.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
                 Toast.makeText(getContext(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });

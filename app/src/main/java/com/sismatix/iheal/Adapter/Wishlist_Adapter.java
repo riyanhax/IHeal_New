@@ -102,8 +102,6 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.MyVi
         holder.iv_wishlist_image_remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Toast.makeText(context, "delete", Toast.LENGTH_SHORT).show();
                 remove_wishlist(action, wishliist_product_id, wishlist_customer_id);
 
             }
@@ -206,9 +204,7 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.MyVi
                     if (status.equalsIgnoreCase("Success")) {
                         /* Cart.prepare_Cart();*/
                         String msg = jsonObject.getString("message");
-                        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
-
-//loadFragment(new Wishlist_fragment());
+                       // Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
 
                         Wishlist_fragment.CALL_WISHLIST_API();
 

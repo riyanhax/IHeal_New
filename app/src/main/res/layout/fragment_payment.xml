@@ -92,26 +92,23 @@
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:orientation="vertical"
+                    android:visibility="gone"
                     android:padding="18dp">
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="PAYMENT DETAILS"
                         android:textColor="@color/edittextpay"
                         android:textStyle="bold" />
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
-
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:orientation="vertical">
-
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -127,7 +124,6 @@
                                     android:text="CARD NUMBER"
                                     android:textColor="@color/titlepayal"
                                     android:textSize="14dp" />
-
                                 <EditText
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -149,7 +145,6 @@
                                 android:layout_marginTop="10dp"
                                 android:orientation="horizontal"
                                 android:weightSum="4">
-
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -158,14 +153,12 @@
                                     android:text="EXPIRATION DATE"
                                     android:textColor="@color/titlepayal"
                                     android:textSize="14dp" />
-
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_weight="1.6"
                                     android:orientation="horizontal"
                                     android:weightSum="3">
-
                                     <EditText
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
@@ -178,7 +171,6 @@
                                         android:singleLine="true"
                                         android:textColorHint="@color/edittextpay"
                                         android:textSize="14dp" />
-
                                     <TextView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
@@ -186,7 +178,6 @@
                                         android:gravity="center"
                                         android:text="CVS"
                                         android:textSize="16dp" />
-
                                     <EditText
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
@@ -201,16 +192,13 @@
                                         android:textColorHint="@color/edittextpay"
                                         android:textSize="14dp" />
                                 </LinearLayout>
-
                             </LinearLayout>
-
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
                                 android:orientation="horizontal"
                                 android:weightSum="4">
-
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
